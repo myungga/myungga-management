@@ -15,7 +15,6 @@ def get_db():
 def init_db():
     conn = get_db()
     c = conn.cursor()
-
     c.execute('''CREATE TABLE IF NOT EXISTS menu (
         id SERIAL PRIMARY KEY,
         name TEXT NOT NULL,
@@ -24,12 +23,10 @@ def init_db():
         price REAL NOT NULL,
         active INTEGER DEFAULT 1
     )''')
-
     c.execute('''CREATE TABLE IF NOT EXISTS exp_categories (
         id SERIAL PRIMARY KEY,
         name TEXT NOT NULL UNIQUE
     )''')
-
     c.execute('''CREATE TABLE IF NOT EXISTS sales (
         id SERIAL PRIMARY KEY,
         date TEXT NOT NULL,
@@ -44,7 +41,6 @@ def init_db():
         total REAL NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )''')
-
     c.execute('''CREATE TABLE IF NOT EXISTS expenses (
         id SERIAL PRIMARY KEY,
         date TEXT NOT NULL,
@@ -56,7 +52,6 @@ def init_db():
         note TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )''')
-
     c.execute('''CREATE TABLE IF NOT EXISTS inventory (
         id SERIAL PRIMARY KEY,
         name TEXT NOT NULL,
@@ -66,7 +61,6 @@ def init_db():
         min_stock REAL DEFAULT 0,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )''')
-
     c.execute('''CREATE TABLE IF NOT EXISTS inventory_log (
         id SERIAL PRIMARY KEY,
         item_id INTEGER REFERENCES inventory(id),
@@ -75,8 +69,6 @@ def init_db():
         note TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )''')
-
-    # Seed default menu if empty
     c.execute('SELECT COUNT(*) as cnt FROM menu')
     if c.fetchone()['cnt'] == 0:
         default_menu = [
@@ -128,21 +120,17 @@ def init_db():
             ('Flower Tea','COMMON','Beverage',60),
         ]
         c.executemany('INSERT INTO menu (name,type,cat,price) VALUES (%s,%s,%s,%s)', default_menu)
-
-    # Seed default expense categories if empty
     c.execute('SELECT COUNT(*) as cnt FROM exp_categories')
     if c.fetchone()['cnt'] == 0:
         default_cats = [
-            ('Food Ingredient',), ('Beverage Stock',), ('Supplies',),
-            ('Utilities (Water/Electric/Gas)',), ('Salary',), ('Rent',),
-            ('Marketing',), ('Equipment / Repair',), ('Other',)
+            ('Food Ingredient',),('Beverage Stock',),('Supplies',),
+            ('Utilities (Water/Electric/Gas)',),('Salary',),('Rent',),
+            ('Marketing',),('Equipment / Repair',),('Other',)
         ]
         c.executemany('INSERT INTO exp_categories (name) VALUES (%s)', default_cats)
-
-    # Seed default inventory if empty
     c.execute('SELECT COUNT(*) as cnt FROM inventory')
     if c.fetchone()['cnt'] == 0:
-        default_inventory = [
+        default_inv = [
             ('Chang Beer','Beer','bottle',0,24),
             ('Singha Beer','Beer','bottle',0,24),
             ('Soju','Soju','bottle',0,12),
@@ -152,12 +140,11 @@ def init_db():
             ('Sprite','Soft Drink','can',0,24),
             ('Water','Soft Drink','bottle',0,24),
         ]
-        c.executemany('INSERT INTO inventory (name,category,unit,current_stock,min_stock) VALUES (%s,%s,%s,%s,%s)', default_inventory)
-
+        c.executemany('INSERT INTO inventory (name,category,unit,current_stock,min_stock) VALUES (%s,%s,%s,%s,%s)', default_inv)
     conn.commit()
     conn.close()
 
-# ─── MENU ───────────────────────────────────────────────────
+# MENU
 @app.route('/api/menu', methods=['GET'])
 def get_menu():
     conn = get_db(); c = conn.cursor()
@@ -169,26 +156,26 @@ def get_menu():
 def add_menu():
     d = request.json; conn = get_db(); c = conn.cursor()
     c.execute('INSERT INTO menu (name,type,cat,price) VALUES (%s,%s,%s,%s)',
-              (d['name'], d['type'], d['cat'], d['price']))
+              (d['name'],d['type'],d['cat'],d['price']))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/menu/<int:id>', methods=['PUT'])
 def update_menu(id):
     d = request.json; conn = get_db(); c = conn.cursor()
     c.execute('UPDATE menu SET name=%s,type=%s,cat=%s,price=%s WHERE id=%s',
-              (d['name'], d['type'], d['cat'], d['price'], id))
+              (d['name'],d['type'],d['cat'],d['price'],id))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/menu/<int:id>', methods=['DELETE'])
 def delete_menu(id):
     conn = get_db(); c = conn.cursor()
-    c.execute('UPDATE menu SET active=0 WHERE id=%s', (id,))
+    c.execute('UPDATE menu SET active=0 WHERE id=%s',(id,))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
-# ─── EXPENSE CATEGORIES ────────────────────────────────────
+# EXP CATEGORIES
 @app.route('/api/exp_categories', methods=['GET'])
 def get_exp_cats():
     conn = get_db(); c = conn.cursor()
@@ -200,39 +187,37 @@ def get_exp_cats():
 def add_exp_cat():
     d = request.json; conn = get_db(); c = conn.cursor()
     try:
-        c.execute('INSERT INTO exp_categories (name) VALUES (%s)', (d['name'],))
+        c.execute('INSERT INTO exp_categories (name) VALUES (%s)',(d['name'],))
         conn.commit()
     except Exception:
         conn.rollback(); conn.close()
-        return jsonify({'ok': False, 'error': 'Already exists'}), 400
+        return jsonify({'ok':False,'error':'Already exists'}),400
     conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/exp_categories/<int:id>', methods=['PUT'])
 def update_exp_cat(id):
     d = request.json; conn = get_db(); c = conn.cursor()
-    c.execute('UPDATE exp_categories SET name=%s WHERE id=%s', (d['name'], id))
+    c.execute('UPDATE exp_categories SET name=%s WHERE id=%s',(d['name'],id))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/exp_categories/<int:id>', methods=['DELETE'])
 def delete_exp_cat(id):
     conn = get_db(); c = conn.cursor()
-    c.execute('DELETE FROM exp_categories WHERE id=%s', (id,))
+    c.execute('DELETE FROM exp_categories WHERE id=%s',(id,))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
-# ─── SALES ─────────────────────────────────────────────────
+# SALES
 @app.route('/api/sales', methods=['GET'])
 def get_sales():
-    date_from = request.args.get('from')
-    date_to   = request.args.get('to')
-    date      = request.args.get('date')
+    date_from=request.args.get('from'); date_to=request.args.get('to'); date=request.args.get('date')
     conn = get_db(); c = conn.cursor()
     if date:
-        c.execute('SELECT * FROM sales WHERE date=%s ORDER BY id DESC', (date,))
+        c.execute('SELECT * FROM sales WHERE date=%s ORDER BY id DESC',(date,))
     elif date_from and date_to:
-        c.execute('SELECT * FROM sales WHERE date>=%s AND date<=%s ORDER BY date DESC,id DESC', (date_from, date_to))
+        c.execute('SELECT * FROM sales WHERE date>=%s AND date<=%s ORDER BY date DESC,id DESC',(date_from,date_to))
     else:
         c.execute('SELECT * FROM sales ORDER BY date DESC,id DESC LIMIT 100')
     rows = c.fetchall(); conn.close()
@@ -248,30 +233,28 @@ def add_sale():
     d = request.json; conn = get_db(); c = conn.cursor()
     c.execute('''INSERT INTO sales (date,ctype,guest,tour,guide,payment,currency,items,discount,total)
                  VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
-              (d['date'], d['ctype'], d.get('guest',''), d.get('tour',''), d.get('guide',''),
-               d['payment'], d.get('currency','THB'), json.dumps(d['items']),
-               d.get('discount',0), d['total']))
+              (d['date'],d['ctype'],d.get('guest',''),d.get('tour',''),d.get('guide',''),
+               d['payment'],d.get('currency','THB'),json.dumps(d['items']),
+               d.get('discount',0),d['total']))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/sales/<int:id>', methods=['DELETE'])
 def delete_sale(id):
     conn = get_db(); c = conn.cursor()
-    c.execute('DELETE FROM sales WHERE id=%s', (id,))
+    c.execute('DELETE FROM sales WHERE id=%s',(id,))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
-# ─── EXPENSES ──────────────────────────────────────────────
+# EXPENSES
 @app.route('/api/expenses', methods=['GET'])
 def get_expenses():
-    date_from = request.args.get('from')
-    date_to   = request.args.get('to')
-    date      = request.args.get('date')
+    date_from=request.args.get('from'); date_to=request.args.get('to'); date=request.args.get('date')
     conn = get_db(); c = conn.cursor()
     if date:
-        c.execute('SELECT * FROM expenses WHERE date=%s ORDER BY id DESC', (date,))
+        c.execute('SELECT * FROM expenses WHERE date=%s ORDER BY id DESC',(date,))
     elif date_from and date_to:
-        c.execute('SELECT * FROM expenses WHERE date>=%s AND date<=%s ORDER BY date DESC,id DESC', (date_from, date_to))
+        c.execute('SELECT * FROM expenses WHERE date>=%s AND date<=%s ORDER BY date DESC,id DESC',(date_from,date_to))
     else:
         c.execute('SELECT * FROM expenses ORDER BY date DESC,id DESC LIMIT 100')
     rows = c.fetchall(); conn.close()
@@ -281,23 +264,23 @@ def get_expenses():
 def add_expense():
     d = request.json; conn = get_db(); c = conn.cursor()
     c.execute('INSERT INTO expenses (date,cat,vendor,amount,currency,payment,note) VALUES (%s,%s,%s,%s,%s,%s,%s)',
-              (d['date'], d['cat'], d.get('vendor',''), d['amount'],
-               d.get('currency','THB'), d['payment'], d.get('note','')))
+              (d['date'],d['cat'],d.get('vendor',''),d['amount'],
+               d.get('currency','THB'),d['payment'],d.get('note','')))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/expenses/<int:id>', methods=['DELETE'])
 def delete_expense(id):
     conn = get_db(); c = conn.cursor()
-    c.execute('DELETE FROM expenses WHERE id=%s', (id,))
+    c.execute('DELETE FROM expenses WHERE id=%s',(id,))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
-# ─── INVENTORY ─────────────────────────────────────────────
+# INVENTORY
 @app.route('/api/inventory', methods=['GET'])
 def get_inventory():
     conn = get_db(); c = conn.cursor()
-    c.execute('SELECT * FROM inventory ORDER BY category, name')
+    c.execute('SELECT * FROM inventory ORDER BY category,name')
     rows = c.fetchall(); conn.close()
     return jsonify([dict(r) for r in rows])
 
@@ -305,48 +288,45 @@ def get_inventory():
 def add_inventory():
     d = request.json; conn = get_db(); c = conn.cursor()
     c.execute('INSERT INTO inventory (name,category,unit,current_stock,min_stock) VALUES (%s,%s,%s,%s,%s)',
-              (d['name'], d['category'], d['unit'], d.get('current_stock',0), d.get('min_stock',0)))
+              (d['name'],d['category'],d['unit'],d.get('current_stock',0),d.get('min_stock',0)))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/inventory/<int:id>', methods=['PUT'])
 def update_inventory(id):
     d = request.json; conn = get_db(); c = conn.cursor()
     c.execute('UPDATE inventory SET name=%s,category=%s,unit=%s,min_stock=%s WHERE id=%s',
-              (d['name'], d['category'], d['unit'], d.get('min_stock',0), id))
+              (d['name'],d['category'],d['unit'],d.get('min_stock',0),id))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/inventory/<int:id>', methods=['DELETE'])
 def delete_inventory(id):
     conn = get_db(); c = conn.cursor()
-    c.execute('DELETE FROM inventory_log WHERE item_id=%s', (id,))
-    c.execute('DELETE FROM inventory WHERE id=%s', (id,))
+    c.execute('DELETE FROM inventory_log WHERE item_id=%s',(id,))
+    c.execute('DELETE FROM inventory WHERE id=%s',(id,))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/inventory/<int:id>/stock', methods=['POST'])
 def update_stock(id):
     d = request.json; conn = get_db(); c = conn.cursor()
-    action = d['action']  # 'add' or 'use'
-    qty    = float(d['quantity'])
-    note   = d.get('note','')
+    action = d['action']; qty = float(d['quantity']); note = d.get('note','')
     if action == 'add':
-        c.execute('UPDATE inventory SET current_stock=current_stock+%s, updated_at=NOW() WHERE id=%s', (qty, id))
+        c.execute('UPDATE inventory SET current_stock=current_stock+%s,updated_at=NOW() WHERE id=%s',(qty,id))
     else:
-        c.execute('UPDATE inventory SET current_stock=GREATEST(0,current_stock-%s), updated_at=NOW() WHERE id=%s', (qty, id))
-    c.execute('INSERT INTO inventory_log (item_id,action,quantity,note) VALUES (%s,%s,%s,%s)', (id, action, qty, note))
+        c.execute('UPDATE inventory SET current_stock=GREATEST(0,current_stock-%s),updated_at=NOW() WHERE id=%s',(qty,id))
+    c.execute('INSERT INTO inventory_log (item_id,action,quantity,note) VALUES (%s,%s,%s,%s)',(id,action,qty,note))
     conn.commit(); conn.close()
-    return jsonify({'ok': True})
+    return jsonify({'ok':True})
 
 @app.route('/api/inventory/<int:id>/log', methods=['GET'])
 def get_inventory_log(id):
     conn = get_db(); c = conn.cursor()
-    c.execute('SELECT * FROM inventory_log WHERE item_id=%s ORDER BY created_at DESC LIMIT 30', (id,))
+    c.execute('SELECT * FROM inventory_log WHERE item_id=%s ORDER BY created_at DESC LIMIT 30',(id,))
     rows = c.fetchall(); conn.close()
     return jsonify([dict(r) for r in rows])
 
-# ─── MAIN ──────────────────────────────────────────────────
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -354,5 +334,5 @@ def index():
 init_db()
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    port = int(os.environ.get('PORT',5000))
+    app.run(host='0.0.0.0',port=port,debug=False)
