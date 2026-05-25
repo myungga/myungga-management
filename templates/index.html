@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -15,18 +15,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; display: inline-block; margin-left: 8px; }
 .status-dot.online { background: #0F6E56; }
 .status-dot.offline { background: #A32D2D; }
-
 .nav { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; background: #fff; border: 1px solid #e0ddd6; border-radius: 12px; padding: 6px; }
-.nav button { flex: 1; min-width: 100px; padding: 9px 12px; border: none; border-radius: 8px; background: transparent; font-size: 13px; cursor: pointer; color: #666; transition: all 0.15s; font-weight: 500; }
+.nav button { flex: 1; min-width: 80px; padding: 9px 10px; border: none; border-radius: 8px; background: transparent; font-size: 12px; cursor: pointer; color: #666; transition: all 0.15s; font-weight: 500; }
 .nav button.active { background: #185FA5; color: #fff; }
 .nav button:hover:not(.active) { background: #f0f0f0; color: #1a1a1a; }
-
 .section { display: none; }
 .section.active { display: block; }
-
 .card { background: #fff; border: 1px solid #e0ddd6; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
-.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 1rem; color: #1a1a1a; display: flex; align-items: center; gap: 8px; }
-
+.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 1rem; color: #1a1a1a; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 1rem; }
 .metric { background: #f5f4f0; border-radius: 10px; padding: 1rem; }
 .metric .label { font-size: 11px; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
@@ -34,12 +30,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .metric .value.green { color: #0F6E56; }
 .metric .value.red   { color: #A32D2D; }
 .metric .value.blue  { color: #185FA5; }
-
 .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 14px; }
 .form-group label { display: block; font-size: 12px; color: #666; margin-bottom: 5px; font-weight: 500; }
 .form-group select, .form-group input { width: 100%; padding: 9px 11px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #1a1a1a; transition: border-color 0.15s; }
 .form-group select:focus, .form-group input:focus { outline: none; border-color: #185FA5; }
-
 .btn { padding: 9px 18px; border-radius: 8px; font-size: 14px; cursor: pointer; border: 1px solid #ddd; background: #fff; color: #1a1a1a; font-weight: 500; transition: all 0.15s; }
 .btn:hover { background: #f0f0f0; }
 .btn-primary { background: #185FA5; color: #fff; border-color: #185FA5; }
@@ -47,135 +41,104 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .btn-danger { background: #fff0f0; color: #A32D2D; border-color: #f0b0b0; font-size: 12px; padding: 5px 10px; }
 .btn-danger:hover { background: #ffe0e0; }
 .btn-edit { background: #f0f5ff; color: #185FA5; border-color: #c0d8f5; font-size: 12px; padding: 5px 10px; }
-
+.btn-print { background: #f0faf5; color: #0F6E56; border-color: #a0dcc0; font-size: 13px; padding: 7px 14px; }
+.print-bar { display: flex; justify-content: flex-end; margin-bottom: 10px; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { text-align: left; padding: 9px 10px; font-size: 11px; font-weight: 600; color: #888; border-bottom: 1px solid #e8e8e8; text-transform: uppercase; letter-spacing: 0.04em; }
 td { padding: 9px 10px; border-bottom: 1px solid #f0f0f0; color: #1a1a1a; vertical-align: middle; }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: #fafafa; }
-
 .badge { display: inline-block; padding: 3px 9px; border-radius: 99px; font-size: 11px; font-weight: 600; }
 .badge-tour   { background: #E6F1FB; color: #185FA5; }
 .badge-walk   { background: #EAF3DE; color: #3B6D11; }
-.badge-common { background: #F1EFE8; color: #5F5E5A; }
 .badge-cash   { background: #F1EFE8; color: #5F5E5A; }
 .badge-qr     { background: #FAEEDA; color: #854F0B; }
 .badge-card   { background: #FBEAF0; color: #993556; }
 .badge-transfer { background: #EEEDFE; color: #534AB7; }
-
+.badge-thb    { background: #E6F1FB; color: #185FA5; }
+.badge-krw    { background: #EAF3DE; color: #3B6D11; }
+.badge-usd    { background: #FAEEDA; color: #854F0B; }
 .date-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
 .date-nav button { padding: 7px 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; cursor: pointer; font-size: 14px; }
 .date-nav button:hover { background: #f0f0f0; }
 .date-nav span { font-size: 15px; font-weight: 600; flex: 1; text-align: center; }
-
 .order-item { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; padding: 10px 12px; background: #f8f8f6; border-radius: 10px; border: 1px solid #ebebeb; }
 .order-item select { font-size: 13px; padding: 7px 9px; border: 1px solid #ddd; border-radius: 7px; background: #fff; color: #1a1a1a; }
 .order-item input[type=number] { width: 70px; flex: none; font-size: 13px; padding: 7px 9px; border: 1px solid #ddd; border-radius: 7px; text-align: center; }
 .order-item .subtotal { font-size: 13px; color: #185FA5; font-weight: 600; text-align: right; min-width: 80px; }
 .remove-btn { background: none; border: none; color: #bbb; cursor: pointer; font-size: 18px; padding: 2px 6px; border-radius: 6px; line-height: 1; }
 .remove-btn:hover { background: #ffe0e0; color: #A32D2D; }
-
 .bar-wrap { margin-bottom: 12px; }
 .bar-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
 .bar { height: 7px; border-radius: 4px; background: #B5D4F4; }
 .bar.red { background: #F09595; }
-
 .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
 .stat-row:last-child { border-bottom: none; }
-
 .empty { text-align: center; padding: 2rem; color: #aaa; font-size: 13px; }
 .loading { text-align: center; padding: 2rem; color: #888; font-size: 13px; }
-
 .section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
 .order-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid #e8e8e8; margin-top: 4px; }
 .order-total-row .total-label { font-size: 15px; font-weight: 600; }
 .order-total-row .total-value { font-size: 20px; font-weight: 700; color: #185FA5; }
-
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
-
 .filter-tabs { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
 .filter-tabs button { padding: 6px 14px; border: 1px solid #ddd; border-radius: 99px; font-size: 13px; cursor: pointer; background: #fff; color: #666; font-weight: 500; transition: all 0.15s; }
 .filter-tabs button.active { background: #185FA5; color: #fff; border-color: #185FA5; }
-
 .settings-form { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; align-items: end; background: #f8f8f6; border-radius: 10px; padding: 14px; margin-bottom: 1rem; border: 1px solid #ebebeb; }
 @media (max-width: 700px) { .settings-form { grid-template-columns: 1fr 1fr; } }
-
 .menu-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; align-items: center; padding: 10px 4px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
 .menu-row:last-child { border-bottom: none; }
 .menu-row:hover { background: #fafafa; border-radius: 8px; }
 .menu-row-header { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; padding: 6px 4px 10px; font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #e8e8e8; margin-bottom: 4px; }
-.edit-input { width: 100%; padding: 6px 8px; font-size: 13px; border: 1px solid #ddd; border-radius: 6px; background: #fff; color: #1a1a1a; }
-.edit-input:focus { outline: none; border-color: #185FA5; }
-
 .cat-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 10px 4px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
 .cat-row:last-child { border-bottom: none; }
-.cat-row:hover { background: #fafafa; border-radius: 8px; }
-
-.toast { position: fixed; bottom: 24px; right: 24px; background: #185FA5; color: #fff; padding: 11px 20px; border-radius: 10px; font-size: 14px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-.toast.show { opacity: 1; }
-
-/* Print Button */
-.btn-print { background: #f0faf5; color: #0F6E56; border-color: #a0dcc0; font-size: 13px; padding: 7px 14px; }
-.btn-print:hover { background: #d8f5e8; }
-.print-bar { display: flex; justify-content: flex-end; margin-bottom: 10px; }
-
-/* Print Styles */
-@media print {
-  body { background: #fff !important; }
-  .nav, .header .status-dot, .btn-print, .print-bar,
-  .btn-danger, .btn-edit, .remove-btn, .date-nav button,
-  .order-item select, .order-item input,
-  #today-sales-table .btn,
-  .form-row, .order-items, .order-total-row button,
-  .filter-tabs, .settings-form, .toast { display: none !important; }
-  .app { max-width: 100% !important; padding: 0 !important; }
-  .header { border-bottom: 2px solid #185FA5 !important; padding-bottom: 10px !important; margin-bottom: 10px !important; }
-  .card { border: 1px solid #ccc !important; border-radius: 4px !important; margin-bottom: 10px !important; page-break-inside: avoid; }
-  .section { display: block !important; }
-  .section:not(.active) { display: none !important; }
-  .metric { background: #f5f5f5 !important; }
-  .nav { display: none !important; }
-  table { font-size: 11px !important; }
-  th, td { padding: 6px 8px !important; }
-  .print-title { display: block !important; font-size: 16px; font-weight: 700; color: #185FA5; margin-bottom: 6px; }
-}
-.print-title { display: none; }
-
-/* Edit Modal */
+.edit-input { width: 100%; padding: 6px 8px; font-size: 13px; border: 1px solid #ddd; border-radius: 6px; background: #fff; color: #1a1a1a; }
+.edit-input:focus { outline: none; border-color: #185FA5; }
+.highlight-row td { background: #fffbe6 !important; }
+/* Stock badges */
+.stock-ok   { color: #0F6E56; font-weight: 600; }
+.stock-low  { color: #A32D2D; font-weight: 600; }
+/* Modal */
 .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:100; align-items:center; justify-content:center; }
 .modal-overlay.show { display:flex; }
-.modal { background:#fff; border-radius:16px; padding:1.5rem; width:90%; max-width:640px; max-height:90vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.18); }
+.modal { background:#fff; border-radius:16px; padding:1.5rem; width:92%; max-width:660px; max-height:90vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.18); }
 .modal h3 { font-size:16px; font-weight:600; margin-bottom:1rem; color:#185FA5; }
 .modal-footer { display:flex; justify-content:flex-end; gap:8px; margin-top:1rem; padding-top:1rem; border-top:1px solid #eee; }
-
-/* Table search highlight */
-.highlight-row td { background:#fffbe6 !important; }</style>
+.toast { position: fixed; bottom: 24px; right: 24px; background: #185FA5; color: #fff; padding: 11px 20px; border-radius: 10px; font-size: 14px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.toast.show { opacity: 1; }
+@media print {
+  body { background: #fff !important; }
+  .nav, .print-bar, .btn-danger, .btn-edit, .remove-btn, .date-nav button,
+  .filter-tabs, .settings-form, .toast, .modal-overlay { display: none !important; }
+  .app { max-width: 100% !important; padding: 0 !important; }
+  .section { display: block !important; }
+  .section:not(.active) { display: none !important; }
+  table { font-size: 11px !important; }
+}
+</style>
 </head>
 <body>
 <div class="app">
-
   <div class="header">
     <div class="logo">明</div>
     <div style="flex:1">
-      <h1>Myungga Korean Restaurant
-        <span class="status-dot" id="status-dot" title="Server connection"></span>
-      </h1>
-      <p>Sales · Expense · Statistics Management &nbsp;|&nbsp; Chiang Mai, Thailand</p>
+      <h1>Myungga Korean Restaurant <span class="status-dot" id="status-dot"></span></h1>
+      <p>Sales · Expense · Inventory · Statistics | Chiang Mai, Thailand</p>
     </div>
   </div>
-
   <nav class="nav">
     <button class="active" onclick="showSection('sales')">🧾 Sales</button>
     <button onclick="showSection('expense')">💸 Expense</button>
     <button onclick="showSection('daily')">📅 Daily</button>
-    <button onclick="showSection('stats')">📊 Statistics</button>
+    <button onclick="showSection('inventory')">📦 Inventory</button>
+    <button onclick="showSection('stats')">📊 Stats</button>
     <button onclick="showSection('settings')">⚙️ Settings</button>
   </nav>
 
-  <!-- SALES ENTRY -->
+  <!-- ===== SALES ===== -->
   <div id="sales" class="section active">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
+    <div class="print-bar"><button class="btn btn-print" onclick="window.print()">🖨️ Print</button></div>
     <div class="card">
       <h3>🧾 New Sales Order</h3>
       <div class="form-row">
@@ -187,12 +150,8 @@ tr:hover td { background: #fafafa; }
             <option value="TOUR">TOUR</option>
           </select>
         </div>
-        <div class="form-group" id="tour-name-field" style="display:none">
-          <label>Tour Team</label><input type="text" id="sale-tour" placeholder="Team name">
-        </div>
-        <div class="form-group" id="guide-name-field" style="display:none">
-          <label>Guide Name</label><input type="text" id="sale-guide" placeholder="Guide name">
-        </div>
+        <div class="form-group" id="tour-name-field" style="display:none"><label>Tour Team</label><input type="text" id="sale-tour" placeholder="Team name"></div>
+        <div class="form-group" id="guide-name-field" style="display:none"><label>Guide Name</label><input type="text" id="sale-guide" placeholder="Guide name"></div>
         <div class="form-group"><label>Table / Guest No.</label><input type="text" id="sale-guest" placeholder="e.g. Table 1"></div>
         <div class="form-group">
           <label>Payment</label>
@@ -200,7 +159,15 @@ tr:hover td { background: #fafafa; }
             <option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option>
           </select>
         </div>
-        <div class="form-group"><label>Discount (฿)</label><input type="number" id="sale-discount" placeholder="0" min="0" value="0" oninput="updateTotal()"></div>
+        <div class="form-group">
+          <label>Currency</label>
+          <select id="sale-currency" onchange="updateTotal()">
+            <option value="THB">฿ THB (Baht)</option>
+            <option value="KRW">₩ KRW (Won)</option>
+            <option value="USD">$ USD (Dollar)</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Discount</label><input type="number" id="sale-discount" placeholder="0" min="0" value="0" oninput="updateTotal()"></div>
       </div>
       <div class="section-label">Order Items</div>
       <div id="order-items"></div>
@@ -219,65 +186,32 @@ tr:hover td { background: #fafafa; }
     </div>
     <div class="card">
       <h3>📋 Today's Orders
-        <input type="text" id="guest-search" placeholder="🔍 Search table / guest..." 
-               style="margin-left:auto;font-size:13px;padding:6px 10px;border:1px solid #ddd;border-radius:8px;width:200px"
+        <input type="text" id="guest-search" placeholder="🔍 Search table / guest..."
+               style="margin-left:auto;font-size:13px;padding:6px 10px;border:1px solid #ddd;border-radius:8px;width:190px"
                oninput="filterOrders(this.value)">
       </h3>
       <div id="today-sales-table"><div class="loading">Loading...</div></div>
     </div>
   </div>
 
-  <!-- EDIT ORDER MODAL -->
-  <div class="modal-overlay" id="edit-modal">
-    <div class="modal">
-      <h3>✏️ Edit Order</h3>
-      <div class="form-row">
-        <div class="form-group"><label>Table / Guest No.</label><input type="text" id="edit-guest"></div>
-        <div class="form-group">
-          <label>Customer Type</label>
-          <select id="edit-ctype" onchange="onEditCtypeChange()">
-            <option value="WALK-IN">WALK-IN</option>
-            <option value="TOUR">TOUR</option>
-          </select>
-        </div>
-        <div class="form-group" id="edit-tour-field" style="display:none"><label>Tour Team</label><input type="text" id="edit-tour"></div>
-        <div class="form-group" id="edit-guide-field" style="display:none"><label>Guide Name</label><input type="text" id="edit-guide"></div>
-        <div class="form-group">
-          <label>Payment</label>
-          <select id="edit-payment">
-            <option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Discount (฿)</label><input type="number" id="edit-discount" min="0" value="0" oninput="updateEditTotal()"></div>
-      </div>
-      <div class="section-label">Order Items</div>
-      <div id="edit-order-items"></div>
-      <button class="btn" onclick="addEditOrderItem()" style="margin:8px 0 1rem">+ Add Menu Item</button>
-      <div class="order-total-row">
-        <span class="total-label">Order Total</span>
-        <div style="text-align:right">
-          <div id="edit-subtotal-row" style="font-size:13px;color:#888;display:none">Subtotal: <span id="edit-order-subtotal"></span></div>
-          <div id="edit-discount-row" style="font-size:13px;color:#A32D2D;display:none">Discount: -<span id="edit-discount-show"></span></div>
-          <div class="total-value" id="edit-order-total">฿0</div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" onclick="closeEditModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="saveEditOrder()">✓ Save Changes</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- EXPENSE ENTRY -->
+  <!-- ===== EXPENSE ===== -->
   <div id="expense" class="section">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
+    <div class="print-bar"><button class="btn btn-print" onclick="window.print()">🖨️ Print</button></div>
     <div class="card">
       <h3>💸 Add Expense</h3>
       <div class="form-row">
         <div class="form-group"><label>Date</label><input type="date" id="exp-date"></div>
         <div class="form-group"><label>Category</label><select id="exp-cat"></select></div>
         <div class="form-group"><label>Vendor / Description</label><input type="text" id="exp-vendor" placeholder="Supermarket..."></div>
-        <div class="form-group"><label>Amount (THB ฿)</label><input type="number" id="exp-amount" placeholder="0" min="0"></div>
+        <div class="form-group"><label>Amount</label><input type="number" id="exp-amount" placeholder="0" min="0"></div>
+        <div class="form-group">
+          <label>Currency</label>
+          <select id="exp-currency">
+            <option value="THB">฿ THB</option>
+            <option value="KRW">₩ KRW</option>
+            <option value="USD">$ USD</option>
+          </select>
+        </div>
         <div class="form-group">
           <label>Payment</label>
           <select id="exp-payment">
@@ -296,9 +230,9 @@ tr:hover td { background: #fafafa; }
     </div>
   </div>
 
-  <!-- DAILY REPORT -->
+  <!-- ===== DAILY ===== -->
   <div id="daily" class="section">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
+    <div class="print-bar"><button class="btn btn-print" onclick="window.print()">🖨️ Print</button></div>
     <div class="date-nav">
       <button onclick="changeDay(-1)">◀ Prev</button>
       <span id="daily-date-label"></span>
@@ -313,9 +247,47 @@ tr:hover td { background: #fafafa; }
     <div class="card"><h3>💸 Expenses</h3><div id="daily-expenses"></div></div>
   </div>
 
-  <!-- STATISTICS -->
+  <!-- ===== INVENTORY ===== -->
+  <div id="inventory" class="section">
+    <div class="print-bar"><button class="btn btn-print" onclick="window.print()">🖨️ Print</button></div>
+    <div class="card">
+      <h3>➕ Add Inventory Item</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Item Name</label><input type="text" id="inv-name" placeholder="Chang Beer"></div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="inv-cat">
+            <option value="Beer">Beer</option>
+            <option value="Soju">Soju</option>
+            <option value="Spirits">Spirits</option>
+            <option value="Soft Drink">Soft Drink</option>
+            <option value="Food">Food</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Unit</label>
+          <select id="inv-unit">
+            <option value="bottle">Bottle</option>
+            <option value="can">Can</option>
+            <option value="box">Box</option>
+            <option value="kg">Kg</option>
+            <option value="piece">Piece</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Min Stock Alert</label><input type="number" id="inv-min" placeholder="0" min="0" value="0"></div>
+        <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addInvItem()" style="width:100%">+ Add</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📦 Stock List</h3>
+      <div id="inventory-list"><div class="loading">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- ===== STATISTICS ===== -->
   <div id="stats" class="section">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
+    <div class="print-bar"><button class="btn btn-print" onclick="window.print()">🖨️ Print</button></div>
     <div class="card">
       <h3>📅 Select Period</h3>
       <div class="form-row" style="max-width:380px">
@@ -341,10 +313,9 @@ tr:hover td { background: #fafafa; }
     <div class="card" style="margin-top:1rem"><h3>🧭 Tour Guide Summary</h3><div id="stats-guides"></div></div>
   </div>
 
-  <!-- SETTINGS -->
+  <!-- ===== SETTINGS ===== -->
   <div id="settings" class="section">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
-    <!-- Add Menu -->
+    <div class="print-bar"><button class="btn btn-print" onclick="window.print()">🖨️ Print</button></div>
     <div class="card">
       <h3>➕ Add Menu Item</h3>
       <div class="settings-form">
@@ -352,24 +323,19 @@ tr:hover td { background: #fafafa; }
         <div class="form-group">
           <label>Type</label>
           <select id="new-menu-type" class="edit-input">
-            <option value="WALK-IN">WALK-IN</option>
-            <option value="TOUR">TOUR</option>
-            <option value="COMMON">COMMON</option>
+            <option value="WALK-IN">WALK-IN</option><option value="TOUR">TOUR</option><option value="COMMON">COMMON</option>
           </select>
         </div>
         <div class="form-group">
           <label>Category</label>
           <select id="new-menu-cat" class="edit-input">
-            <option value="Food">Food</option>
-            <option value="Beverage">Beverage</option>
+            <option value="Food">Food</option><option value="Beverage">Beverage</option>
           </select>
         </div>
         <div class="form-group"><label>Price (฿)</label><input type="number" id="new-menu-price" placeholder="0" min="0" class="edit-input"></div>
         <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addMenuItem()" style="width:100%">+ Add</button></div>
       </div>
     </div>
-
-    <!-- Menu List -->
     <div class="card">
       <h3>📋 Menu List <span id="menu-count" style="font-size:13px;color:#888;font-weight:400;margin-left:6px"></span></h3>
       <div class="filter-tabs">
@@ -382,43 +348,112 @@ tr:hover td { background: #fafafa; }
       </div>
       <div id="settings-menu-list"><div class="loading">Loading...</div></div>
     </div>
-
-    <!-- Add Expense Category -->
     <div class="card">
       <h3>➕ Add Expense Category</h3>
       <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
-        <div class="form-group"><label>Category Name</label><input type="text" id="new-exp-cat" placeholder="e.g. Laundry, Packaging..." class="edit-input"></div>
+        <div class="form-group"><label>Category Name</label><input type="text" id="new-exp-cat" placeholder="e.g. Laundry..." class="edit-input"></div>
         <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addExpCat()" style="width:100%">+ Add</button></div>
       </div>
     </div>
-
-    <!-- Expense Category List -->
     <div class="card">
       <h3>📋 Expense Category List</h3>
       <div id="settings-exp-cat-list"><div class="loading">Loading...</div></div>
     </div>
-
   </div>
+</div>
 
-</div><!-- /app -->
+<!-- EDIT ORDER MODAL -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal">
+    <h3>✏️ Edit Order</h3>
+    <div class="form-row">
+      <div class="form-group"><label>Table / Guest No.</label><input type="text" id="edit-guest"></div>
+      <div class="form-group">
+        <label>Customer Type</label>
+        <select id="edit-ctype" onchange="onEditCtypeChange()">
+          <option value="WALK-IN">WALK-IN</option><option value="TOUR">TOUR</option>
+        </select>
+      </div>
+      <div class="form-group" id="edit-tour-field" style="display:none"><label>Tour Team</label><input type="text" id="edit-tour"></div>
+      <div class="form-group" id="edit-guide-field" style="display:none"><label>Guide Name</label><input type="text" id="edit-guide"></div>
+      <div class="form-group">
+        <label>Payment</label>
+        <select id="edit-payment">
+          <option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Currency</label>
+        <select id="edit-currency" onchange="updateEditTotal()">
+          <option value="THB">฿ THB</option><option value="KRW">₩ KRW</option><option value="USD">$ USD</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Discount</label><input type="number" id="edit-discount" min="0" value="0" oninput="updateEditTotal()"></div>
+    </div>
+    <div class="section-label">Order Items</div>
+    <div id="edit-order-items"></div>
+    <button class="btn" onclick="addEditOrderItem()" style="margin:8px 0 1rem">+ Add Menu Item</button>
+    <div class="order-total-row">
+      <span class="total-label">Order Total</span>
+      <div style="text-align:right">
+        <div id="edit-subtotal-row" style="font-size:13px;color:#888;display:none">Subtotal: <span id="edit-order-subtotal"></span></div>
+        <div id="edit-discount-row" style="font-size:13px;color:#A32D2D;display:none">Discount: -<span id="edit-discount-show"></span></div>
+        <div class="total-value" id="edit-order-total">฿0</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeEditModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditOrder()">✓ Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- STOCK UPDATE MODAL -->
+<div class="modal-overlay" id="stock-modal">
+  <div class="modal">
+    <h3 id="stock-modal-title">📦 Update Stock</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Action</label>
+        <select id="stock-action">
+          <option value="add">➕ Add Stock (받음)</option>
+          <option value="use">➖ Use / Remove (사용/제거)</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Quantity</label><input type="number" id="stock-qty" placeholder="0" min="0" value="1"></div>
+      <div class="form-group"><label>Note (optional)</label><input type="text" id="stock-note" placeholder="Delivery, counted..."></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeStockModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveStock()">✓ Update Stock</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ── PRINT ────────────────────────────────────────────────────
-function printSection() {
-  window.print();
-}
-
 // ── GLOBALS ─────────────────────────────────────────────────
 let MENU = [], EXP_CATS = [], orderItems = [], viewDate = tod();
 let menuFilter = 'ALL', editingMenuId = null, editingCatId = null;
+let allTodaySales = [], editOrderId = null, editOrderItems = [];
+let stockItemId = null;
 
 // ── HELPERS ─────────────────────────────────────────────────
 function tod() { return new Date().toISOString().slice(0,10); }
-function fmt(n) { return '฿' + Math.round(n).toLocaleString(); }
-function fmtDate(d) {
-  return new Date(d+'T00:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+function fmtCurrency(n, currency) {
+  const sym = currency === 'KRW' ? '₩' : currency === 'USD' ? '$' : '฿';
+  return sym + Math.round(n).toLocaleString();
 }
+function fmt(n) { return '฿' + Math.round(n).toLocaleString(); }
+
+function fmtDate(d) {
+  const parts = d.split('-');
+  const dt = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+  return dt.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
+
 function toast(msg, isErr) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -426,10 +461,10 @@ function toast(msg, isErr) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
+
 function setStatus(ok) {
   const d = document.getElementById('status-dot');
   d.className = 'status-dot ' + (ok ? 'online' : 'offline');
-  d.title = ok ? 'Connected' : 'Connection error';
 }
 
 // ── API ─────────────────────────────────────────────────────
@@ -442,9 +477,9 @@ async function api(method, path, body) {
     });
     setStatus(true);
     return await res.json();
-  } catch (e) {
+  } catch(e) {
     setStatus(false);
-    toast('Connection error. Please check your internet.', true);
+    toast('Connection error', true);
     return null;
   }
 }
@@ -454,13 +489,15 @@ function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav button')[['sales','expense','daily','stats','settings'].indexOf(id)].classList.add('active');
-  if (id === 'daily')    loadDaily();
-  if (id === 'stats')    loadStats();
-  if (id === 'settings') { loadSettingsMenu(); loadSettingsExpCats(); }
+  const idx = ['sales','expense','daily','inventory','stats','settings'].indexOf(id);
+  document.querySelectorAll('.nav button')[idx].classList.add('active');
+  if (id==='daily')     loadDaily();
+  if (id==='inventory') loadInventory();
+  if (id==='stats')     loadStats();
+  if (id==='settings')  { loadSettingsMenu(); loadSettingsExpCats(); }
 }
 
-// ── INIT ─────────────────────────────────────────────────────
+// ── INIT ────────────────────────────────────────────────────
 async function init() {
   const t = tod();
   document.getElementById('sale-date').value = t;
@@ -469,27 +506,22 @@ async function init() {
   const m = new Date(); m.setDate(1);
   document.getElementById('stats-from').value = m.toISOString().slice(0,10);
   document.getElementById('stats-to').value   = t;
-
-  // Load menu & expense categories
   const [menuData, catData] = await Promise.all([
-    api('GET', '/api/menu'),
-    api('GET', '/api/exp_categories')
+    api('GET','/api/menu'), api('GET','/api/exp_categories')
   ]);
   if (menuData) MENU = menuData;
-  if (catData)  EXP_CATS = catData;
-  populateExpCatSelect();
+  if (catData)  { EXP_CATS = catData; populateExpCatSelect(); }
   addOrderItem();
   loadTodaySales();
   loadRecentExpenses();
 }
 
-// ── EXPENSE CAT SELECT ───────────────────────────────────────
 function populateExpCatSelect() {
   const sel = document.getElementById('exp-cat');
-  sel.innerHTML = EXP_CATS.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+  sel.innerHTML = EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
 }
 
-// ── SALES ENTRY ──────────────────────────────────────────────
+// ── SALES ENTRY ─────────────────────────────────────────────
 function onCtypeChange() {
   const isTour = document.getElementById('sale-ctype').value === 'TOUR';
   document.getElementById('tour-name-field').style.display = isTour ? '' : 'none';
@@ -498,58 +530,47 @@ function onCtypeChange() {
   addOrderItem();
 }
 
-function getMenuByCat(cat) {
-  const ctype = document.getElementById('sale-ctype').value;
+function getMenuByCat(cat, ctype) {
   return MENU.filter(m => (m.type === ctype || m.type === 'COMMON') && m.cat === cat);
 }
 
 function addOrderItem() {
-  orderItems.push({ cat: 'Food', menuId: null });
+  orderItems.push({ cat:'Food', menuId:null, qty:1 });
   renderOrderItems();
 }
 
-function removeOrderItem(i) {
-  orderItems.splice(i, 1);
-  renderOrderItems();
-}
+function removeOrderItem(i) { orderItems.splice(i,1); renderOrderItems(); }
 
 function onItemCatChange(i, cat) {
   orderItems[i].cat = cat;
-  const list = getMenuByCat(cat);
+  const ctype = document.getElementById('sale-ctype').value;
+  const list = getMenuByCat(cat, ctype);
   orderItems[i].menuId = list.length ? list[0].id : null;
   renderOrderItems();
 }
 
-function onItemMenuChange(i, id) {
-  orderItems[i].menuId = parseInt(id);
-  renderOrderItems();
-}
+function onItemMenuChange(i, id) { orderItems[i].menuId = parseInt(id); renderOrderItems(); }
 
-function getMenuObj(item) {
-  return MENU.find(m => m.id === item.menuId) || null;
-}
+function getMenuObj(item) { return MENU.find(m => m.id === item.menuId) || null; }
 
 function renderOrderItems() {
+  const ctype = document.getElementById('sale-ctype').value;
   const container = document.getElementById('order-items');
-  if (!orderItems.length) {
-    container.innerHTML = '<div class="empty" style="padding:1rem 0">No items. Click "+ Add Menu Item"</div>';
-    updateTotal(); return;
-  }
-  container.innerHTML = orderItems.map((item, i) => {
-    const catList = getMenuByCat(item.cat);
+  if (!orderItems.length) { container.innerHTML='<div class="empty" style="padding:1rem 0">No items. Click "+ Add Menu Item"</div>'; updateTotal(); return; }
+  container.innerHTML = orderItems.map((item,i) => {
+    const catList = getMenuByCat(item.cat, ctype);
     if (!item.menuId && catList.length) item.menuId = catList[0].id;
-    const menuObj  = getMenuObj(item);
+    const menuObj = getMenuObj(item);
     const subtotal = menuObj ? menuObj.price * (item.qty||1) : 0;
     return `<div class="order-item">
       <select style="flex:1.2;min-width:90px" onchange="onItemCatChange(${i},this.value)">
-        <option value="Food"     ${item.cat==='Food'    ?'selected':''}>🍽️ Food</option>
+        <option value="Food" ${item.cat==='Food'?'selected':''}>🍽️ Food</option>
         <option value="Beverage" ${item.cat==='Beverage'?'selected':''}>🥤 Beverage</option>
       </select>
       <select style="flex:2.5" onchange="onItemMenuChange(${i},this.value)">
         ${catList.map(m=>`<option value="${m.id}" ${m.id===item.menuId?'selected':''}>${m.name} — ฿${m.price.toLocaleString()}</option>`).join('')}
       </select>
-      <input type="number" min="1" value="${item.qty||1}" style="width:64px;flex:none"
-             onchange="orderItems[${i}].qty=parseInt(this.value)||1;renderOrderItems()">
+      <input type="number" min="1" value="${item.qty||1}" style="width:64px;flex:none" onchange="orderItems[${i}].qty=parseInt(this.value)||1;renderOrderItems()">
       <div class="subtotal">${fmt(subtotal)}</div>
       <button class="remove-btn" onclick="removeOrderItem(${i})">✕</button>
     </div>`;
@@ -558,164 +579,138 @@ function renderOrderItems() {
 }
 
 function updateTotal() {
-  const subtotal = orderItems.reduce((s,item) => {
-    const m = getMenuObj(item); return s + (m ? m.price*(item.qty||1) : 0);
-  }, 0);
-  const discount = parseFloat(document.getElementById('sale-discount')?.value) || 0;
-  const total = Math.max(0, subtotal - discount);
+  const subtotal = orderItems.reduce((s,item) => { const m=getMenuObj(item); return s+(m?m.price*(item.qty||1):0); }, 0);
+  const discount = parseFloat(document.getElementById('sale-discount')?.value)||0;
+  const currency = document.getElementById('sale-currency')?.value || 'THB';
+  const total    = Math.max(0, subtotal-discount);
   const subEl = document.getElementById('order-subtotal');
   const discRow = document.getElementById('discount-row');
   const subRow  = document.getElementById('subtotal-row');
-  if (subEl) subEl.textContent = fmt(subtotal);
-  if (discount > 0) { discRow.style.display=''; subRow.style.display=''; document.getElementById('order-discount-show').textContent=fmt(discount); }
+  if (subEl) subEl.textContent = fmtCurrency(subtotal, currency);
+  if (discount>0) { discRow.style.display=''; subRow.style.display=''; document.getElementById('order-discount-show').textContent=fmtCurrency(discount,currency); }
   else { if(discRow) discRow.style.display='none'; if(subRow) subRow.style.display='none'; }
-  document.getElementById('order-total').textContent = fmt(total);
+  document.getElementById('order-total').textContent = fmtCurrency(total, currency);
 }
 
 async function submitSale() {
-  const valid = orderItems.filter(i => getMenuObj(i));
-  if (!valid.length) { toast('Please add at least one item', true); return; }
-  const items = valid.map(item => {
-    const m = getMenuObj(item);
-    return { name:m.name, cat:m.cat, price:m.price, qty:item.qty||1, total:m.price*(item.qty||1) };
-  });
+  const valid = orderItems.filter(i=>getMenuObj(i));
+  if (!valid.length) { toast('Please add at least one item',true); return; }
+  const items = valid.map(item => { const m=getMenuObj(item); return {name:m.name,cat:m.cat,price:m.price,qty:item.qty||1,total:m.price*(item.qty||1)}; });
   const subtotal = items.reduce((s,i)=>s+i.total,0);
-  const discount = parseFloat(document.getElementById('sale-discount').value) || 0;
-  const total    = Math.max(0, subtotal - discount);
+  const discount = parseFloat(document.getElementById('sale-discount').value)||0;
+  const currency = document.getElementById('sale-currency').value;
   const body = {
-    date:    document.getElementById('sale-date').value,
-    ctype:   document.getElementById('sale-ctype').value,
-    guest:   document.getElementById('sale-guest').value.trim() || '-',
-    tour:    document.getElementById('sale-tour').value.trim(),
-    guide:   document.getElementById('sale-guide').value.trim(),
-    payment: document.getElementById('sale-payment').value,
-    discount, items, total
+    date:     document.getElementById('sale-date').value,
+    ctype:    document.getElementById('sale-ctype').value,
+    guest:    document.getElementById('sale-guest').value.trim()||'-',
+    tour:     document.getElementById('sale-tour').value.trim(),
+    guide:    document.getElementById('sale-guide').value.trim(),
+    payment:  document.getElementById('sale-payment').value,
+    currency, discount, items, total: Math.max(0,subtotal-discount)
   };
-  const res = await api('POST', '/api/sales', body);
+  const res = await api('POST','/api/sales',body);
   if (res?.ok) {
-    orderItems = [];
-    addOrderItem();
-    document.getElementById('sale-guest').value    = '';
-    document.getElementById('sale-tour').value     = '';
-    document.getElementById('sale-guide').value    = '';
-    document.getElementById('sale-discount').value = '0';
-    loadTodaySales();
-    toast('✓ Order saved!');
+    orderItems=[];addOrderItem();
+    document.getElementById('sale-guest').value='';
+    document.getElementById('sale-tour').value='';
+    document.getElementById('sale-guide').value='';
+    document.getElementById('sale-discount').value='0';
+    loadTodaySales(); toast('✓ Order saved!');
   }
 }
 
-let allTodaySales = [];
-
 async function loadTodaySales() {
   const d = document.getElementById('sale-date').value;
-  const data = await api('GET', `/api/sales?date=${d}`);
-  allTodaySales = data || [];
+  const data = await api('GET',`/api/sales?date=${d}`);
+  allTodaySales = data||[];
   renderTodaySalesTable(allTodaySales);
 }
 
 function filterOrders(q) {
   if (!q.trim()) { renderTodaySalesTable(allTodaySales); return; }
-  const filtered = allTodaySales.filter(s => s.guest.toLowerCase().includes(q.toLowerCase()));
-  renderTodaySalesTable(filtered, q);
+  const filtered = allTodaySales.filter(s=>s.guest.toLowerCase().includes(q.toLowerCase()));
+  renderTodaySalesTable(filtered,q);
 }
 
 function renderTodaySalesTable(data, highlight) {
   const el = document.getElementById('today-sales-table');
-  if (!data || !data.length) { el.innerHTML = '<div class="empty">No orders for this date</div>'; return; }
+  if (!data||!data.length) { el.innerHTML='<div class="empty">No orders for this date</div>'; return; }
   const total = data.reduce((s,o)=>s+o.total,0);
+  const sym = (c) => c==='KRW'?'₩':c==='USD'?'$':'฿';
   el.innerHTML = `<div style="text-align:right;font-size:13px;color:#185FA5;font-weight:600;margin-bottom:8px">
     Day Total: ${fmt(total)} | ${data.length} orders</div>
-    <table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Discount</th><th>Payment</th><th>Total</th><th></th></tr></thead>
-    <tbody>${data.map(s=>`<tr class="${highlight && s.guest.toLowerCase().includes(highlight.toLowerCase()) ? 'highlight-row' : ''}">
+    <table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Discount</th><th>Payment</th><th>Currency</th><th>Total</th><th></th></tr></thead>
+    <tbody>${data.map(s=>`<tr class="${highlight&&s.guest.toLowerCase().includes(highlight.toLowerCase())?'highlight-row':''}">
       <td style="cursor:pointer;color:#185FA5;font-weight:600" onclick="filterOrders('${s.guest}')">${s.guest}</td>
       <td><span class="badge ${s.ctype==='TOUR'?'badge-tour':'badge-walk'}">${s.ctype}</span></td>
       <td style="font-size:12px;color:#555">${s.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td>
-      <td style="color:#A32D2D">${s.discount ? '-'+fmt(s.discount) : '-'}</td>
+      <td style="color:#A32D2D">${s.discount?'-'+sym(s.currency)+Math.round(s.discount).toLocaleString():'-'}</td>
       <td><span class="badge badge-${s.payment.toLowerCase()}">${s.payment}</span></td>
-      <td style="font-weight:600">${fmt(s.total)}</td>
+      <td><span class="badge badge-${(s.currency||'THB').toLowerCase()}">${s.currency||'THB'}</span></td>
+      <td style="font-weight:600">${sym(s.currency)}${Math.round(s.total).toLocaleString()}</td>
       <td style="display:flex;gap:4px">
         <button class="btn btn-edit" onclick="openEditModal(${s.id})">✏️</button>
-        <button class="btn btn-danger" onclick="deleteSale(${s.id})">Delete</button>
+        <button class="btn btn-danger" onclick="deleteSale(${s.id})">Del</button>
       </td>
     </tr>`).join('')}</tbody></table>`;
 }
 
 async function deleteSale(id) {
   if (!confirm('Delete this order?')) return;
-  const res = await api('DELETE', `/api/sales/${id}`);
+  const res = await api('DELETE',`/api/sales/${id}`);
   if (res?.ok) { loadTodaySales(); toast('Order deleted'); }
 }
 
-// ── EDIT ORDER MODAL ──────────────────────────────────────────
-let editOrderId = null;
-let editOrderItems = [];
-
+// ── EDIT ORDER MODAL ─────────────────────────────────────────
 function onEditCtypeChange() {
-  const isTour = document.getElementById('edit-ctype').value === 'TOUR';
-  document.getElementById('edit-tour-field').style.display  = isTour ? '' : 'none';
-  document.getElementById('edit-guide-field').style.display = isTour ? '' : 'none';
+  const isTour = document.getElementById('edit-ctype').value==='TOUR';
+  document.getElementById('edit-tour-field').style.display  = isTour?'':'none';
+  document.getElementById('edit-guide-field').style.display = isTour?'':'none';
 }
 
 function openEditModal(id) {
-  const sale = allTodaySales.find(s => s.id === id);
-  if (!sale) return;
+  const sale = allTodaySales.find(s=>s.id===id); if(!sale) return;
   editOrderId = id;
-  editOrderItems = sale.items.map(i => {
-    const m = MENU.find(m => m.name === i.name);
-    return { menuId: m ? m.id : null, qty: i.qty, cat: i.cat };
-  });
+  editOrderItems = sale.items.map(i => { const m=MENU.find(m=>m.name===i.name); return {menuId:m?m.id:null,qty:i.qty,cat:i.cat}; });
   document.getElementById('edit-guest').value    = sale.guest;
   document.getElementById('edit-ctype').value    = sale.ctype;
   document.getElementById('edit-payment').value  = sale.payment;
-  document.getElementById('edit-discount').value = sale.discount || 0;
+  document.getElementById('edit-currency').value = sale.currency||'THB';
+  document.getElementById('edit-discount').value = sale.discount||0;
   onEditCtypeChange();
-  if (sale.tour)  document.getElementById('edit-tour').value  = sale.tour;
-  if (sale.guide) document.getElementById('edit-guide').value = sale.guide;
+  if(sale.tour)  document.getElementById('edit-tour').value  = sale.tour;
+  if(sale.guide) document.getElementById('edit-guide').value = sale.guide;
   renderEditOrderItems();
   document.getElementById('edit-modal').classList.add('show');
 }
 
-function closeEditModal() {
-  document.getElementById('edit-modal').classList.remove('show');
-  editOrderId = null; editOrderItems = [];
-}
+function closeEditModal() { document.getElementById('edit-modal').classList.remove('show'); editOrderId=null; editOrderItems=[]; }
 
 function getEditMenuByCat(cat) {
   const ctype = document.getElementById('edit-ctype').value;
-  return MENU.filter(m => (m.type === ctype || m.type === 'COMMON') && m.cat === cat);
+  return MENU.filter(m=>(m.type===ctype||m.type==='COMMON')&&m.cat===cat);
 }
 
-function addEditOrderItem() {
-  editOrderItems.push({ cat: 'Food', menuId: null, qty: 1 });
-  renderEditOrderItems();
-}
-
-function removeEditOrderItem(i) {
-  editOrderItems.splice(i, 1);
-  renderEditOrderItems();
-}
+function addEditOrderItem() { editOrderItems.push({cat:'Food',menuId:null,qty:1}); renderEditOrderItems(); }
+function removeEditOrderItem(i) { editOrderItems.splice(i,1); renderEditOrderItems(); }
 
 function renderEditOrderItems() {
   const container = document.getElementById('edit-order-items');
-  if (!editOrderItems.length) {
-    container.innerHTML = '<div class="empty" style="padding:1rem 0">No items</div>';
-    updateEditTotal(); return;
-  }
-  container.innerHTML = editOrderItems.map((item, i) => {
+  if (!editOrderItems.length) { container.innerHTML='<div class="empty" style="padding:1rem 0">No items</div>'; updateEditTotal(); return; }
+  container.innerHTML = editOrderItems.map((item,i) => {
     const catList = getEditMenuByCat(item.cat);
-    if (!item.menuId && catList.length) item.menuId = catList[0].id;
-    const menuObj  = MENU.find(m => m.id === item.menuId);
-    const subtotal = menuObj ? menuObj.price * (item.qty||1) : 0;
+    if (!item.menuId&&catList.length) item.menuId=catList[0].id;
+    const menuObj = MENU.find(m=>m.id===item.menuId);
+    const subtotal = menuObj?menuObj.price*(item.qty||1):0;
     return `<div class="order-item">
-      <select style="flex:1.2;min-width:90px" onchange="editOrderItems[${i}].cat=this.value;editOrderItems[${i}].menuId=null;renderEditOrderItems()">
-        <option value="Food"     ${item.cat==='Food'    ?'selected':''}>🍽️ Food</option>
+      <select style="flex:1.2" onchange="editOrderItems[${i}].cat=this.value;editOrderItems[${i}].menuId=null;renderEditOrderItems()">
+        <option value="Food" ${item.cat==='Food'?'selected':''}>🍽️ Food</option>
         <option value="Beverage" ${item.cat==='Beverage'?'selected':''}>🥤 Beverage</option>
       </select>
       <select style="flex:2.5" onchange="editOrderItems[${i}].menuId=parseInt(this.value);renderEditOrderItems()">
         ${catList.map(m=>`<option value="${m.id}" ${m.id===item.menuId?'selected':''}>${m.name} — ฿${m.price.toLocaleString()}</option>`).join('')}
       </select>
-      <input type="number" min="1" value="${item.qty||1}" style="width:64px;flex:none"
-             onchange="editOrderItems[${i}].qty=parseInt(this.value)||1;renderEditOrderItems()">
+      <input type="number" min="1" value="${item.qty||1}" style="width:64px;flex:none" onchange="editOrderItems[${i}].qty=parseInt(this.value)||1;renderEditOrderItems()">
       <div class="subtotal">${fmt(subtotal)}</div>
       <button class="remove-btn" onclick="removeEditOrderItem(${i})">✕</button>
     </div>`;
@@ -724,1102 +719,223 @@ function renderEditOrderItems() {
 }
 
 function updateEditTotal() {
-  const subtotal = editOrderItems.reduce((s,item) => {
-    const m = MENU.find(m=>m.id===item.menuId); return s + (m ? m.price*(item.qty||1) : 0);
-  }, 0);
-  const discount = parseFloat(document.getElementById('edit-discount')?.value) || 0;
-  const total = Math.max(0, subtotal - discount);
-  const subEl  = document.getElementById('edit-order-subtotal');
-  const discEl = document.getElementById('edit-discount-show');
-  const discRow = document.getElementById('edit-discount-row');
-  const subRow  = document.getElementById('edit-subtotal-row');
-  if (subEl) subEl.textContent = fmt(subtotal);
-  if (discount > 0) { discRow.style.display=''; subRow.style.display=''; if(discEl) discEl.textContent=fmt(discount); }
-  else { if(discRow) discRow.style.display='none'; if(subRow) subRow.style.display='none'; }
-  document.getElementById('edit-order-total').textContent = fmt(total);
+  const subtotal = editOrderItems.reduce((s,item)=>{ const m=MENU.find(m=>m.id===item.menuId); return s+(m?m.price*(item.qty||1):0); },0);
+  const discount = parseFloat(document.getElementById('edit-discount')?.value)||0;
+  const currency = document.getElementById('edit-currency')?.value||'THB';
+  const total    = Math.max(0,subtotal-discount);
+  const subEl=document.getElementById('edit-order-subtotal');
+  const discEl=document.getElementById('edit-discount-show');
+  const discRow=document.getElementById('edit-discount-row');
+  const subRow=document.getElementById('edit-subtotal-row');
+  if(subEl) subEl.textContent=fmtCurrency(subtotal,currency);
+  if(discount>0){discRow.style.display='';subRow.style.display='';if(discEl)discEl.textContent=fmtCurrency(discount,currency);}
+  else{if(discRow)discRow.style.display='none';if(subRow)subRow.style.display='none';}
+  document.getElementById('edit-order-total').textContent=fmtCurrency(total,currency);
 }
 
 async function saveEditOrder() {
-  const valid = editOrderItems.filter(i => MENU.find(m=>m.id===i.menuId));
-  if (!valid.length) { toast('Please add at least one item', true); return; }
-  const items = valid.map(item => {
-    const m = MENU.find(m=>m.id===item.menuId);
-    return { name:m.name, cat:m.cat, price:m.price, qty:item.qty||1, total:m.price*(item.qty||1) };
-  });
+  const valid = editOrderItems.filter(i=>MENU.find(m=>m.id===i.menuId));
+  if (!valid.length) { toast('Please add at least one item',true); return; }
+  const items = valid.map(item=>{ const m=MENU.find(m=>m.id===item.menuId); return {name:m.name,cat:m.cat,price:m.price,qty:item.qty||1,total:m.price*(item.qty||1)}; });
   const subtotal = items.reduce((s,i)=>s+i.total,0);
-  const discount = parseFloat(document.getElementById('edit-discount').value) || 0;
-  const total    = Math.max(0, subtotal - discount);
+  const discount = parseFloat(document.getElementById('edit-discount').value)||0;
+  const currency = document.getElementById('edit-currency').value;
   const body = {
     date:    allTodaySales.find(s=>s.id===editOrderId)?.date,
     ctype:   document.getElementById('edit-ctype').value,
-    guest:   document.getElementById('edit-guest').value.trim() || '-',
+    guest:   document.getElementById('edit-guest').value.trim()||'-',
     tour:    document.getElementById('edit-tour').value.trim(),
     guide:   document.getElementById('edit-guide').value.trim(),
     payment: document.getElementById('edit-payment').value,
-    discount, items, total
+    currency, discount, items, total: Math.max(0,subtotal-discount)
   };
-  // Delete old + create new
-  await api('DELETE', `/api/sales/${editOrderId}`);
-  const res = await api('POST', '/api/sales', body);
-  if (res?.ok) {
-    closeEditModal();
-    loadTodaySales();
-    toast('✓ Order updated!');
-  }
+  await api('DELETE',`/api/sales/${editOrderId}`);
+  const res = await api('POST','/api/sales',body);
+  if (res?.ok) { closeEditModal(); loadTodaySales(); toast('✓ Order updated!'); }
 }
 
-// ── EXPENSE ENTRY ─────────────────────────────────────────────
+// ── EXPENSE ──────────────────────────────────────────────────
 async function submitExpense() {
   const amount = parseFloat(document.getElementById('exp-amount').value);
-  if (!amount || amount <= 0) { toast('Please enter a valid amount', true); return; }
+  if (!amount||amount<=0) { toast('Please enter a valid amount',true); return; }
   const body = {
-    date:    document.getElementById('exp-date').value,
-    cat:     document.getElementById('exp-cat').value,
-    vendor:  document.getElementById('exp-vendor').value.trim() || '-',
+    date:     document.getElementById('exp-date').value,
+    cat:      document.getElementById('exp-cat').value,
+    vendor:   document.getElementById('exp-vendor').value.trim()||'-',
     amount,
-    payment: document.getElementById('exp-payment').value,
-    note:    document.getElementById('exp-note').value.trim()
+    currency: document.getElementById('exp-currency').value,
+    payment:  document.getElementById('exp-payment').value,
+    note:     document.getElementById('exp-note').value.trim()
   };
-  const res = await api('POST', '/api/expenses', body);
+  const res = await api('POST','/api/expenses',body);
   if (res?.ok) {
-    document.getElementById('exp-vendor').value = '';
-    document.getElementById('exp-amount').value = '';
-    document.getElementById('exp-note').value   = '';
-    loadRecentExpenses();
-    toast('✓ Expense saved!');
+    document.getElementById('exp-vendor').value='';
+    document.getElementById('exp-amount').value='';
+    document.getElementById('exp-note').value='';
+    loadRecentExpenses(); toast('✓ Expense saved!');
   }
 }
 
 async function loadRecentExpenses() {
-  const data = await api('GET', '/api/expenses');
+  const data = await api('GET','/api/expenses');
   const el = document.getElementById('expense-table');
-  if (!data || !data.length) { el.innerHTML = '<div class="empty">No expenses recorded</div>'; return; }
-  el.innerHTML = `<table><thead><tr><th>Date</th><th>Category</th><th>Vendor</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
+  if (!data||!data.length) { el.innerHTML='<div class="empty">No expenses recorded</div>'; return; }
+  const sym = (c) => c==='KRW'?'₩':c==='USD'?'$':'฿';
+  el.innerHTML = `<table><thead><tr><th>Date</th><th>Category</th><th>Vendor</th><th>Currency</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
     <tbody>${data.slice(0,30).map(e=>`<tr>
       <td>${e.date}</td><td>${e.cat}</td>
       <td>${e.vendor}${e.note?' · '+e.note:''}</td>
+      <td><span class="badge badge-${(e.currency||'THB').toLowerCase()}">${e.currency||'THB'}</span></td>
       <td><span class="badge badge-${e.payment.toLowerCase()}">${e.payment}</span></td>
-      <td style="font-weight:600;color:#A32D2D">${fmt(e.amount)}</td>
-      <td><button class="btn btn-danger" onclick="deleteExpense(${e.id})">Delete</button></td>
+      <td style="font-weight:600;color:#A32D2D">${sym(e.currency)}${Math.round(e.amount).toLocaleString()}</td>
+      <td><button class="btn btn-danger" onclick="deleteExpense(${e.id})">Del</button></td>
     </tr>`).join('')}</tbody></table>`;
 }
 
 async function deleteExpense(id) {
   if (!confirm('Delete this expense?')) return;
-  const res = await api('DELETE', `/api/expenses/${id}`);
+  const res = await api('DELETE',`/api/expenses/${id}`);
   if (res?.ok) { loadRecentExpenses(); toast('Expense deleted'); }
 }
 
-// ── DAILY REPORT ──────────────────────────────────────────────
+// ── DAILY ────────────────────────────────────────────────────
 function changeDay(d) {
   const parts = viewDate.split('-');
-  const dt = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
-  dt.setDate(dt.getDate() + d);
-  const y = dt.getFullYear();
-  const m = String(dt.getMonth()+1).padStart(2,'0');
-  const day = String(dt.getDate()).padStart(2,'0');
-  viewDate = `${y}-${m}-${day}`;
-  document.getElementById('daily-date-label').textContent = fmtDate(viewDate);
-  loadDaily();
-}
-
-async function loadDaily() {
-  const [ds, de] = await Promise.all([
-    api('GET', `/api/sales?date=${viewDate}`),
-    api('GET', `/api/expenses?date=${viewDate}`)
-  ]);
-  if (!ds || !de) return;
-
-  const totalSales = ds.reduce((s,o)=>s+o.total,0);
-  const totalExp   = de.reduce((s,e)=>s+e.amount,0);
-  const net        = totalSales - totalExp;
-  const tourSales  = ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
-  const walkSales  = ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
-  const foodSales  = ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Food').reduce((a,i)=>a+i.total,0),0);
-  const bevSales   = ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Beverage').reduce((a,i)=>a+i.total,0),0);
-
-  document.getElementById('daily-metrics').innerHTML = `
-    <div class="metric"><div class="label">Total Sales</div><div class="value blue">${fmt(totalSales)}</div></div>
-    <div class="metric"><div class="label">Total Expenses</div><div class="value red">${fmt(totalExp)}</div></div>
-    <div class="metric"><div class="label">Net Income</div><div class="value ${net>=0?'green':'red'}">${fmt(net)}</div></div>
-    <div class="metric"><div class="label">Orders</div><div class="value">${ds.length}</div></div>
-    <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
-    <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>`;
-
-  const pays = {};
-  ds.forEach(s=>{ pays[s.payment]=(pays[s.payment]||0)+s.total; });
-  document.getElementById('daily-payment').innerHTML = Object.keys(pays).length
-    ? Object.entries(pays).map(([k,v])=>`<div class="stat-row"><span>${k}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')
-    : '<div class="empty">No data</div>';
-
-  document.getElementById('daily-category').innerHTML = `
-    <div class="stat-row"><span>Food</span><span style="font-weight:600">${fmt(foodSales)}</span></div>
-    <div class="stat-row"><span>Beverage</span><span style="font-weight:600">${fmt(bevSales)}</span></div>`;
-
-  document.getElementById('daily-orders').innerHTML = ds.length
-    ? `<table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Payment</th><th>Total</th></tr></thead>
-       <tbody>${ds.map(s=>`<tr><td>${s.guest}</td>
-         <td><span class="badge ${s.ctype==='TOUR'?'badge-tour':'badge-walk'}">${s.ctype}</span></td>
-         <td style="font-size:12px;color:#555">${s.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td>
-         <td>${s.payment}</td><td style="font-weight:600">${fmt(s.total)}</td>
-       </tr>`).join('')}</tbody></table>`
-    : '<div class="empty">No orders</div>';
-
-  document.getElementById('daily-expenses').innerHTML = de.length
-    ? `<table><thead><tr><th>Category</th><th>Vendor</th><th>Note</th><th>Payment</th><th>Amount</th></tr></thead>
-       <tbody>${de.map(e=>`<tr><td>${e.cat}</td><td>${e.vendor}</td><td style="color:#888">${e.note||''}</td>
-         <td>${e.payment}</td><td style="color:#A32D2D;font-weight:600">${fmt(e.amount)}</td>
-       </tr>`).join('')}</tbody></table>`
-    : '<div class="empty">No expenses</div>';
-}
-
-// ── STATISTICS ────────────────────────────────────────────────
-function setRange(type) {
-  const t = tod();
-  let from = t;
-  if (type==='week') {
-    const d = new Date(t+'T00:00:00'); d.setDate(d.getDate()-d.getDay()+1);
-    from = d.toISOString().slice(0,10);
-  } else if (type==='month') {
-    from = t.slice(0,7)+'-01';
-  }
-  document.getElementById('stats-from').value = from;
-  document.getElementById('stats-to').value   = t;
-  loadStats();
-}
-
-async function loadStats() {
-  const from = document.getElementById('stats-from').value;
-  const to   = document.getElementById('stats-to').value;
-  const [ds, de] = await Promise.all([
-    api('GET', `/api/sales?from=${from}&to=${to}`),
-    api('GET', `/api/expenses?from=${from}&to=${to}`)
-  ]);
-  if (!ds || !de) return;
-
-  const totalSales = ds.reduce((s,o)=>s+o.total,0);
-  const totalExp   = de.reduce((s,o)=>s+o.amount,0);
-  const net        = totalSales - totalExp;
-  const tourSales  = ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
-  const walkSales  = ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
-  const avgOrder   = ds.length ? totalSales/ds.length : 0;
-
-  document.getElementById('stats-metrics').innerHTML = `
-    <div class="metric"><div class="label">Total Sales</div><div class="value blue">${fmt(totalSales)}</div></div>
-    <div class="metric"><div class="label">Total Expenses</div><div class="value red">${fmt(totalExp)}</div></div>
-    <div class="metric"><div class="label">Net Income</div><div class="value ${net>=0?'green':'red'}">${fmt(net)}</div></div>
-    <div class="metric"><div class="label">Orders</div><div class="value">${ds.length}</div></div>
-    <div class="metric"><div class="label">Avg Order</div><div class="value">${fmt(avgOrder)}</div></div>
-    <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
-    <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>`;
-
-  const menuMap = {};
-  ds.forEach(s=>s.items.forEach(i=>{ if(!menuMap[i.name]) menuMap[i.name]={qty:0,total:0}; menuMap[i.name].qty+=i.qty; menuMap[i.name].total+=i.total; }));
-  const topMenu = Object.entries(menuMap).sort((a,b)=>b[1].total-a[1].total).slice(0,8);
-  const maxM = topMenu[0]?.[1]?.total||1;
-  document.getElementById('stats-menu').innerHTML = topMenu.length
-    ? topMenu.map(([n,v])=>`<div class="bar-wrap"><div class="bar-label"><span>${n}</span><span style="color:#888">${fmt(v.total)} · ${v.qty}pcs</span></div><div class="bar" style="width:${Math.round(v.total/maxM*100)}%"></div></div>`).join('')
-    : '<div class="empty">No data</div>';
-
-  const expCat = {};
-  de.forEach(e=>{ expCat[e.cat]=(expCat[e.cat]||0)+e.amount; });
-  const topExp = Object.entries(expCat).sort((a,b)=>b[1]-a[1]);
-  const maxE = topExp[0]?.[1]||1;
-  document.getElementById('stats-exp-cat').innerHTML = topExp.length
-    ? topExp.map(([c,v])=>`<div class="bar-wrap"><div class="bar-label"><span>${c}</span><span style="color:#A32D2D">${fmt(v)}</span></div><div class="bar red" style="width:${Math.round(v/maxE*100)}%"></div></div>`).join('')
-    : '<div class="empty">No data</div>';
-
-  const tourPct = totalSales ? Math.round(tourSales/totalSales*100) : 0;
-  document.getElementById('stats-ctype').innerHTML = `
-    <div class="stat-row"><span>TOUR</span><span style="font-weight:600">${fmt(tourSales)} (${tourPct}%)</span></div>
-    <div class="stat-row"><span>WALK-IN</span><span style="font-weight:600">${fmt(walkSales)} (${100-tourPct}%)</span></div>
-    <div style="margin-top:10px"><div style="height:10px;border-radius:6px;background:#e8e8e8;overflow:hidden">
-      <div style="height:100%;width:${tourPct}%;background:#185FA5;border-radius:6px"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-top:4px"><span>Tour ${tourPct}%</span><span>Walk-in ${100-tourPct}%</span></div></div>`;
-
-  const payMap = {};
-  ds.forEach(s=>{ payMap[s.payment]=(payMap[s.payment]||0)+s.total; });
-  document.getElementById('stats-payment').innerHTML = Object.keys(payMap).length
-    ? Object.entries(payMap).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="stat-row"><span>${k}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')
-    : '<div class="empty">No data</div>';
-
-  const guides = {};
-  ds.filter(s=>s.ctype==='TOUR'&&s.guide).forEach(s=>{
-    if(!guides[s.guide]) guides[s.guide]={tour:s.tour||'',sales:0,orders:0};
-    guides[s.guide].sales+=s.total; guides[s.guide].orders++;
-  });
-  document.getElementById('stats-guides').innerHTML = Object.keys(guides).length
-    ? `<table><thead><tr><th>Guide</th><th>Tour Team</th><th>Orders</th><th>Total Sales</th></tr></thead>
-       <tbody>${Object.entries(guides).map(([g,v])=>`<tr><td>${g}</td><td>${v.tour||'-'}</td><td>${v.orders}</td><td style="font-weight:600;color:#185FA5">${fmt(v.sales)}</td></tr>`).join('')}</tbody></table>`
-    : '<div class="empty">No tour data in this period</div>';
-}
-
-// ── SETTINGS — MENU ───────────────────────────────────────────
-function setMenuFilter(f, btn) {
-  menuFilter = f;
-  document.querySelectorAll('.filter-tabs button').forEach(b=>b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  renderSettingsMenu();
-}
-
-async function loadSettingsMenu() {
-  const data = await api('GET', '/api/menu');
-  if (data) MENU = data;
-  editingMenuId = null;
-  renderSettingsMenu();
-}
-
-function renderSettingsMenu() {
-  const filtered = MENU.filter(m => {
-    if (menuFilter==='ALL') return true;
-    if (menuFilter==='Food'||menuFilter==='Beverage') return m.cat===menuFilter;
-    return m.type===menuFilter;
-  });
-  document.getElementById('menu-count').textContent = `(${filtered.length} items)`;
-  const el = document.getElementById('settings-menu-list');
-  if (!filtered.length) { el.innerHTML = '<div class="empty">No items found</div>'; return; }
-  el.innerHTML = `
-    <div class="menu-row-header"><span>Name</span><span>Type</span><span>Category</span><span>Price</span><span>Action</span></div>
-    ${filtered.map(m => {
-      if (editingMenuId === m.id) return `
-        <div class="menu-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
-          <input class="edit-input" id="em-name-${m.id}"  value="${m.name}">
-          <select class="edit-input" id="em-type-${m.id}">
-            <option value="WALK-IN" ${m.type==='WALK-IN'?'selected':''}>WALK-IN</option>
-            <option value="TOUR"    ${m.type==='TOUR'   ?'selected':''}>TOUR</option>
-            <option value="COMMON"  ${m.type==='COMMON' ?'selected':''}>COMMON</option>
-          </select>
-          <select class="edit-input" id="em-cat-${m.id}">
-            <option value="Food"     ${m.cat==='Food'    ?'selected':''}>Food</option>
-            <option value="Beverage" ${m.cat==='Beverage'?'selected':''}>Beverage</option>
-          </select>
-          <input class="edit-input" id="em-price-${m.id}" type="number" value="${m.price}">
-          <div style="display:flex;gap:6px">
-            <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="saveMenuItem(${m.id})">✓</button>
-            <button class="btn" style="padding:5px 10px;font-size:12px" onclick="editingMenuId=null;renderSettingsMenu()">✕</button>
-          </div>
-        </div>`;
-      const tb = m.type==='WALK-IN'?'badge-walk':m.type==='TOUR'?'badge-tour':'badge-common';
-      return `<div class="menu-row">
-        <span>${m.name}</span>
-        <span><span class="badge ${tb}">${m.type}</span></span>
-        <span style="color:#666">${m.cat}</span>
-        <span style="font-weight:600">฿${m.price.toLocaleString()}</span>
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-edit" onclick="editingMenuId=${m.id};renderSettingsMenu()">✏️ Edit</button>
-          <button class="btn btn-danger" onclick="deleteMenuItem(${m.id})">Delete</button>
-        </div>
-      </div>`;
-    }).join('')}`;
-}
-
-async function addMenuItem() {
-  const name  = document.getElementById('new-menu-name').value.trim();
-  const type  = document.getElementById('new-menu-type').value;
-  const cat   = document.getElementById('new-menu-cat').value;
-  const price = parseFloat(document.getElementById('new-menu-price').value);
-  if (!name)  { toast('Please enter a menu name', true); return; }
-  if (!price||price<=0) { toast('Please enter a valid price', true); return; }
-  const res = await api('POST', '/api/menu', {name, type, cat, price});
-  if (res?.ok) {
-    document.getElementById('new-menu-name').value  = '';
-    document.getElementById('new-menu-price').value = '';
-    await loadSettingsMenu();
-    MENU = await api('GET','/api/menu') || MENU;
-    toast('✓ Menu item added!');
-  }
-}
-
-async function saveMenuItem(id) {
-  const name  = document.getElementById(`em-name-${id}`).value.trim();
-  const type  = document.getElementById(`em-type-${id}`).value;
-  const cat   = document.getElementById(`em-cat-${id}`).value;
-  const price = parseFloat(document.getElementById(`em-price-${id}`).value);
-  if (!name)  { toast('Name cannot be empty', true); return; }
-  if (!price||price<0) { toast('Invalid price', true); return; }
-  const res = await api('PUT', `/api/menu/${id}`, {name, type, cat, price});
-  if (res?.ok) {
-    editingMenuId = null;
-    await loadSettingsMenu();
-    MENU = await api('GET','/api/menu') || MENU;
-    toast('✓ Menu updated!');
-  }
-}
-
-async function deleteMenuItem(id) {
-  const item = MENU.find(m=>m.id===id);
-  if (!confirm(`Delete "${item?.name}"?`)) return;
-  const res = await api('DELETE', `/api/menu/${id}`);
-  if (res?.ok) {
-    await loadSettingsMenu();
-    MENU = await api('GET','/api/menu') || MENU;
-    toast('Menu item deleted');
-  }
-}
-
-// ── SETTINGS — EXPENSE CATEGORIES ────────────────────────────
-async function loadSettingsExpCats() {
-  const data = await api('GET', '/api/exp_categories');
-  if (data) { EXP_CATS = data; populateExpCatSelect(); }
-  editingCatId = null;
-  renderSettingsExpCats();
-}
-
-function renderSettingsExpCats() {
-  const el = document.getElementById('settings-exp-cat-list');
-  if (!EXP_CATS.length) { el.innerHTML = '<div class="empty">No categories</div>'; return; }
-  el.innerHTML = EXP_CATS.map(c => {
-    if (editingCatId === c.id) return `
-      <div class="cat-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
-        <input class="edit-input" id="ec-name-${c.id}" value="${c.name}">
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="saveExpCat(${c.id})">✓</button>
-          <button class="btn" style="padding:5px 10px;font-size:12px" onclick="editingCatId=null;renderSettingsExpCats()">✕</button>
-        </div>
-      </div>`;
-    return `<div class="cat-row">
-      <span>${c.name}</span>
-      <div style="display:flex;gap:6px">
-        <button class="btn btn-edit" onclick="editingCatId=${c.id};renderSettingsExpCats()">✏️ Edit</button>
-        <button class="btn btn-danger" onclick="deleteExpCat(${c.id})">Delete</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-async function addExpCat() {
-  const name = document.getElementById('new-exp-cat').value.trim();
-  if (!name) { toast('Please enter a category name', true); return; }
-  const res = await api('POST', '/api/exp_categories', {name});
-  if (res?.ok) {
-    document.getElementById('new-exp-cat').value = '';
-    await loadSettingsExpCats();
-    toast('✓ Category added!');
-  } else if (res) {
-    toast('This category already exists', true);
-  }
-}
-
-async function saveExpCat(id) {
-  const name = document.getElementById(`ec-name-${id}`).value.trim();
-  if (!name) { toast('Name cannot be empty', true); return; }
-  const res = await api('PUT', `/api/exp_categories/${id}`, {name});
-  if (res?.ok) {
-    editingCatId = null;
-    await loadSettingsExpCats();
-    toast('✓ Category updated!');
-  }
-}
-
-async function deleteExpCat(id) {
-  const cat = EXP_CATS.find(c=>c.id===id);
-  if (!confirm(`Delete "${cat?.name}"?`)) return;
-  const res = await api('DELETE', `/api/exp_categories/${id}`);
-  if (res?.ok) {
-    await loadSettingsExpCats();
-    toast('Category deleted');
-  }
-}
-
-// ── START ─────────────────────────────────────────────────────
-init();
-</script>
-</body>
-</html>
-
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Myungga Korean Restaurant — Management</title>
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f0; color: #1a1a1a; min-height: 100vh; }
-.app { max-width: 960px; margin: 0 auto; padding: 1rem; }
-.header { display: flex; align-items: center; gap: 14px; padding: 1.25rem 0 1.5rem; border-bottom: 1px solid #e0ddd6; margin-bottom: 1.5rem; }
-.logo { width: 48px; height: 48px; border-radius: 50%; background: #185FA5; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; color: #fff; flex-shrink: 0; }
-.header h1 { font-size: 20px; font-weight: 600; }
-.header p { font-size: 13px; color: #888; margin-top: 2px; }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; display: inline-block; margin-left: 8px; }
-.status-dot.online { background: #0F6E56; }
-.status-dot.offline { background: #A32D2D; }
-
-.nav { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; background: #fff; border: 1px solid #e0ddd6; border-radius: 12px; padding: 6px; }
-.nav button { flex: 1; min-width: 100px; padding: 9px 12px; border: none; border-radius: 8px; background: transparent; font-size: 13px; cursor: pointer; color: #666; transition: all 0.15s; font-weight: 500; }
-.nav button.active { background: #185FA5; color: #fff; }
-.nav button:hover:not(.active) { background: #f0f0f0; color: #1a1a1a; }
-
-.section { display: none; }
-.section.active { display: block; }
-
-.card { background: #fff; border: 1px solid #e0ddd6; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
-.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 1rem; color: #1a1a1a; display: flex; align-items: center; gap: 8px; }
-
-.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 1rem; }
-.metric { background: #f5f4f0; border-radius: 10px; padding: 1rem; }
-.metric .label { font-size: 11px; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
-.metric .value { font-size: 21px; font-weight: 600; }
-.metric .value.green { color: #0F6E56; }
-.metric .value.red   { color: #A32D2D; }
-.metric .value.blue  { color: #185FA5; }
-
-.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 14px; }
-.form-group label { display: block; font-size: 12px; color: #666; margin-bottom: 5px; font-weight: 500; }
-.form-group select, .form-group input { width: 100%; padding: 9px 11px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #1a1a1a; transition: border-color 0.15s; }
-.form-group select:focus, .form-group input:focus { outline: none; border-color: #185FA5; }
-
-.btn { padding: 9px 18px; border-radius: 8px; font-size: 14px; cursor: pointer; border: 1px solid #ddd; background: #fff; color: #1a1a1a; font-weight: 500; transition: all 0.15s; }
-.btn:hover { background: #f0f0f0; }
-.btn-primary { background: #185FA5; color: #fff; border-color: #185FA5; }
-.btn-primary:hover { background: #0C447C; }
-.btn-danger { background: #fff0f0; color: #A32D2D; border-color: #f0b0b0; font-size: 12px; padding: 5px 10px; }
-.btn-danger:hover { background: #ffe0e0; }
-.btn-edit { background: #f0f5ff; color: #185FA5; border-color: #c0d8f5; font-size: 12px; padding: 5px 10px; }
-
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-th { text-align: left; padding: 9px 10px; font-size: 11px; font-weight: 600; color: #888; border-bottom: 1px solid #e8e8e8; text-transform: uppercase; letter-spacing: 0.04em; }
-td { padding: 9px 10px; border-bottom: 1px solid #f0f0f0; color: #1a1a1a; vertical-align: middle; }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: #fafafa; }
-
-.badge { display: inline-block; padding: 3px 9px; border-radius: 99px; font-size: 11px; font-weight: 600; }
-.badge-tour   { background: #E6F1FB; color: #185FA5; }
-.badge-walk   { background: #EAF3DE; color: #3B6D11; }
-.badge-common { background: #F1EFE8; color: #5F5E5A; }
-.badge-cash   { background: #F1EFE8; color: #5F5E5A; }
-.badge-qr     { background: #FAEEDA; color: #854F0B; }
-.badge-card   { background: #FBEAF0; color: #993556; }
-.badge-transfer { background: #EEEDFE; color: #534AB7; }
-
-.date-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
-.date-nav button { padding: 7px 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; cursor: pointer; font-size: 14px; }
-.date-nav button:hover { background: #f0f0f0; }
-.date-nav span { font-size: 15px; font-weight: 600; flex: 1; text-align: center; }
-
-.order-item { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; padding: 10px 12px; background: #f8f8f6; border-radius: 10px; border: 1px solid #ebebeb; }
-.order-item select { font-size: 13px; padding: 7px 9px; border: 1px solid #ddd; border-radius: 7px; background: #fff; color: #1a1a1a; }
-.order-item input[type=number] { width: 70px; flex: none; font-size: 13px; padding: 7px 9px; border: 1px solid #ddd; border-radius: 7px; text-align: center; }
-.order-item .subtotal { font-size: 13px; color: #185FA5; font-weight: 600; text-align: right; min-width: 80px; }
-.remove-btn { background: none; border: none; color: #bbb; cursor: pointer; font-size: 18px; padding: 2px 6px; border-radius: 6px; line-height: 1; }
-.remove-btn:hover { background: #ffe0e0; color: #A32D2D; }
-
-.bar-wrap { margin-bottom: 12px; }
-.bar-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
-.bar { height: 7px; border-radius: 4px; background: #B5D4F4; }
-.bar.red { background: #F09595; }
-
-.stat-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
-.stat-row:last-child { border-bottom: none; }
-
-.empty { text-align: center; padding: 2rem; color: #aaa; font-size: 13px; }
-.loading { text-align: center; padding: 2rem; color: #888; font-size: 13px; }
-
-.section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-.order-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid #e8e8e8; margin-top: 4px; }
-.order-total-row .total-label { font-size: 15px; font-weight: 600; }
-.order-total-row .total-value { font-size: 20px; font-weight: 700; color: #185FA5; }
-
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
-
-.filter-tabs { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
-.filter-tabs button { padding: 6px 14px; border: 1px solid #ddd; border-radius: 99px; font-size: 13px; cursor: pointer; background: #fff; color: #666; font-weight: 500; transition: all 0.15s; }
-.filter-tabs button.active { background: #185FA5; color: #fff; border-color: #185FA5; }
-
-.settings-form { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; align-items: end; background: #f8f8f6; border-radius: 10px; padding: 14px; margin-bottom: 1rem; border: 1px solid #ebebeb; }
-@media (max-width: 700px) { .settings-form { grid-template-columns: 1fr 1fr; } }
-
-.menu-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; align-items: center; padding: 10px 4px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
-.menu-row:last-child { border-bottom: none; }
-.menu-row:hover { background: #fafafa; border-radius: 8px; }
-.menu-row-header { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; padding: 6px 4px 10px; font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #e8e8e8; margin-bottom: 4px; }
-.edit-input { width: 100%; padding: 6px 8px; font-size: 13px; border: 1px solid #ddd; border-radius: 6px; background: #fff; color: #1a1a1a; }
-.edit-input:focus { outline: none; border-color: #185FA5; }
-
-.cat-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 10px 4px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
-.cat-row:last-child { border-bottom: none; }
-.cat-row:hover { background: #fafafa; border-radius: 8px; }
-
-.toast { position: fixed; bottom: 24px; right: 24px; background: #185FA5; color: #fff; padding: 11px 20px; border-radius: 10px; font-size: 14px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-.toast.show { opacity: 1; }
-
-/* Print Button */
-.btn-print { background: #f0faf5; color: #0F6E56; border-color: #a0dcc0; font-size: 13px; padding: 7px 14px; }
-.btn-print:hover { background: #d8f5e8; }
-.print-bar { display: flex; justify-content: flex-end; margin-bottom: 10px; }
-
-/* Print Styles */
-@media print {
-  body { background: #fff !important; }
-  .nav, .header .status-dot, .btn-print, .print-bar,
-  .btn-danger, .btn-edit, .remove-btn, .date-nav button,
-  .order-item select, .order-item input,
-  #today-sales-table .btn,
-  .form-row, .order-items, .order-total-row button,
-  .filter-tabs, .settings-form, .toast { display: none !important; }
-  .app { max-width: 100% !important; padding: 0 !important; }
-  .header { border-bottom: 2px solid #185FA5 !important; padding-bottom: 10px !important; margin-bottom: 10px !important; }
-  .card { border: 1px solid #ccc !important; border-radius: 4px !important; margin-bottom: 10px !important; page-break-inside: avoid; }
-  .section { display: block !important; }
-  .section:not(.active) { display: none !important; }
-  .metric { background: #f5f5f5 !important; }
-  .nav { display: none !important; }
-  table { font-size: 11px !important; }
-  th, td { padding: 6px 8px !important; }
-  .print-title { display: block !important; font-size: 16px; font-weight: 700; color: #185FA5; margin-bottom: 6px; }
-}
-.print-title { display: none; }
-</style>
-</head>
-<body>
-<div class="app">
-
-  <div class="header">
-    <div class="logo">明</div>
-    <div style="flex:1">
-      <h1>Myungga Korean Restaurant
-        <span class="status-dot" id="status-dot" title="Server connection"></span>
-      </h1>
-      <p>Sales · Expense · Statistics Management &nbsp;|&nbsp; Chiang Mai, Thailand</p>
-    </div>
-  </div>
-
-  <nav class="nav">
-    <button class="active" onclick="showSection('sales')">🧾 Sales</button>
-    <button onclick="showSection('expense')">💸 Expense</button>
-    <button onclick="showSection('daily')">📅 Daily</button>
-    <button onclick="showSection('stats')">📊 Statistics</button>
-    <button onclick="showSection('settings')">⚙️ Settings</button>
-  </nav>
-
-  <!-- SALES ENTRY -->
-  <div id="sales" class="section active">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
-    <div class="card">
-      <h3>🧾 New Sales Order</h3>
-      <div class="form-row">
-        <div class="form-group"><label>Date</label><input type="date" id="sale-date"></div>
-        <div class="form-group">
-          <label>Customer Type</label>
-          <select id="sale-ctype" onchange="onCtypeChange()">
-            <option value="WALK-IN">WALK-IN</option>
-            <option value="TOUR">TOUR</option>
-          </select>
-        </div>
-        <div class="form-group" id="tour-name-field" style="display:none">
-          <label>Tour Team</label><input type="text" id="sale-tour" placeholder="Team name">
-        </div>
-        <div class="form-group" id="guide-name-field" style="display:none">
-          <label>Guide Name</label><input type="text" id="sale-guide" placeholder="Guide name">
-        </div>
-        <div class="form-group"><label>Table / Guest No.</label><input type="text" id="sale-guest" placeholder="e.g. Table 1"></div>
-        <div class="form-group">
-          <label>Payment</label>
-          <select id="sale-payment">
-            <option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option>
-          </select>
-        </div>
-      </div>
-      <div class="section-label">Order Items</div>
-      <div id="order-items"></div>
-      <button class="btn" onclick="addOrderItem()" style="margin:8px 0 1rem">+ Add Menu Item</button>
-      <div class="order-total-row">
-        <span class="total-label">Order Total</span>
-        <span class="total-value" id="order-total">฿0</span>
-      </div>
-      <div style="text-align:right;margin-top:14px">
-        <button class="btn btn-primary" onclick="submitSale()">✓ Save Order</button>
-      </div>
-    </div>
-    <div class="card">
-      <h3>📋 Today's Orders</h3>
-      <div id="today-sales-table"><div class="loading">Loading...</div></div>
-    </div>
-  </div>
-
-  <!-- EXPENSE ENTRY -->
-  <div id="expense" class="section">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
-    <div class="card">
-      <h3>💸 Add Expense</h3>
-      <div class="form-row">
-        <div class="form-group"><label>Date</label><input type="date" id="exp-date"></div>
-        <div class="form-group"><label>Category</label><select id="exp-cat"></select></div>
-        <div class="form-group"><label>Vendor / Description</label><input type="text" id="exp-vendor" placeholder="Supermarket..."></div>
-        <div class="form-group"><label>Amount (THB ฿)</label><input type="number" id="exp-amount" placeholder="0" min="0"></div>
-        <div class="form-group">
-          <label>Payment</label>
-          <select id="exp-payment">
-            <option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Note</label><input type="text" id="exp-note" placeholder="Optional"></div>
-      </div>
-      <div style="text-align:right">
-        <button class="btn btn-primary" onclick="submitExpense()">✓ Save Expense</button>
-      </div>
-    </div>
-    <div class="card">
-      <h3>📋 Recent Expenses</h3>
-      <div id="expense-table"><div class="loading">Loading...</div></div>
-    </div>
-  </div>
-
-  <!-- DAILY REPORT -->
-  <div id="daily" class="section">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
-    <div class="date-nav">
-      <button onclick="changeDay(-1)">◀ Prev</button>
-      <span id="daily-date-label"></span>
-      <button onclick="changeDay(1)">Next ▶</button>
-    </div>
-    <div class="metrics" id="daily-metrics"></div>
-    <div class="two-col">
-      <div class="card"><h3>💳 Payment Breakdown</h3><div id="daily-payment"></div></div>
-      <div class="card"><h3>🍽️ Sales by Category</h3><div id="daily-category"></div></div>
-    </div>
-    <div class="card"><h3>🧾 Orders</h3><div id="daily-orders"></div></div>
-    <div class="card"><h3>💸 Expenses</h3><div id="daily-expenses"></div></div>
-  </div>
-
-  <!-- STATISTICS -->
-  <div id="stats" class="section">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
-    <div class="card">
-      <h3>📅 Select Period</h3>
-      <div class="form-row" style="max-width:380px">
-        <div class="form-group"><label>From</label><input type="date" id="stats-from"></div>
-        <div class="form-group"><label>To</label><input type="date" id="stats-to"></div>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn" onclick="setRange('today')">Today</button>
-        <button class="btn" onclick="setRange('week')">This Week</button>
-        <button class="btn" onclick="setRange('month')">This Month</button>
-        <button class="btn btn-primary" onclick="loadStats()">Update</button>
-      </div>
-    </div>
-    <div class="metrics" id="stats-metrics"></div>
-    <div class="two-col" style="margin-top:1rem">
-      <div class="card"><h3>🏆 Top Menu Items</h3><div id="stats-menu"></div></div>
-      <div class="card"><h3>💸 Expense by Category</h3><div id="stats-exp-cat"></div></div>
-    </div>
-    <div class="two-col" style="margin-top:1rem">
-      <div class="card"><h3>👥 Customer Type</h3><div id="stats-ctype"></div></div>
-      <div class="card"><h3>💳 Payment Methods</h3><div id="stats-payment"></div></div>
-    </div>
-    <div class="card" style="margin-top:1rem"><h3>🧭 Tour Guide Summary</h3><div id="stats-guides"></div></div>
-  </div>
-
-  <!-- SETTINGS -->
-  <div id="settings" class="section">
-    <div class="print-bar"><button class="btn btn-print" onclick="printSection()">🖨️ Print</button></div>
-    <!-- Add Menu -->
-    <div class="card">
-      <h3>➕ Add Menu Item</h3>
-      <div class="settings-form">
-        <div class="form-group"><label>Menu Name</label><input type="text" id="new-menu-name" placeholder="e.g. Bulgogi Set" class="edit-input"></div>
-        <div class="form-group">
-          <label>Type</label>
-          <select id="new-menu-type" class="edit-input">
-            <option value="WALK-IN">WALK-IN</option>
-            <option value="TOUR">TOUR</option>
-            <option value="COMMON">COMMON</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Category</label>
-          <select id="new-menu-cat" class="edit-input">
-            <option value="Food">Food</option>
-            <option value="Beverage">Beverage</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Price (฿)</label><input type="number" id="new-menu-price" placeholder="0" min="0" class="edit-input"></div>
-        <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addMenuItem()" style="width:100%">+ Add</button></div>
-      </div>
-    </div>
-
-    <!-- Menu List -->
-    <div class="card">
-      <h3>📋 Menu List <span id="menu-count" style="font-size:13px;color:#888;font-weight:400;margin-left:6px"></span></h3>
-      <div class="filter-tabs">
-        <button class="active" onclick="setMenuFilter('ALL',this)">All</button>
-        <button onclick="setMenuFilter('WALK-IN',this)">WALK-IN</button>
-        <button onclick="setMenuFilter('TOUR',this)">TOUR</button>
-        <button onclick="setMenuFilter('COMMON',this)">COMMON</button>
-        <button onclick="setMenuFilter('Food',this)">🍽️ Food</button>
-        <button onclick="setMenuFilter('Beverage',this)">🥤 Beverage</button>
-      </div>
-      <div id="settings-menu-list"><div class="loading">Loading...</div></div>
-    </div>
-
-    <!-- Add Expense Category -->
-    <div class="card">
-      <h3>➕ Add Expense Category</h3>
-      <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
-        <div class="form-group"><label>Category Name</label><input type="text" id="new-exp-cat" placeholder="e.g. Laundry, Packaging..." class="edit-input"></div>
-        <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addExpCat()" style="width:100%">+ Add</button></div>
-      </div>
-    </div>
-
-    <!-- Expense Category List -->
-    <div class="card">
-      <h3>📋 Expense Category List</h3>
-      <div id="settings-exp-cat-list"><div class="loading">Loading...</div></div>
-    </div>
-
-  </div>
-
-</div><!-- /app -->
-<div class="toast" id="toast"></div>
-
-<script>
-// ── PRINT ────────────────────────────────────────────────────
-function printSection() {
-  window.print();
-}
-
-// ── GLOBALS ─────────────────────────────────────────────────
-let MENU = [], EXP_CATS = [], orderItems = [], viewDate = tod();
-let menuFilter = 'ALL', editingMenuId = null, editingCatId = null;
-
-// ── HELPERS ─────────────────────────────────────────────────
-function tod() { return new Date().toISOString().slice(0,10); }
-function fmt(n) { return '฿' + Math.round(n).toLocaleString(); }
-function fmtDate(d) {
-  return new Date(d+'T00:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-}
-function toast(msg, isErr) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = isErr ? '#A32D2D' : '#185FA5';
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-function setStatus(ok) {
-  const d = document.getElementById('status-dot');
-  d.className = 'status-dot ' + (ok ? 'online' : 'offline');
-  d.title = ok ? 'Connected' : 'Connection error';
-}
-
-// ── API ─────────────────────────────────────────────────────
-async function api(method, path, body) {
-  try {
-    const res = await fetch(path, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: body ? JSON.stringify(body) : undefined
-    });
-    setStatus(true);
-    return await res.json();
-  } catch (e) {
-    setStatus(false);
-    toast('Connection error. Please check your internet.', true);
-    return null;
-  }
-}
-
-// ── NAV ─────────────────────────────────────────────────────
-function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav button')[['sales','expense','daily','stats','settings'].indexOf(id)].classList.add('active');
-  if (id === 'daily')    loadDaily();
-  if (id === 'stats')    loadStats();
-  if (id === 'settings') { loadSettingsMenu(); loadSettingsExpCats(); }
-}
-
-// ── INIT ─────────────────────────────────────────────────────
-async function init() {
-  const t = tod();
-  document.getElementById('sale-date').value = t;
-  document.getElementById('exp-date').value  = t;
-  document.getElementById('daily-date-label').textContent = fmtDate(t);
-  const m = new Date(); m.setDate(1);
-  document.getElementById('stats-from').value = m.toISOString().slice(0,10);
-  document.getElementById('stats-to').value   = t;
-
-  // Load menu & expense categories
-  const [menuData, catData] = await Promise.all([
-    api('GET', '/api/menu'),
-    api('GET', '/api/exp_categories')
-  ]);
-  if (menuData) MENU = menuData;
-  if (catData)  EXP_CATS = catData;
-  populateExpCatSelect();
-  addOrderItem();
-  loadTodaySales();
-  loadRecentExpenses();
-}
-
-// ── EXPENSE CAT SELECT ───────────────────────────────────────
-function populateExpCatSelect() {
-  const sel = document.getElementById('exp-cat');
-  sel.innerHTML = EXP_CATS.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-}
-
-// ── SALES ENTRY ──────────────────────────────────────────────
-function onCtypeChange() {
-  const isTour = document.getElementById('sale-ctype').value === 'TOUR';
-  document.getElementById('tour-name-field').style.display = isTour ? '' : 'none';
-  document.getElementById('guide-name-field').style.display = isTour ? '' : 'none';
-  orderItems = [];
-  addOrderItem();
-}
-
-function getMenuByCat(cat) {
-  const ctype = document.getElementById('sale-ctype').value;
-  return MENU.filter(m => (m.type === ctype || m.type === 'COMMON') && m.cat === cat);
-}
-
-function addOrderItem() {
-  orderItems.push({ cat: 'Food', menuId: null });
-  renderOrderItems();
-}
-
-function removeOrderItem(i) {
-  orderItems.splice(i, 1);
-  renderOrderItems();
-}
-
-function onItemCatChange(i, cat) {
-  orderItems[i].cat = cat;
-  const list = getMenuByCat(cat);
-  orderItems[i].menuId = list.length ? list[0].id : null;
-  renderOrderItems();
-}
-
-function onItemMenuChange(i, id) {
-  orderItems[i].menuId = parseInt(id);
-  renderOrderItems();
-}
-
-function getMenuObj(item) {
-  return MENU.find(m => m.id === item.menuId) || null;
-}
-
-function renderOrderItems() {
-  const container = document.getElementById('order-items');
-  if (!orderItems.length) {
-    container.innerHTML = '<div class="empty" style="padding:1rem 0">No items. Click "+ Add Menu Item"</div>';
-    updateTotal(); return;
-  }
-  container.innerHTML = orderItems.map((item, i) => {
-    const catList = getMenuByCat(item.cat);
-    if (!item.menuId && catList.length) item.menuId = catList[0].id;
-    const menuObj  = getMenuObj(item);
-    const subtotal = menuObj ? menuObj.price * (item.qty||1) : 0;
-    return `<div class="order-item">
-      <select style="flex:1.2;min-width:90px" onchange="onItemCatChange(${i},this.value)">
-        <option value="Food"     ${item.cat==='Food'    ?'selected':''}>🍽️ Food</option>
-        <option value="Beverage" ${item.cat==='Beverage'?'selected':''}>🥤 Beverage</option>
-      </select>
-      <select style="flex:2.5" onchange="onItemMenuChange(${i},this.value)">
-        ${catList.map(m=>`<option value="${m.id}" ${m.id===item.menuId?'selected':''}>${m.name} — ฿${m.price.toLocaleString()}</option>`).join('')}
-      </select>
-      <input type="number" min="1" value="${item.qty||1}" style="width:64px;flex:none"
-             onchange="orderItems[${i}].qty=parseInt(this.value)||1;renderOrderItems()">
-      <div class="subtotal">${fmt(subtotal)}</div>
-      <button class="remove-btn" onclick="removeOrderItem(${i})">✕</button>
-    </div>`;
-  }).join('');
-  updateTotal();
-}
-
-function updateTotal() {
-  const total = orderItems.reduce((s,item) => {
-    const m = getMenuObj(item); return s + (m ? m.price*(item.qty||1) : 0);
-  }, 0);
-  document.getElementById('order-total').textContent = fmt(total);
-}
-
-async function submitSale() {
-  const valid = orderItems.filter(i => getMenuObj(i));
-  if (!valid.length) { toast('Please add at least one item', true); return; }
-  const items = valid.map(item => {
-    const m = getMenuObj(item);
-    return { name:m.name, cat:m.cat, price:m.price, qty:item.qty||1, total:m.price*(item.qty||1) };
-  });
-  const body = {
-    date:    document.getElementById('sale-date').value,
-    ctype:   document.getElementById('sale-ctype').value,
-    guest:   document.getElementById('sale-guest').value.trim() || '-',
-    tour:    document.getElementById('sale-tour').value.trim(),
-    guide:   document.getElementById('sale-guide').value.trim(),
-    payment: document.getElementById('sale-payment').value,
-    items,
-    total:   items.reduce((s,i)=>s+i.total,0)
-  };
-  const res = await api('POST', '/api/sales', body);
-  if (res?.ok) {
-    orderItems = [];
-    addOrderItem();
-    document.getElementById('sale-guest').value = '';
-    document.getElementById('sale-tour').value  = '';
-    document.getElementById('sale-guide').value = '';
-    loadTodaySales();
-    toast('✓ Order saved!');
-  }
-}
-
-async function loadTodaySales() {
-  const d = document.getElementById('sale-date').value;
-  const data = await api('GET', `/api/sales?date=${d}`);
-  const el = document.getElementById('today-sales-table');
-  if (!data || !data.length) { el.innerHTML = '<div class="empty">No orders for this date</div>'; return; }
-  const total = data.reduce((s,o)=>s+o.total,0);
-  el.innerHTML = `<div style="text-align:right;font-size:13px;color:#185FA5;font-weight:600;margin-bottom:8px">
-    Day Total: ${fmt(total)} | ${data.length} orders</div>
-    <table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Payment</th><th>Total</th><th></th></tr></thead>
-    <tbody>${data.map(s=>`<tr>
-      <td>${s.guest}</td>
-      <td><span class="badge ${s.ctype==='TOUR'?'badge-tour':'badge-walk'}">${s.ctype}</span></td>
-      <td style="font-size:12px;color:#555">${s.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td>
-      <td><span class="badge badge-${s.payment.toLowerCase()}">${s.payment}</span></td>
-      <td style="font-weight:600">${fmt(s.total)}</td>
-      <td><button class="btn btn-danger" onclick="deleteSale(${s.id})">Delete</button></td>
-    </tr>`).join('')}</tbody></table>`;
-}
-
-async function deleteSale(id) {
-  if (!confirm('Delete this order?')) return;
-  const res = await api('DELETE', `/api/sales/${id}`);
-  if (res?.ok) { loadTodaySales(); toast('Order deleted'); }
-}
-
-// ── EXPENSE ENTRY ─────────────────────────────────────────────
-async function submitExpense() {
-  const amount = parseFloat(document.getElementById('exp-amount').value);
-  if (!amount || amount <= 0) { toast('Please enter a valid amount', true); return; }
-  const body = {
-    date:    document.getElementById('exp-date').value,
-    cat:     document.getElementById('exp-cat').value,
-    vendor:  document.getElementById('exp-vendor').value.trim() || '-',
-    amount,
-    payment: document.getElementById('exp-payment').value,
-    note:    document.getElementById('exp-note').value.trim()
-  };
-  const res = await api('POST', '/api/expenses', body);
-  if (res?.ok) {
-    document.getElementById('exp-vendor').value = '';
-    document.getElementById('exp-amount').value = '';
-    document.getElementById('exp-note').value   = '';
-    loadRecentExpenses();
-    toast('✓ Expense saved!');
-  }
-}
-
-async function loadRecentExpenses() {
-  const data = await api('GET', '/api/expenses');
-  const el = document.getElementById('expense-table');
-  if (!data || !data.length) { el.innerHTML = '<div class="empty">No expenses recorded</div>'; return; }
-  el.innerHTML = `<table><thead><tr><th>Date</th><th>Category</th><th>Vendor</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
-    <tbody>${data.slice(0,30).map(e=>`<tr>
-      <td>${e.date}</td><td>${e.cat}</td>
-      <td>${e.vendor}${e.note?' · '+e.note:''}</td>
-      <td><span class="badge badge-${e.payment.toLowerCase()}">${e.payment}</span></td>
-      <td style="font-weight:600;color:#A32D2D">${fmt(e.amount)}</td>
-      <td><button class="btn btn-danger" onclick="deleteExpense(${e.id})">Delete</button></td>
-    </tr>`).join('')}</tbody></table>`;
-}
-
-async function deleteExpense(id) {
-  if (!confirm('Delete this expense?')) return;
-  const res = await api('DELETE', `/api/expenses/${id}`);
-  if (res?.ok) { loadRecentExpenses(); toast('Expense deleted'); }
-}
-
-// ── DAILY REPORT ──────────────────────────────────────────────
-function changeDay(d) {
-  const dt = new Date(viewDate+'T00:00:00');
+  const dt = new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
   dt.setDate(dt.getDate()+d);
-  viewDate = dt.toISOString().slice(0,10);
-  document.getElementById('daily-date-label').textContent = fmtDate(viewDate);
+  const y=dt.getFullYear(), mo=String(dt.getMonth()+1).padStart(2,'0'), day=String(dt.getDate()).padStart(2,'0');
+  viewDate=`${y}-${mo}-${day}`;
+  document.getElementById('daily-date-label').textContent=fmtDate(viewDate);
   loadDaily();
 }
 
 async function loadDaily() {
-  const [ds, de] = await Promise.all([
-    api('GET', `/api/sales?date=${viewDate}`),
-    api('GET', `/api/expenses?date=${viewDate}`)
-  ]);
-  if (!ds || !de) return;
-
-  const totalSales = ds.reduce((s,o)=>s+o.total,0);
-  const totalExp   = de.reduce((s,e)=>s+e.amount,0);
-  const net        = totalSales - totalExp;
-  const tourSales  = ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
-  const walkSales  = ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
-  const foodSales  = ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Food').reduce((a,i)=>a+i.total,0),0);
-  const bevSales   = ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Beverage').reduce((a,i)=>a+i.total,0),0);
-
-  document.getElementById('daily-metrics').innerHTML = `
+  const [ds,de] = await Promise.all([api('GET',`/api/sales?date=${viewDate}`),api('GET',`/api/expenses?date=${viewDate}`)]);
+  if(!ds||!de) return;
+  const totalSales=ds.reduce((s,o)=>s+o.total,0);
+  const totalExp=de.reduce((s,e)=>s+e.amount,0);
+  const net=totalSales-totalExp;
+  const tourSales=ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
+  const walkSales=ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
+  const foodSales=ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Food').reduce((a,i)=>a+i.total,0),0);
+  const bevSales=ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Beverage').reduce((a,i)=>a+i.total,0),0);
+  document.getElementById('daily-metrics').innerHTML=`
     <div class="metric"><div class="label">Total Sales</div><div class="value blue">${fmt(totalSales)}</div></div>
     <div class="metric"><div class="label">Total Expenses</div><div class="value red">${fmt(totalExp)}</div></div>
     <div class="metric"><div class="label">Net Income</div><div class="value ${net>=0?'green':'red'}">${fmt(net)}</div></div>
     <div class="metric"><div class="label">Orders</div><div class="value">${ds.length}</div></div>
     <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
     <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>`;
-
-  const pays = {};
-  ds.forEach(s=>{ pays[s.payment]=(pays[s.payment]||0)+s.total; });
-  document.getElementById('daily-payment').innerHTML = Object.keys(pays).length
-    ? Object.entries(pays).map(([k,v])=>`<div class="stat-row"><span>${k}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')
-    : '<div class="empty">No data</div>';
-
-  document.getElementById('daily-category').innerHTML = `
+  const pays={};
+  ds.forEach(s=>{pays[s.payment]=(pays[s.payment]||0)+s.total;});
+  document.getElementById('daily-payment').innerHTML=Object.keys(pays).length
+    ?Object.entries(pays).map(([k,v])=>`<div class="stat-row"><span>${k}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')
+    :'<div class="empty">No data</div>';
+  document.getElementById('daily-category').innerHTML=`
     <div class="stat-row"><span>Food</span><span style="font-weight:600">${fmt(foodSales)}</span></div>
     <div class="stat-row"><span>Beverage</span><span style="font-weight:600">${fmt(bevSales)}</span></div>`;
-
-  document.getElementById('daily-orders').innerHTML = ds.length
-    ? `<table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Payment</th><th>Total</th></tr></thead>
-       <tbody>${ds.map(s=>`<tr><td>${s.guest}</td>
-         <td><span class="badge ${s.ctype==='TOUR'?'badge-tour':'badge-walk'}">${s.ctype}</span></td>
-         <td style="font-size:12px;color:#555">${s.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td>
-         <td>${s.payment}</td><td style="font-weight:600">${fmt(s.total)}</td>
-       </tr>`).join('')}</tbody></table>`
-    : '<div class="empty">No orders</div>';
-
-  document.getElementById('daily-expenses').innerHTML = de.length
-    ? `<table><thead><tr><th>Category</th><th>Vendor</th><th>Note</th><th>Payment</th><th>Amount</th></tr></thead>
-       <tbody>${de.map(e=>`<tr><td>${e.cat}</td><td>${e.vendor}</td><td style="color:#888">${e.note||''}</td>
-         <td>${e.payment}</td><td style="color:#A32D2D;font-weight:600">${fmt(e.amount)}</td>
-       </tr>`).join('')}</tbody></table>`
-    : '<div class="empty">No expenses</div>';
+  document.getElementById('daily-orders').innerHTML=ds.length
+    ?`<table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Currency</th><th>Payment</th><th>Total</th></tr></thead>
+      <tbody>${ds.map(s=>`<tr><td>${s.guest}</td>
+        <td><span class="badge ${s.ctype==='TOUR'?'badge-tour':'badge-walk'}">${s.ctype}</span></td>
+        <td style="font-size:12px;color:#555">${s.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td>
+        <td>${s.currency||'THB'}</td><td>${s.payment}</td>
+        <td style="font-weight:600">${fmt(s.total)}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty">No orders</div>';
+  document.getElementById('daily-expenses').innerHTML=de.length
+    ?`<table><thead><tr><th>Category</th><th>Vendor</th><th>Currency</th><th>Payment</th><th>Amount</th></tr></thead>
+      <tbody>${de.map(e=>`<tr><td>${e.cat}</td><td>${e.vendor}</td>
+        <td>${e.currency||'THB'}</td><td>${e.payment}</td>
+        <td style="color:#A32D2D;font-weight:600">${fmt(e.amount)}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty">No expenses</div>';
 }
 
-// ── STATISTICS ────────────────────────────────────────────────
+// ── INVENTORY ────────────────────────────────────────────────
+async function loadInventory() {
+  const data = await api('GET','/api/inventory');
+  const el = document.getElementById('inventory-list');
+  if (!data||!data.length) { el.innerHTML='<div class="empty">No inventory items. Add one above!</div>'; return; }
+  const cats = [...new Set(data.map(i=>i.category))];
+  el.innerHTML = cats.map(cat => {
+    const items = data.filter(i=>i.category===cat);
+    return `<div style="margin-bottom:1.5rem">
+      <div style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">${cat}</div>
+      <table><thead><tr><th>Item</th><th>Unit</th><th>Current Stock</th><th>Min Alert</th><th>Status</th><th></th></tr></thead>
+      <tbody>${items.map(item=>{
+        const isLow = item.current_stock <= item.min_stock;
+        return `<tr>
+          <td style="font-weight:500">${item.name}</td>
+          <td>${item.unit}</td>
+          <td class="${isLow?'stock-low':'stock-ok'}">${item.current_stock}</td>
+          <td style="color:#888">${item.min_stock}</td>
+          <td>${isLow?'⚠️ Low Stock':'✅ OK'}</td>
+          <td style="display:flex;gap:4px">
+            <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="openStockModal(${item.id},'${item.name}')">📦 Update</button>
+            <button class="btn btn-danger" onclick="deleteInvItem(${item.id})">Del</button>
+          </td>
+        </tr>`;
+      }).join('')}</tbody></table>
+    </div>`;
+  }).join('');
+}
+
+async function addInvItem() {
+  const name = document.getElementById('inv-name').value.trim();
+  const cat  = document.getElementById('inv-cat').value;
+  const unit = document.getElementById('inv-unit').value;
+  const min  = parseFloat(document.getElementById('inv-min').value)||0;
+  if (!name) { toast('Please enter item name',true); return; }
+  const res = await api('POST','/api/inventory',{name,category:cat,unit,current_stock:0,min_stock:min});
+  if (res?.ok) { document.getElementById('inv-name').value=''; document.getElementById('inv-min').value='0'; loadInventory(); toast('✓ Item added!'); }
+}
+
+async function deleteInvItem(id) {
+  if (!confirm('Delete this inventory item?')) return;
+  const res = await api('DELETE',`/api/inventory/${id}`);
+  if (res?.ok) { loadInventory(); toast('Item deleted'); }
+}
+
+function openStockModal(id, name) {
+  stockItemId = id;
+  document.getElementById('stock-modal-title').textContent = `📦 Update Stock — ${name}`;
+  document.getElementById('stock-qty').value = '1';
+  document.getElementById('stock-note').value = '';
+  document.getElementById('stock-modal').classList.add('show');
+}
+
+function closeStockModal() { document.getElementById('stock-modal').classList.remove('show'); stockItemId=null; }
+
+async function saveStock() {
+  const action = document.getElementById('stock-action').value;
+  const qty    = parseFloat(document.getElementById('stock-qty').value)||0;
+  const note   = document.getElementById('stock-note').value.trim();
+  if (qty<=0) { toast('Please enter a valid quantity',true); return; }
+  const res = await api('POST',`/api/inventory/${stockItemId}/stock`,{action,quantity:qty,note});
+  if (res?.ok) { closeStockModal(); loadInventory(); toast('✓ Stock updated!'); }
+}
+
+// ── STATISTICS ───────────────────────────────────────────────
 function setRange(type) {
-  const t = tod();
-  let from = t;
-  if (type==='week') {
-    const d = new Date(t+'T00:00:00'); d.setDate(d.getDate()-d.getDay()+1);
-    from = d.toISOString().slice(0,10);
-  } else if (type==='month') {
-    from = t.slice(0,7)+'-01';
-  }
-  document.getElementById('stats-from').value = from;
-  document.getElementById('stats-to').value   = t;
+  const t=tod(); let from=t;
+  if(type==='week'){const d=new Date(t+'T00:00:00');d.setDate(d.getDate()-d.getDay()+1);from=d.toISOString().slice(0,10);}
+  else if(type==='month'){from=t.slice(0,7)+'-01';}
+  document.getElementById('stats-from').value=from;
+  document.getElementById('stats-to').value=t;
   loadStats();
 }
 
 async function loadStats() {
-  const from = document.getElementById('stats-from').value;
-  const to   = document.getElementById('stats-to').value;
-  const [ds, de] = await Promise.all([
-    api('GET', `/api/sales?from=${from}&to=${to}`),
-    api('GET', `/api/expenses?from=${from}&to=${to}`)
-  ]);
-  if (!ds || !de) return;
-
-  const totalSales = ds.reduce((s,o)=>s+o.total,0);
-  const totalExp   = de.reduce((s,o)=>s+o.amount,0);
-  const net        = totalSales - totalExp;
-  const tourSales  = ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
-  const walkSales  = ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
-  const avgOrder   = ds.length ? totalSales/ds.length : 0;
-
-  document.getElementById('stats-metrics').innerHTML = `
+  const from=document.getElementById('stats-from').value;
+  const to=document.getElementById('stats-to').value;
+  const [ds,de]=await Promise.all([api('GET',`/api/sales?from=${from}&to=${to}`),api('GET',`/api/expenses?from=${from}&to=${to}`)]);
+  if(!ds||!de) return;
+  const totalSales=ds.reduce((s,o)=>s+o.total,0);
+  const totalExp=de.reduce((s,o)=>s+o.amount,0);
+  const net=totalSales-totalExp;
+  const tourSales=ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
+  const walkSales=ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
+  const avgOrder=ds.length?totalSales/ds.length:0;
+  document.getElementById('stats-metrics').innerHTML=`
     <div class="metric"><div class="label">Total Sales</div><div class="value blue">${fmt(totalSales)}</div></div>
     <div class="metric"><div class="label">Total Expenses</div><div class="value red">${fmt(totalExp)}</div></div>
     <div class="metric"><div class="label">Net Income</div><div class="value ${net>=0?'green':'red'}">${fmt(net)}</div></div>
@@ -1827,94 +943,80 @@ async function loadStats() {
     <div class="metric"><div class="label">Avg Order</div><div class="value">${fmt(avgOrder)}</div></div>
     <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
     <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>`;
-
-  const menuMap = {};
-  ds.forEach(s=>s.items.forEach(i=>{ if(!menuMap[i.name]) menuMap[i.name]={qty:0,total:0}; menuMap[i.name].qty+=i.qty; menuMap[i.name].total+=i.total; }));
-  const topMenu = Object.entries(menuMap).sort((a,b)=>b[1].total-a[1].total).slice(0,8);
-  const maxM = topMenu[0]?.[1]?.total||1;
-  document.getElementById('stats-menu').innerHTML = topMenu.length
-    ? topMenu.map(([n,v])=>`<div class="bar-wrap"><div class="bar-label"><span>${n}</span><span style="color:#888">${fmt(v.total)} · ${v.qty}pcs</span></div><div class="bar" style="width:${Math.round(v.total/maxM*100)}%"></div></div>`).join('')
-    : '<div class="empty">No data</div>';
-
-  const expCat = {};
-  de.forEach(e=>{ expCat[e.cat]=(expCat[e.cat]||0)+e.amount; });
-  const topExp = Object.entries(expCat).sort((a,b)=>b[1]-a[1]);
-  const maxE = topExp[0]?.[1]||1;
-  document.getElementById('stats-exp-cat').innerHTML = topExp.length
-    ? topExp.map(([c,v])=>`<div class="bar-wrap"><div class="bar-label"><span>${c}</span><span style="color:#A32D2D">${fmt(v)}</span></div><div class="bar red" style="width:${Math.round(v/maxE*100)}%"></div></div>`).join('')
-    : '<div class="empty">No data</div>';
-
-  const tourPct = totalSales ? Math.round(tourSales/totalSales*100) : 0;
-  document.getElementById('stats-ctype').innerHTML = `
+  const menuMap={};
+  ds.forEach(s=>s.items.forEach(i=>{if(!menuMap[i.name])menuMap[i.name]={qty:0,total:0};menuMap[i.name].qty+=i.qty;menuMap[i.name].total+=i.total;}));
+  const topMenu=Object.entries(menuMap).sort((a,b)=>b[1].total-a[1].total).slice(0,8);
+  const maxM=topMenu[0]?.[1]?.total||1;
+  document.getElementById('stats-menu').innerHTML=topMenu.length
+    ?topMenu.map(([n,v])=>`<div class="bar-wrap"><div class="bar-label"><span>${n}</span><span style="color:#888">${fmt(v.total)} · ${v.qty}pcs</span></div><div class="bar" style="width:${Math.round(v.total/maxM*100)}%"></div></div>`).join('')
+    :'<div class="empty">No data</div>';
+  const expCat={};
+  de.forEach(e=>{expCat[e.cat]=(expCat[e.cat]||0)+e.amount;});
+  const topExp=Object.entries(expCat).sort((a,b)=>b[1]-a[1]);
+  const maxE=topExp[0]?.[1]||1;
+  document.getElementById('stats-exp-cat').innerHTML=topExp.length
+    ?topExp.map(([c,v])=>`<div class="bar-wrap"><div class="bar-label"><span>${c}</span><span style="color:#A32D2D">${fmt(v)}</span></div><div class="bar red" style="width:${Math.round(v/maxE*100)}%"></div></div>`).join('')
+    :'<div class="empty">No data</div>';
+  const tourPct=totalSales?Math.round(tourSales/totalSales*100):0;
+  document.getElementById('stats-ctype').innerHTML=`
     <div class="stat-row"><span>TOUR</span><span style="font-weight:600">${fmt(tourSales)} (${tourPct}%)</span></div>
     <div class="stat-row"><span>WALK-IN</span><span style="font-weight:600">${fmt(walkSales)} (${100-tourPct}%)</span></div>
     <div style="margin-top:10px"><div style="height:10px;border-radius:6px;background:#e8e8e8;overflow:hidden">
       <div style="height:100%;width:${tourPct}%;background:#185FA5;border-radius:6px"></div></div>
     <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-top:4px"><span>Tour ${tourPct}%</span><span>Walk-in ${100-tourPct}%</span></div></div>`;
-
-  const payMap = {};
-  ds.forEach(s=>{ payMap[s.payment]=(payMap[s.payment]||0)+s.total; });
-  document.getElementById('stats-payment').innerHTML = Object.keys(payMap).length
-    ? Object.entries(payMap).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="stat-row"><span>${k}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')
-    : '<div class="empty">No data</div>';
-
-  const guides = {};
-  ds.filter(s=>s.ctype==='TOUR'&&s.guide).forEach(s=>{
-    if(!guides[s.guide]) guides[s.guide]={tour:s.tour||'',sales:0,orders:0};
-    guides[s.guide].sales+=s.total; guides[s.guide].orders++;
-  });
-  document.getElementById('stats-guides').innerHTML = Object.keys(guides).length
-    ? `<table><thead><tr><th>Guide</th><th>Tour Team</th><th>Orders</th><th>Total Sales</th></tr></thead>
-       <tbody>${Object.entries(guides).map(([g,v])=>`<tr><td>${g}</td><td>${v.tour||'-'}</td><td>${v.orders}</td><td style="font-weight:600;color:#185FA5">${fmt(v.sales)}</td></tr>`).join('')}</tbody></table>`
-    : '<div class="empty">No tour data in this period</div>';
+  const payMap={};
+  ds.forEach(s=>{payMap[s.payment]=(payMap[s.payment]||0)+s.total;});
+  document.getElementById('stats-payment').innerHTML=Object.keys(payMap).length
+    ?Object.entries(payMap).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="stat-row"><span>${k}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')
+    :'<div class="empty">No data</div>';
+  const guides={};
+  ds.filter(s=>s.ctype==='TOUR'&&s.guide).forEach(s=>{if(!guides[s.guide])guides[s.guide]={tour:s.tour||'',sales:0,orders:0};guides[s.guide].sales+=s.total;guides[s.guide].orders++;});
+  document.getElementById('stats-guides').innerHTML=Object.keys(guides).length
+    ?`<table><thead><tr><th>Guide</th><th>Tour Team</th><th>Orders</th><th>Total Sales</th></tr></thead>
+      <tbody>${Object.entries(guides).map(([g,v])=>`<tr><td>${g}</td><td>${v.tour||'-'}</td><td>${v.orders}</td><td style="font-weight:600;color:#185FA5">${fmt(v.sales)}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty">No tour data in this period</div>';
 }
 
-// ── SETTINGS — MENU ───────────────────────────────────────────
-function setMenuFilter(f, btn) {
-  menuFilter = f;
+// ── SETTINGS — MENU ──────────────────────────────────────────
+function setMenuFilter(f,btn) {
+  menuFilter=f;
   document.querySelectorAll('.filter-tabs button').forEach(b=>b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
+  if(btn) btn.classList.add('active');
   renderSettingsMenu();
 }
 
 async function loadSettingsMenu() {
-  const data = await api('GET', '/api/menu');
-  if (data) MENU = data;
-  editingMenuId = null;
-  renderSettingsMenu();
+  const data=await api('GET','/api/menu'); if(data) MENU=data; editingMenuId=null; renderSettingsMenu();
 }
 
 function renderSettingsMenu() {
-  const filtered = MENU.filter(m => {
-    if (menuFilter==='ALL') return true;
-    if (menuFilter==='Food'||menuFilter==='Beverage') return m.cat===menuFilter;
+  const filtered=MENU.filter(m=>{
+    if(menuFilter==='ALL') return true;
+    if(menuFilter==='Food'||menuFilter==='Beverage') return m.cat===menuFilter;
     return m.type===menuFilter;
   });
-  document.getElementById('menu-count').textContent = `(${filtered.length} items)`;
-  const el = document.getElementById('settings-menu-list');
-  if (!filtered.length) { el.innerHTML = '<div class="empty">No items found</div>'; return; }
-  el.innerHTML = `
-    <div class="menu-row-header"><span>Name</span><span>Type</span><span>Category</span><span>Price</span><span>Action</span></div>
-    ${filtered.map(m => {
-      if (editingMenuId === m.id) return `
-        <div class="menu-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
-          <input class="edit-input" id="em-name-${m.id}"  value="${m.name}">
-          <select class="edit-input" id="em-type-${m.id}">
-            <option value="WALK-IN" ${m.type==='WALK-IN'?'selected':''}>WALK-IN</option>
-            <option value="TOUR"    ${m.type==='TOUR'   ?'selected':''}>TOUR</option>
-            <option value="COMMON"  ${m.type==='COMMON' ?'selected':''}>COMMON</option>
-          </select>
-          <select class="edit-input" id="em-cat-${m.id}">
-            <option value="Food"     ${m.cat==='Food'    ?'selected':''}>Food</option>
-            <option value="Beverage" ${m.cat==='Beverage'?'selected':''}>Beverage</option>
-          </select>
-          <input class="edit-input" id="em-price-${m.id}" type="number" value="${m.price}">
-          <div style="display:flex;gap:6px">
-            <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="saveMenuItem(${m.id})">✓</button>
-            <button class="btn" style="padding:5px 10px;font-size:12px" onclick="editingMenuId=null;renderSettingsMenu()">✕</button>
-          </div>
-        </div>`;
-      const tb = m.type==='WALK-IN'?'badge-walk':m.type==='TOUR'?'badge-tour':'badge-common';
+  document.getElementById('menu-count').textContent=`(${filtered.length} items)`;
+  const el=document.getElementById('settings-menu-list');
+  if(!filtered.length){el.innerHTML='<div class="empty">No items found</div>';return;}
+  el.innerHTML=`<div class="menu-row-header"><span>Name</span><span>Type</span><span>Category</span><span>Price</span><span>Action</span></div>
+    ${filtered.map(m=>{
+      if(editingMenuId===m.id) return `<div class="menu-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
+        <input class="edit-input" id="em-name-${m.id}" value="${m.name}">
+        <select class="edit-input" id="em-type-${m.id}">
+          <option value="WALK-IN" ${m.type==='WALK-IN'?'selected':''}>WALK-IN</option>
+          <option value="TOUR" ${m.type==='TOUR'?'selected':''}>TOUR</option>
+          <option value="COMMON" ${m.type==='COMMON'?'selected':''}>COMMON</option>
+        </select>
+        <select class="edit-input" id="em-cat-${m.id}">
+          <option value="Food" ${m.cat==='Food'?'selected':''}>Food</option>
+          <option value="Beverage" ${m.cat==='Beverage'?'selected':''}>Beverage</option>
+        </select>
+        <input class="edit-input" id="em-price-${m.id}" type="number" value="${m.price}">
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="saveMenuItem(${m.id})">✓</button>
+          <button class="btn" style="padding:5px 10px;font-size:12px" onclick="editingMenuId=null;renderSettingsMenu()">✕</button>
+        </div></div>`;
+      const tb=m.type==='WALK-IN'?'badge-walk':m.type==='TOUR'?'badge-tour':'badge-cash';
       return `<div class="menu-row">
         <span>${m.name}</span>
         <span><span class="badge ${tb}">${m.type}</span></span>
@@ -1922,121 +1024,88 @@ function renderSettingsMenu() {
         <span style="font-weight:600">฿${m.price.toLocaleString()}</span>
         <div style="display:flex;gap:6px">
           <button class="btn btn-edit" onclick="editingMenuId=${m.id};renderSettingsMenu()">✏️ Edit</button>
-          <button class="btn btn-danger" onclick="deleteMenuItem(${m.id})">Delete</button>
-        </div>
-      </div>`;
+          <button class="btn btn-danger" onclick="deleteMenuItem(${m.id})">Del</button>
+        </div></div>`;
     }).join('')}`;
 }
 
 async function addMenuItem() {
-  const name  = document.getElementById('new-menu-name').value.trim();
-  const type  = document.getElementById('new-menu-type').value;
-  const cat   = document.getElementById('new-menu-cat').value;
-  const price = parseFloat(document.getElementById('new-menu-price').value);
-  if (!name)  { toast('Please enter a menu name', true); return; }
-  if (!price||price<=0) { toast('Please enter a valid price', true); return; }
-  const res = await api('POST', '/api/menu', {name, type, cat, price});
-  if (res?.ok) {
-    document.getElementById('new-menu-name').value  = '';
-    document.getElementById('new-menu-price').value = '';
-    await loadSettingsMenu();
-    MENU = await api('GET','/api/menu') || MENU;
-    toast('✓ Menu item added!');
-  }
+  const name=document.getElementById('new-menu-name').value.trim();
+  const type=document.getElementById('new-menu-type').value;
+  const cat=document.getElementById('new-menu-cat').value;
+  const price=parseFloat(document.getElementById('new-menu-price').value);
+  if(!name){toast('Please enter a menu name',true);return;}
+  if(!price||price<=0){toast('Please enter a valid price',true);return;}
+  const res=await api('POST','/api/menu',{name,type,cat,price});
+  if(res?.ok){document.getElementById('new-menu-name').value='';document.getElementById('new-menu-price').value='';await loadSettingsMenu();MENU=await api('GET','/api/menu')||MENU;toast('✓ Menu item added!');}
 }
 
 async function saveMenuItem(id) {
-  const name  = document.getElementById(`em-name-${id}`).value.trim();
-  const type  = document.getElementById(`em-type-${id}`).value;
-  const cat   = document.getElementById(`em-cat-${id}`).value;
-  const price = parseFloat(document.getElementById(`em-price-${id}`).value);
-  if (!name)  { toast('Name cannot be empty', true); return; }
-  if (!price||price<0) { toast('Invalid price', true); return; }
-  const res = await api('PUT', `/api/menu/${id}`, {name, type, cat, price});
-  if (res?.ok) {
-    editingMenuId = null;
-    await loadSettingsMenu();
-    MENU = await api('GET','/api/menu') || MENU;
-    toast('✓ Menu updated!');
-  }
+  const name=document.getElementById(`em-name-${id}`).value.trim();
+  const type=document.getElementById(`em-type-${id}`).value;
+  const cat=document.getElementById(`em-cat-${id}`).value;
+  const price=parseFloat(document.getElementById(`em-price-${id}`).value);
+  if(!name){toast('Name cannot be empty',true);return;}
+  if(!price||price<0){toast('Invalid price',true);return;}
+  const res=await api('PUT',`/api/menu/${id}`,{name,type,cat,price});
+  if(res?.ok){editingMenuId=null;await loadSettingsMenu();MENU=await api('GET','/api/menu')||MENU;toast('✓ Menu updated!');}
 }
 
 async function deleteMenuItem(id) {
-  const item = MENU.find(m=>m.id===id);
-  if (!confirm(`Delete "${item?.name}"?`)) return;
-  const res = await api('DELETE', `/api/menu/${id}`);
-  if (res?.ok) {
-    await loadSettingsMenu();
-    MENU = await api('GET','/api/menu') || MENU;
-    toast('Menu item deleted');
-  }
+  const item=MENU.find(m=>m.id===id);
+  if(!confirm(`Delete "${item?.name}"?`)) return;
+  const res=await api('DELETE',`/api/menu/${id}`);
+  if(res?.ok){await loadSettingsMenu();MENU=await api('GET','/api/menu')||MENU;toast('Menu item deleted');}
 }
 
-// ── SETTINGS — EXPENSE CATEGORIES ────────────────────────────
+// ── SETTINGS — EXPENSE CATS ──────────────────────────────────
 async function loadSettingsExpCats() {
-  const data = await api('GET', '/api/exp_categories');
-  if (data) { EXP_CATS = data; populateExpCatSelect(); }
-  editingCatId = null;
-  renderSettingsExpCats();
+  const data=await api('GET','/api/exp_categories');
+  if(data){EXP_CATS=data;populateExpCatSelect();}
+  editingCatId=null; renderSettingsExpCats();
 }
 
 function renderSettingsExpCats() {
-  const el = document.getElementById('settings-exp-cat-list');
-  if (!EXP_CATS.length) { el.innerHTML = '<div class="empty">No categories</div>'; return; }
-  el.innerHTML = EXP_CATS.map(c => {
-    if (editingCatId === c.id) return `
-      <div class="cat-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
-        <input class="edit-input" id="ec-name-${c.id}" value="${c.name}">
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="saveExpCat(${c.id})">✓</button>
-          <button class="btn" style="padding:5px 10px;font-size:12px" onclick="editingCatId=null;renderSettingsExpCats()">✕</button>
-        </div>
-      </div>`;
-    return `<div class="cat-row">
-      <span>${c.name}</span>
+  const el=document.getElementById('settings-exp-cat-list');
+  if(!EXP_CATS.length){el.innerHTML='<div class="empty">No categories</div>';return;}
+  el.innerHTML=EXP_CATS.map(c=>{
+    if(editingCatId===c.id) return `<div class="cat-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
+      <input class="edit-input" id="ec-name-${c.id}" value="${c.name}">
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="saveExpCat(${c.id})">✓</button>
+        <button class="btn" style="padding:5px 10px;font-size:12px" onclick="editingCatId=null;renderSettingsExpCats()">✕</button>
+      </div></div>`;
+    return `<div class="cat-row"><span>${c.name}</span>
       <div style="display:flex;gap:6px">
         <button class="btn btn-edit" onclick="editingCatId=${c.id};renderSettingsExpCats()">✏️ Edit</button>
-        <button class="btn btn-danger" onclick="deleteExpCat(${c.id})">Delete</button>
-      </div>
-    </div>`;
+        <button class="btn btn-danger" onclick="deleteExpCat(${c.id})">Del</button>
+      </div></div>`;
   }).join('');
 }
 
 async function addExpCat() {
-  const name = document.getElementById('new-exp-cat').value.trim();
-  if (!name) { toast('Please enter a category name', true); return; }
-  const res = await api('POST', '/api/exp_categories', {name});
-  if (res?.ok) {
-    document.getElementById('new-exp-cat').value = '';
-    await loadSettingsExpCats();
-    toast('✓ Category added!');
-  } else if (res) {
-    toast('This category already exists', true);
-  }
+  const name=document.getElementById('new-exp-cat').value.trim();
+  if(!name){toast('Please enter a category name',true);return;}
+  const res=await api('POST','/api/exp_categories',{name});
+  if(res?.ok){document.getElementById('new-exp-cat').value='';await loadSettingsExpCats();toast('✓ Category added!');}
+  else if(res) toast('This category already exists',true);
 }
 
 async function saveExpCat(id) {
-  const name = document.getElementById(`ec-name-${id}`).value.trim();
-  if (!name) { toast('Name cannot be empty', true); return; }
-  const res = await api('PUT', `/api/exp_categories/${id}`, {name});
-  if (res?.ok) {
-    editingCatId = null;
-    await loadSettingsExpCats();
-    toast('✓ Category updated!');
-  }
+  const name=document.getElementById(`ec-name-${id}`).value.trim();
+  if(!name){toast('Name cannot be empty',true);return;}
+  const res=await api('PUT',`/api/exp_categories/${id}`,{name});
+  if(res?.ok){editingCatId=null;await loadSettingsExpCats();toast('✓ Category updated!');}
 }
 
 async function deleteExpCat(id) {
-  const cat = EXP_CATS.find(c=>c.id===id);
-  if (!confirm(`Delete "${cat?.name}"?`)) return;
-  const res = await api('DELETE', `/api/exp_categories/${id}`);
-  if (res?.ok) {
-    await loadSettingsExpCats();
-    toast('Category deleted');
-  }
+  const cat=EXP_CATS.find(c=>c.id===id);
+  if(!confirm(`Delete "${cat?.name}"?`)) return;
+  const res=await api('DELETE',`/api/exp_categories/${id}`);
+  if(res?.ok){await loadSettingsExpCats();toast('Category deleted');}
 }
 
-// ── START ─────────────────────────────────────────────────────
+// ── START ────────────────────────────────────────────────────
 init();
 </script>
 </body>
