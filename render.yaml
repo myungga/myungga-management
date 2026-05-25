@@ -3,9 +3,7 @@ services:
     name: myungga-management
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    startCommand: gunicorn app:app --workers 2 --timeout 120
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0
-      - key: RENDER_DISK_PATH
-        value: /opt/render/project/src
+        value: 3.11.9
