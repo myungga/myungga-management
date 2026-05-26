@@ -72,6 +72,7 @@ tr:hover td { background: #fafafa; }
 .bar-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
 .bar { height: 7px; border-radius: 4px; background: #B5D4F4; }
 .bar.red { background: #F09595; }
+.bar.green { background: #7ECDB0; }
 .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
 .stat-row:last-child { border-bottom: none; }
 .empty { text-align: center; padding: 2rem; color: #aaa; font-size: 13px; }
@@ -81,7 +82,8 @@ tr:hover td { background: #fafafa; }
 .order-total-row .total-label { font-size: 15px; font-weight: 600; }
 .order-total-row .total-value { font-size: 20px; font-weight: 700; color: #185FA5; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+@media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } .three-col { grid-template-columns: 1fr; } }
 .filter-tabs { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
 .filter-tabs button { padding: 6px 14px; border: 1px solid #ddd; border-radius: 99px; font-size: 13px; cursor: pointer; background: #fff; color: #666; font-weight: 500; transition: all 0.15s; }
 .filter-tabs button.active { background: #185FA5; color: #fff; border-color: #185FA5; }
@@ -96,9 +98,19 @@ tr:hover td { background: #fafafa; }
 .edit-input { width: 100%; padding: 6px 8px; font-size: 13px; border: 1px solid #ddd; border-radius: 6px; background: #fff; color: #1a1a1a; }
 .edit-input:focus { outline: none; border-color: #185FA5; }
 .highlight-row td { background: #fffbe6 !important; }
-/* Stock badges */
 .stock-ok   { color: #0F6E56; font-weight: 600; }
 .stock-low  { color: #A32D2D; font-weight: 600; }
+/* 결제수단별 건수 표시용 */
+.pay-stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; background: #f8f8f6; margin-bottom: 6px; font-size: 13px; }
+.pay-stat-row .pay-name { font-weight: 500; flex: 1; }
+.pay-stat-row .pay-count { color: #888; font-size: 12px; margin: 0 12px; }
+.pay-stat-row .pay-amount { font-weight: 700; color: #185FA5; }
+.pay-stat-row.exp-row .pay-amount { color: #A32D2D; }
+/* 지출 항목별 통계 */
+.exp-cat-stat { padding: 10px 12px; border-radius: 8px; background: #fff8f8; border: 1px solid #f5dede; margin-bottom: 8px; }
+.exp-cat-stat .cat-name { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+.exp-cat-stat .cat-detail { display: flex; justify-content: space-between; font-size: 12px; color: #888; }
+.exp-cat-stat .cat-amount { font-size: 15px; font-weight: 700; color: #A32D2D; margin-top: 2px; }
 /* Modal */
 .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:100; align-items:center; justify-content:center; }
 .modal-overlay.show { display:flex; }
@@ -239,10 +251,29 @@ tr:hover td { background: #fafafa; }
       <button onclick="changeDay(1)">Next ▶</button>
     </div>
     <div class="metrics" id="daily-metrics"></div>
+
+    <!-- 1) 결제수단별 건수 + 금액 (매출) -->
     <div class="two-col">
-      <div class="card"><h3>💳 Payment Breakdown</h3><div id="daily-payment"></div></div>
+      <div class="card">
+        <h3>💳 Payment Breakdown <span style="font-size:12px;color:#888;font-weight:400">(건수 · 금액)</span></h3>
+        <div id="daily-payment"></div>
+      </div>
       <div class="card"><h3>🍽️ Sales by Category</h3><div id="daily-category"></div></div>
     </div>
+
+    <!-- 2) 지출 결제수단별 건수 + 합계 -->
+    <div class="two-col">
+      <div class="card">
+        <h3>💸 Expense by Payment <span style="font-size:12px;color:#888;font-weight:400">(건수 · 합계)</span></h3>
+        <div id="daily-exp-payment"></div>
+      </div>
+      <!-- 3) 지출 항목별 통계 -->
+      <div class="card">
+        <h3>📂 Expense by Category</h3>
+        <div id="daily-exp-category"></div>
+      </div>
+    </div>
+
     <div class="card"><h3>🧾 Orders</h3><div id="daily-orders"></div></div>
     <div class="card"><h3>💸 Expenses</h3><div id="daily-expenses"></div></div>
   </div>
@@ -812,6 +843,7 @@ function changeDay(d) {
 async function loadDaily() {
   const [ds,de] = await Promise.all([api('GET',`/api/sales?date=${viewDate}`),api('GET',`/api/expenses?date=${viewDate}`)]);
   if(!ds||!de) return;
+
   const totalSales=ds.reduce((s,o)=>s+o.total,0);
   const totalExp=de.reduce((s,e)=>s+e.amount,0);
   const net=totalSales-totalExp;
@@ -819,6 +851,7 @@ async function loadDaily() {
   const walkSales=ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
   const foodSales=ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Food').reduce((a,i)=>a+i.total,0),0);
   const bevSales=ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Beverage').reduce((a,i)=>a+i.total,0),0);
+
   document.getElementById('daily-metrics').innerHTML=`
     <div class="metric"><div class="label">Total Sales</div><div class="value blue">${fmt(totalSales)}</div></div>
     <div class="metric"><div class="label">Total Expenses</div><div class="value red">${fmt(totalExp)}</div></div>
@@ -826,14 +859,93 @@ async function loadDaily() {
     <div class="metric"><div class="label">Orders</div><div class="value">${ds.length}</div></div>
     <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
     <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>`;
-  const pays={};
-  ds.forEach(s=>{pays[s.payment]=(pays[s.payment]||0)+s.total;});
-  document.getElementById('daily-payment').innerHTML=Object.keys(pays).length
-    ?Object.entries(pays).map(([k,v])=>`<div class="stat-row"><span>${k}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')
-    :'<div class="empty">No data</div>';
+
+  // ─── 1) 매출 결제수단별 건수 + 금액 ───────────────────────
+  const payMap = {};
+  ds.forEach(s => {
+    if (!payMap[s.payment]) payMap[s.payment] = { count: 0, total: 0 };
+    payMap[s.payment].count++;
+    payMap[s.payment].total += s.total;
+  });
+  const payEl = document.getElementById('daily-payment');
+  if (Object.keys(payMap).length) {
+    payEl.innerHTML = Object.entries(payMap)
+      .sort((a,b) => b[1].total - a[1].total)
+      .map(([k,v]) => `
+        <div class="pay-stat-row">
+          <span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
+          <span class="pay-count">${v.count}건</span>
+          <span class="pay-amount">${fmt(v.total)}</span>
+        </div>`).join('') +
+      `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#185FA5">
+        <span>합계</span><span>${ds.length}건 · ${fmt(totalSales)}</span>
+      </div>`;
+  } else {
+    payEl.innerHTML = '<div class="empty">No data</div>';
+  }
+
+  // 카테고리별 매출
   document.getElementById('daily-category').innerHTML=`
-    <div class="stat-row"><span>Food</span><span style="font-weight:600">${fmt(foodSales)}</span></div>
-    <div class="stat-row"><span>Beverage</span><span style="font-weight:600">${fmt(bevSales)}</span></div>`;
+    <div class="stat-row"><span>🍽️ Food</span><span style="font-weight:600">${fmt(foodSales)}</span></div>
+    <div class="stat-row"><span>🥤 Beverage</span><span style="font-weight:600">${fmt(bevSales)}</span></div>
+    <div style="border-top:1px solid #eee;margin-top:4px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#185FA5">
+      <span>합계</span><span>${fmt(foodSales+bevSales)}</span>
+    </div>`;
+
+  // ─── 2) 지출 결제수단별 건수 + 합계 ──────────────────────
+  const expPayMap = {};
+  de.forEach(e => {
+    if (!expPayMap[e.payment]) expPayMap[e.payment] = { count: 0, total: 0 };
+    expPayMap[e.payment].count++;
+    expPayMap[e.payment].total += e.amount;
+  });
+  const expPayEl = document.getElementById('daily-exp-payment');
+  if (Object.keys(expPayMap).length) {
+    expPayEl.innerHTML = Object.entries(expPayMap)
+      .sort((a,b) => b[1].total - a[1].total)
+      .map(([k,v]) => `
+        <div class="pay-stat-row exp-row">
+          <span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
+          <span class="pay-count">${v.count}건</span>
+          <span class="pay-amount">${fmt(v.total)}</span>
+        </div>`).join('') +
+      `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#A32D2D">
+        <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span>
+      </div>`;
+  } else {
+    expPayEl.innerHTML = '<div class="empty">No expense data</div>';
+  }
+
+  // ─── 3) 지출 항목(카테고리)별 통계 ───────────────────────
+  const expCatMap = {};
+  de.forEach(e => {
+    if (!expCatMap[e.cat]) expCatMap[e.cat] = { count: 0, total: 0 };
+    expCatMap[e.cat].count++;
+    expCatMap[e.cat].total += e.amount;
+  });
+  const expCatEl = document.getElementById('daily-exp-category');
+  if (Object.keys(expCatMap).length) {
+    const maxVal = Math.max(...Object.values(expCatMap).map(v=>v.total));
+    expCatEl.innerHTML = Object.entries(expCatMap)
+      .sort((a,b) => b[1].total - a[1].total)
+      .map(([cat, v]) => {
+        const pct = Math.round(v.total / maxVal * 100);
+        return `<div class="bar-wrap">
+          <div class="bar-label">
+            <span style="font-weight:500">${cat}</span>
+            <span style="color:#A32D2D;font-weight:600">${fmt(v.total)} <span style="color:#aaa;font-weight:400;font-size:11px">${v.count}건</span></span>
+          </div>
+          <div class="bar red" style="width:${pct}%"></div>
+        </div>`;
+      }).join('') +
+      `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#A32D2D">
+        <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span>
+      </div>`;
+  } else {
+    expCatEl.innerHTML = '<div class="empty">No expense data</div>';
+  }
+
+  // 주문 목록
   document.getElementById('daily-orders').innerHTML=ds.length
     ?`<table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Currency</th><th>Payment</th><th>Total</th></tr></thead>
       <tbody>${ds.map(s=>`<tr><td>${s.guest}</td>
@@ -842,6 +954,8 @@ async function loadDaily() {
         <td>${s.currency||'THB'}</td><td>${s.payment}</td>
         <td style="font-weight:600">${fmt(s.total)}</td></tr>`).join('')}</tbody></table>`
     :'<div class="empty">No orders</div>';
+
+  // 지출 목록
   document.getElementById('daily-expenses').innerHTML=de.length
     ?`<table><thead><tr><th>Category</th><th>Vendor</th><th>Currency</th><th>Payment</th><th>Amount</th></tr></thead>
       <tbody>${de.map(e=>`<tr><td>${e.cat}</td><td>${e.vendor}</td>
