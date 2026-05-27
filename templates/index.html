@@ -72,7 +72,6 @@ tr:hover td { background: #fafafa; }
 .bar-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
 .bar { height: 7px; border-radius: 4px; background: #B5D4F4; }
 .bar.red { background: #F09595; }
-.bar.green { background: #7ECDB0; }
 .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
 .stat-row:last-child { border-bottom: none; }
 .empty { text-align: center; padding: 2rem; color: #aaa; font-size: 13px; }
@@ -97,15 +96,15 @@ tr:hover td { background: #fafafa; }
 .edit-input { width: 100%; padding: 6px 8px; font-size: 13px; border: 1px solid #ddd; border-radius: 6px; background: #fff; color: #1a1a1a; }
 .edit-input:focus { outline: none; border-color: #185FA5; }
 .highlight-row td { background: #fffbe6 !important; }
-.stock-ok   { color: #0F6E56; font-weight: 600; }
-.stock-low  { color: #A32D2D; font-weight: 600; }
+.stock-ok { color: #0F6E56; font-weight: 600; }
+.stock-low { color: #A32D2D; font-weight: 600; }
 /* 결제수단별 행 */
 .pay-stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; background: #f8f8f6; margin-bottom: 6px; font-size: 13px; }
 .pay-stat-row .pay-name { font-weight: 500; flex: 1; }
 .pay-stat-row .pay-count { color: #888; font-size: 12px; margin: 0 12px; }
 .pay-stat-row .pay-amount { font-weight: 700; color: #185FA5; }
 .pay-stat-row.exp-row .pay-amount { color: #A32D2D; }
-/* 시제 마감 테이블 */
+/* 시제 마감 */
 .closing-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .closing-table th { padding: 10px 14px; font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
 .closing-table th.blue-bg { background: #185FA5; }
@@ -113,21 +112,33 @@ tr:hover td { background: #fafafa; }
 .closing-table th.green-bg{ background: #0F6E56; }
 .closing-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; }
 .closing-table tr:last-child td { border-bottom: none; }
-.closing-table .pay-badge-cell { width: 90px; }
 .closing-table .income-val  { color: #185FA5; font-weight: 600; text-align: right; }
 .closing-table .exp-val     { color: #A32D2D; font-weight: 600; text-align: right; }
 .closing-table .balance-pos { color: #0F6E56; font-weight: 700; text-align: right; font-size: 15px; }
 .closing-table .balance-neg { color: #A32D2D; font-weight: 700; text-align: right; font-size: 15px; }
 .closing-table .count-cell  { color: #888; font-size: 12px; text-align: center; }
-.closing-table tfoot td    { background: #f0f4f8; font-weight: 700; font-size: 14px; padding: 12px 14px; }
+.closing-table tfoot td { background: #f0f4f8; font-weight: 700; font-size: 14px; padding: 12px 14px; }
 .closing-card { border: 2px solid #0F6E56; }
 .closing-card h3 { color: #0F6E56; }
+/* ★ 날짜 그룹 (지출 목록) */
+.date-group { margin-bottom: 10px; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
+.date-group-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; background: #f5f4f0; cursor: pointer; user-select: none; transition: background 0.15s; }
+.date-group-header:hover { background: #ece9e2; }
+.date-group-header .dg-date { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+.date-group-header .dg-summary { font-size: 13px; color: #888; display: flex; gap: 14px; align-items: center; }
+.date-group-header .dg-total { font-size: 14px; font-weight: 700; color: #A32D2D; }
+.date-group-header .dg-arrow { font-size: 12px; color: #aaa; transition: transform 0.2s; }
+.date-group-header.open .dg-arrow { transform: rotate(180deg); }
+.date-group-body { display: none; }
+.date-group-body.open { display: block; }
 /* Modal */
 .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:100; align-items:center; justify-content:center; }
 .modal-overlay.show { display:flex; }
 .modal { background:#fff; border-radius:16px; padding:1.5rem; width:92%; max-width:660px; max-height:90vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.18); }
 .modal h3 { font-size:16px; font-weight:600; margin-bottom:1rem; color:#185FA5; }
 .modal-footer { display:flex; justify-content:flex-end; gap:8px; margin-top:1rem; padding-top:1rem; border-top:1px solid #eee; }
+/* ★ 지출 수정 모달 */
+.exp-edit-modal h3 { color: #A32D2D; }
 .toast { position: fixed; bottom: 24px; right: 24px; background: #185FA5; color: #fff; padding: 11px 20px; border-radius: 10px; font-size: 14px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
 .toast.show { opacity: 1; }
 @media print {
@@ -169,8 +180,7 @@ tr:hover td { background: #fafafa; }
         <div class="form-group">
           <label>Customer Type</label>
           <select id="sale-ctype" onchange="onCtypeChange()">
-            <option value="WALK-IN">WALK-IN</option>
-            <option value="TOUR">TOUR</option>
+            <option value="WALK-IN">WALK-IN</option><option value="TOUR">TOUR</option>
           </select>
         </div>
         <div class="form-group" id="tour-name-field" style="display:none"><label>Tour Team</label><input type="text" id="sale-tour" placeholder="Team name"></div>
@@ -178,16 +188,12 @@ tr:hover td { background: #fafafa; }
         <div class="form-group"><label>Table / Guest No.</label><input type="text" id="sale-guest" placeholder="e.g. Table 1"></div>
         <div class="form-group">
           <label>Payment</label>
-          <select id="sale-payment">
-            <option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option>
-          </select>
+          <select id="sale-payment"><option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option></select>
         </div>
         <div class="form-group">
           <label>Currency</label>
           <select id="sale-currency" onchange="updateTotal()">
-            <option value="THB">฿ THB (Baht)</option>
-            <option value="KRW">₩ KRW (Won)</option>
-            <option value="USD">$ USD (Dollar)</option>
+            <option value="THB">฿ THB (Baht)</option><option value="KRW">₩ KRW (Won)</option><option value="USD">$ USD (Dollar)</option>
           </select>
         </div>
         <div class="form-group"><label>Discount</label><input type="number" id="sale-discount" placeholder="0" min="0" value="0" oninput="updateTotal()"></div>
@@ -229,26 +235,19 @@ tr:hover td { background: #fafafa; }
         <div class="form-group"><label>Amount</label><input type="number" id="exp-amount" placeholder="0" min="0"></div>
         <div class="form-group">
           <label>Currency</label>
-          <select id="exp-currency">
-            <option value="THB">฿ THB</option>
-            <option value="KRW">₩ KRW</option>
-            <option value="USD">$ USD</option>
-          </select>
+          <select id="exp-currency"><option value="THB">฿ THB</option><option value="KRW">₩ KRW</option><option value="USD">$ USD</option></select>
         </div>
         <div class="form-group">
           <label>Payment</label>
-          <select id="exp-payment">
-            <option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option>
-          </select>
+          <select id="exp-payment"><option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option></select>
         </div>
         <div class="form-group"><label>Note</label><input type="text" id="exp-note" placeholder="Optional"></div>
       </div>
-      <div style="text-align:right">
-        <button class="btn btn-primary" onclick="submitExpense()">✓ Save Expense</button>
-      </div>
+      <div style="text-align:right"><button class="btn btn-primary" onclick="submitExpense()">✓ Save Expense</button></div>
     </div>
     <div class="card">
-      <h3>📋 Recent Expenses</h3>
+      <!-- ★ 날짜별 그룹 지출 목록 -->
+      <h3>📋 Expense History <span style="font-size:12px;color:#888;font-weight:400">(날짜 클릭으로 펼치기/접기)</span></h3>
       <div id="expense-table"><div class="loading">Loading...</div></div>
     </div>
   </div>
@@ -262,14 +261,11 @@ tr:hover td { background: #fafafa; }
       <button onclick="changeDay(1)">Next ▶</button>
     </div>
     <div class="metrics" id="daily-metrics"></div>
-
-    <!-- ★ 시제 마감 정산표 -->
+    <!-- 시제 마감 -->
     <div class="card closing-card">
       <h3>🏦 일일 시제 마감 정산 <span style="font-size:12px;color:#0F6E56;font-weight:400">(결제수단별 잔액)</span></h3>
       <div id="daily-closing"></div>
     </div>
-
-    <!-- 매출 결제수단별 건수 + 금액 / 카테고리별 -->
     <div class="two-col">
       <div class="card">
         <h3>💳 Payment Breakdown <span style="font-size:12px;color:#888;font-weight:400">(건수 · 금액)</span></h3>
@@ -277,21 +273,23 @@ tr:hover td { background: #fafafa; }
       </div>
       <div class="card"><h3>🍽️ Sales by Category</h3><div id="daily-category"></div></div>
     </div>
-
-    <!-- 지출 결제수단별 / 지출 항목별 -->
     <div class="two-col">
       <div class="card">
         <h3>💸 Expense by Payment <span style="font-size:12px;color:#888;font-weight:400">(건수 · 합계)</span></h3>
         <div id="daily-exp-payment"></div>
       </div>
-      <div class="card">
-        <h3>📂 Expense by Category</h3>
-        <div id="daily-exp-category"></div>
-      </div>
+      <div class="card"><h3>📂 Expense by Category</h3><div id="daily-exp-category"></div></div>
     </div>
-
-    <div class="card"><h3>🧾 Orders</h3><div id="daily-orders"></div></div>
-    <div class="card"><h3>💸 Expenses</h3><div id="daily-expenses"></div></div>
+    <!-- ★ 수정 가능한 주문 목록 -->
+    <div class="card">
+      <h3>🧾 Orders <span style="font-size:12px;color:#185FA5;font-weight:400">✏️ 수정 가능</span></h3>
+      <div id="daily-orders"></div>
+    </div>
+    <!-- ★ 수정 가능한 지출 목록 -->
+    <div class="card">
+      <h3>💸 Expenses <span style="font-size:12px;color:#A32D2D;font-weight:400">✏️ 수정 가능</span></h3>
+      <div id="daily-expenses"></div>
+    </div>
   </div>
 
   <!-- ===== INVENTORY ===== -->
@@ -304,26 +302,22 @@ tr:hover td { background: #fafafa; }
         <div class="form-group">
           <label>Category</label>
           <select id="inv-cat">
-            <option value="Beer">Beer</option><option value="Soju">Soju</option>
-            <option value="Spirits">Spirits</option><option value="Soft Drink">Soft Drink</option>
-            <option value="Food">Food</option><option value="Other">Other</option>
+            <option value="Beer">Beer</option><option value="Soju">Soju</option><option value="Spirits">Spirits</option>
+            <option value="Soft Drink">Soft Drink</option><option value="Food">Food</option><option value="Other">Other</option>
           </select>
         </div>
         <div class="form-group">
           <label>Unit</label>
           <select id="inv-unit">
-            <option value="bottle">Bottle</option><option value="can">Can</option>
-            <option value="box">Box</option><option value="kg">Kg</option><option value="piece">Piece</option>
+            <option value="bottle">Bottle</option><option value="can">Can</option><option value="box">Box</option>
+            <option value="kg">Kg</option><option value="piece">Piece</option>
           </select>
         </div>
         <div class="form-group"><label>Min Stock Alert</label><input type="number" id="inv-min" placeholder="0" min="0" value="0"></div>
         <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addInvItem()" style="width:100%">+ Add</button></div>
       </div>
     </div>
-    <div class="card">
-      <h3>📦 Stock List</h3>
-      <div id="inventory-list"><div class="loading">Loading...</div></div>
-    </div>
+    <div class="card"><h3>📦 Stock List</h3><div id="inventory-list"><div class="loading">Loading...</div></div></div>
   </div>
 
   <!-- ===== STATISTICS ===== -->
@@ -369,9 +363,7 @@ tr:hover td { background: #fafafa; }
         </div>
         <div class="form-group">
           <label>Category</label>
-          <select id="new-menu-cat" class="edit-input">
-            <option value="Food">Food</option><option value="Beverage">Beverage</option>
-          </select>
+          <select id="new-menu-cat" class="edit-input"><option value="Food">Food</option><option value="Beverage">Beverage</option></select>
         </div>
         <div class="form-group"><label>Price (฿)</label><input type="number" id="new-menu-price" placeholder="0" min="0" class="edit-input"></div>
         <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addMenuItem()" style="width:100%">+ Add</button></div>
@@ -396,10 +388,7 @@ tr:hover td { background: #fafafa; }
         <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addExpCat()" style="width:100%">+ Add</button></div>
       </div>
     </div>
-    <div class="card">
-      <h3>📋 Expense Category List</h3>
-      <div id="settings-exp-cat-list"><div class="loading">Loading...</div></div>
-    </div>
+    <div class="card"><h3>📋 Expense Category List</h3><div id="settings-exp-cat-list"><div class="loading">Loading...</div></div></div>
   </div>
 </div>
 
@@ -419,9 +408,7 @@ tr:hover td { background: #fafafa; }
       <div class="form-group" id="edit-guide-field" style="display:none"><label>Guide Name</label><input type="text" id="edit-guide"></div>
       <div class="form-group">
         <label>Payment</label>
-        <select id="edit-payment">
-          <option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option>
-        </select>
+        <select id="edit-payment"><option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option></select>
       </div>
       <div class="form-group">
         <label>Currency</label>
@@ -445,6 +432,32 @@ tr:hover td { background: #fafafa; }
     <div class="modal-footer">
       <button class="btn" onclick="closeEditModal()">Cancel</button>
       <button class="btn btn-primary" onclick="saveEditOrder()">✓ Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ★ EDIT EXPENSE MODAL -->
+<div class="modal-overlay" id="edit-exp-modal">
+  <div class="modal exp-edit-modal">
+    <h3>✏️ Edit Expense</h3>
+    <div class="form-row">
+      <div class="form-group"><label>Date</label><input type="date" id="ee-date"></div>
+      <div class="form-group"><label>Category</label><select id="ee-cat"></select></div>
+      <div class="form-group"><label>Vendor / Description</label><input type="text" id="ee-vendor"></div>
+      <div class="form-group"><label>Amount</label><input type="number" id="ee-amount" min="0"></div>
+      <div class="form-group">
+        <label>Currency</label>
+        <select id="ee-currency"><option value="THB">฿ THB</option><option value="KRW">₩ KRW</option><option value="USD">$ USD</option></select>
+      </div>
+      <div class="form-group">
+        <label>Payment</label>
+        <select id="ee-payment"><option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option></select>
+      </div>
+      <div class="form-group"><label>Note</label><input type="text" id="ee-note" placeholder="Optional"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeExpEditModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveExpEdit()" style="background:#A32D2D;border-color:#A32D2D">✓ Save Changes</button>
     </div>
   </div>
 </div>
@@ -474,96 +487,100 @@ tr:hover td { background: #fafafa; }
 <div class="toast" id="toast"></div>
 
 <script>
-let MENU = [], EXP_CATS = [], orderItems = [], viewDate = tod();
-let menuFilter = 'ALL', editingMenuId = null, editingCatId = null;
-let allTodaySales = [], editOrderId = null, editOrderItems = [];
-let stockItemId = null;
+let MENU=[], EXP_CATS=[], orderItems=[], viewDate=tod();
+let menuFilter='ALL', editingMenuId=null, editingCatId=null;
+let allTodaySales=[], editOrderId=null, editOrderItems=[];
+let stockItemId=null;
+let dailySales=[], dailyExpenses=[];
+let editExpId=null;
 
-function tod() { return new Date().toISOString().slice(0,10); }
-function fmtCurrency(n, currency) {
-  const sym = currency === 'KRW' ? '₩' : currency === 'USD' ? '$' : '฿';
-  return sym + Math.round(n).toLocaleString();
-}
-function fmt(n) { return '฿' + Math.round(n).toLocaleString(); }
-function fmtDate(d) {
-  const parts = d.split('-');
-  const dt = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+function tod(){ return new Date().toISOString().slice(0,10); }
+function fmtCurrency(n,currency){ const sym=currency==='KRW'?'₩':currency==='USD'?'$':'฿'; return sym+Math.round(n).toLocaleString(); }
+function fmt(n){ return '฿'+Math.round(n).toLocaleString(); }
+function fmtDate(d){
+  const parts=d.split('-');
+  const dt=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
   return dt.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 }
-function toast(msg, isErr) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.style.background = isErr ? '#A32D2D' : '#185FA5';
-  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500);
+function fmtDateShort(d){
+  const parts=d.split('-');
+  const dt=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+  return dt.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 }
-function setStatus(ok) {
-  document.getElementById('status-dot').className = 'status-dot ' + (ok ? 'online' : 'offline');
+function toast(msg,isErr){
+  const t=document.getElementById('toast'); t.textContent=msg;
+  t.style.background=isErr?'#A32D2D':'#185FA5';
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500);
 }
+function setStatus(ok){ document.getElementById('status-dot').className='status-dot '+(ok?'online':'offline'); }
 
-async function api(method, path, body) {
-  try {
-    const res = await fetch(path, { method, headers: {'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : undefined });
+async function api(method,path,body){
+  try{
+    const res=await fetch(path,{method,headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});
     setStatus(true); return await res.json();
-  } catch(e) { setStatus(false); toast('Connection error', true); return null; }
+  }catch(e){ setStatus(false); toast('Connection error',true); return null; }
 }
 
-function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  const idx = ['sales','expense','daily','inventory','stats','settings'].indexOf(id);
+  const idx=['sales','expense','daily','inventory','stats','settings'].indexOf(id);
   document.querySelectorAll('.nav button')[idx].classList.add('active');
-  if (id==='daily')     loadDaily();
-  if (id==='inventory') loadInventory();
-  if (id==='stats')     loadStats();
-  if (id==='settings')  { loadSettingsMenu(); loadSettingsExpCats(); }
+  if(id==='daily')     loadDaily();
+  if(id==='inventory') loadInventory();
+  if(id==='stats')     loadStats();
+  if(id==='settings')  { loadSettingsMenu(); loadSettingsExpCats(); }
+  if(id==='expense')   loadRecentExpenses();
 }
 
-async function init() {
-  const t = tod();
-  document.getElementById('sale-date').value = t;
-  document.getElementById('exp-date').value  = t;
-  document.getElementById('daily-date-label').textContent = fmtDate(t);
-  const m = new Date(); m.setDate(1);
-  document.getElementById('stats-from').value = m.toISOString().slice(0,10);
-  document.getElementById('stats-to').value   = t;
-  const [menuData, catData] = await Promise.all([api('GET','/api/menu'), api('GET','/api/exp_categories')]);
-  if (menuData) MENU = menuData;
-  if (catData)  { EXP_CATS = catData; populateExpCatSelect(); }
+async function init(){
+  const t=tod();
+  document.getElementById('sale-date').value=t;
+  document.getElementById('exp-date').value=t;
+  document.getElementById('daily-date-label').textContent=fmtDate(t);
+  const m=new Date(); m.setDate(1);
+  document.getElementById('stats-from').value=m.toISOString().slice(0,10);
+  document.getElementById('stats-to').value=t;
+  const [menuData,catData]=await Promise.all([api('GET','/api/menu'),api('GET','/api/exp_categories')]);
+  if(menuData) MENU=menuData;
+  if(catData){ EXP_CATS=catData; populateExpCatSelect(); populateEECatSelect(); }
   addOrderItem(); loadTodaySales(); loadRecentExpenses();
 }
 
-function populateExpCatSelect() {
-  document.getElementById('exp-cat').innerHTML = EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
+function populateExpCatSelect(){
+  document.getElementById('exp-cat').innerHTML=EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
+}
+function populateEECatSelect(){
+  document.getElementById('ee-cat').innerHTML=EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
 }
 
-function onCtypeChange() {
-  const isTour = document.getElementById('sale-ctype').value === 'TOUR';
-  document.getElementById('tour-name-field').style.display = isTour ? '' : 'none';
-  document.getElementById('guide-name-field').style.display = isTour ? '' : 'none';
-  orderItems = []; addOrderItem();
+// ── SALES ────────────────────────────────────────────────────
+function onCtypeChange(){
+  const isTour=document.getElementById('sale-ctype').value==='TOUR';
+  document.getElementById('tour-name-field').style.display=isTour?'':'none';
+  document.getElementById('guide-name-field').style.display=isTour?'':'none';
+  orderItems=[]; addOrderItem();
 }
-
-function getMenuByCat(cat, ctype) { return MENU.filter(m => (m.type === ctype || m.type === 'COMMON') && m.cat === cat); }
-function addOrderItem() { orderItems.push({ cat:'Food', menuId:null, qty:1 }); renderOrderItems(); }
-function removeOrderItem(i) { orderItems.splice(i,1); renderOrderItems(); }
-function onItemCatChange(i, cat) {
-  orderItems[i].cat = cat;
-  const list = getMenuByCat(cat, document.getElementById('sale-ctype').value);
-  orderItems[i].menuId = list.length ? list[0].id : null;
-  renderOrderItems();
+function getMenuByCat(cat,ctype){ return MENU.filter(m=>(m.type===ctype||m.type==='COMMON')&&m.cat===cat); }
+function addOrderItem(){ orderItems.push({cat:'Food',menuId:null,qty:1}); renderOrderItems(); }
+function removeOrderItem(i){ orderItems.splice(i,1); renderOrderItems(); }
+function onItemCatChange(i,cat){
+  orderItems[i].cat=cat;
+  const list=getMenuByCat(cat,document.getElementById('sale-ctype').value);
+  orderItems[i].menuId=list.length?list[0].id:null; renderOrderItems();
 }
-function onItemMenuChange(i, id) { orderItems[i].menuId = parseInt(id); renderOrderItems(); }
-function getMenuObj(item) { return MENU.find(m => m.id === item.menuId) || null; }
+function onItemMenuChange(i,id){ orderItems[i].menuId=parseInt(id); renderOrderItems(); }
+function getMenuObj(item){ return MENU.find(m=>m.id===item.menuId)||null; }
 
-function renderOrderItems() {
-  const ctype = document.getElementById('sale-ctype').value;
-  const container = document.getElementById('order-items');
-  if (!orderItems.length) { container.innerHTML='<div class="empty" style="padding:1rem 0">No items.</div>'; updateTotal(); return; }
-  container.innerHTML = orderItems.map((item,i) => {
-    const catList = getMenuByCat(item.cat, ctype);
-    if (!item.menuId && catList.length) item.menuId = catList[0].id;
-    const menuObj = getMenuObj(item);
-    const subtotal = menuObj ? menuObj.price * (item.qty||1) : 0;
+function renderOrderItems(){
+  const ctype=document.getElementById('sale-ctype').value;
+  const container=document.getElementById('order-items');
+  if(!orderItems.length){ container.innerHTML='<div class="empty" style="padding:1rem 0">No items.</div>'; updateTotal(); return; }
+  container.innerHTML=orderItems.map((item,i)=>{
+    const catList=getMenuByCat(item.cat,ctype);
+    if(!item.menuId&&catList.length) item.menuId=catList[0].id;
+    const menuObj=getMenuObj(item); const subtotal=menuObj?menuObj.price*(item.qty||1):0;
     return `<div class="order-item">
       <select style="flex:1.2;min-width:90px" onchange="onItemCatChange(${i},this.value)">
         <option value="Food" ${item.cat==='Food'?'selected':''}>🍽️ Food</option>
@@ -580,11 +597,11 @@ function renderOrderItems() {
   updateTotal();
 }
 
-function updateTotal() {
-  const subtotal = orderItems.reduce((s,item) => { const m=getMenuObj(item); return s+(m?m.price*(item.qty||1):0); }, 0);
-  const discount = parseFloat(document.getElementById('sale-discount')?.value)||0;
-  const currency = document.getElementById('sale-currency')?.value || 'THB';
-  const total = Math.max(0, subtotal-discount);
+function updateTotal(){
+  const subtotal=orderItems.reduce((s,item)=>{const m=getMenuObj(item);return s+(m?m.price*(item.qty||1):0);},0);
+  const discount=parseFloat(document.getElementById('sale-discount')?.value)||0;
+  const currency=document.getElementById('sale-currency')?.value||'THB';
+  const total=Math.max(0,subtotal-discount);
   const subEl=document.getElementById('order-subtotal');
   const discRow=document.getElementById('discount-row'); const subRow=document.getElementById('subtotal-row');
   if(subEl) subEl.textContent=fmtCurrency(subtotal,currency);
@@ -593,21 +610,21 @@ function updateTotal() {
   document.getElementById('order-total').textContent=fmtCurrency(total,currency);
 }
 
-async function submitSale() {
-  const valid = orderItems.filter(i=>getMenuObj(i));
-  if (!valid.length) { toast('Please add at least one item',true); return; }
-  const items = valid.map(item => { const m=getMenuObj(item); return {name:m.name,cat:m.cat,price:m.price,qty:item.qty||1,total:m.price*(item.qty||1)}; });
-  const subtotal = items.reduce((s,i)=>s+i.total,0);
-  const discount = parseFloat(document.getElementById('sale-discount').value)||0;
-  const currency = document.getElementById('sale-currency').value;
-  const body = {
+async function submitSale(){
+  const valid=orderItems.filter(i=>getMenuObj(i));
+  if(!valid.length){toast('Please add at least one item',true);return;}
+  const items=valid.map(item=>{const m=getMenuObj(item);return{name:m.name,cat:m.cat,price:m.price,qty:item.qty||1,total:m.price*(item.qty||1)};});
+  const subtotal=items.reduce((s,i)=>s+i.total,0);
+  const discount=parseFloat(document.getElementById('sale-discount').value)||0;
+  const currency=document.getElementById('sale-currency').value;
+  const body={
     date:document.getElementById('sale-date').value, ctype:document.getElementById('sale-ctype').value,
     guest:document.getElementById('sale-guest').value.trim()||'-',
     tour:document.getElementById('sale-tour').value.trim(), guide:document.getElementById('sale-guide').value.trim(),
     payment:document.getElementById('sale-payment').value, currency, discount, items, total:Math.max(0,subtotal-discount)
   };
-  const res = await api('POST','/api/sales',body);
-  if (res?.ok) {
+  const res=await api('POST','/api/sales',body);
+  if(res?.ok){
     orderItems=[];addOrderItem();
     ['sale-guest','sale-tour','sale-guide'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('sale-discount').value='0';
@@ -615,23 +632,23 @@ async function submitSale() {
   }
 }
 
-async function loadTodaySales() {
-  const d = document.getElementById('sale-date').value;
-  const data = await api('GET',`/api/sales?date=${d}`);
-  allTodaySales = data||[]; renderTodaySalesTable(allTodaySales);
+async function loadTodaySales(){
+  const d=document.getElementById('sale-date').value;
+  const data=await api('GET',`/api/sales?date=${d}`);
+  allTodaySales=data||[]; renderTodaySalesTable(allTodaySales);
 }
 
-function filterOrders(q) {
-  if (!q.trim()) { renderTodaySalesTable(allTodaySales); return; }
+function filterOrders(q){
+  if(!q.trim()){renderTodaySalesTable(allTodaySales);return;}
   renderTodaySalesTable(allTodaySales.filter(s=>s.guest.toLowerCase().includes(q.toLowerCase())),q);
 }
 
-function renderTodaySalesTable(data, highlight) {
-  const el = document.getElementById('today-sales-table');
-  if (!data||!data.length) { el.innerHTML='<div class="empty">No orders for this date</div>'; return; }
-  const total = data.reduce((s,o)=>s+o.total,0);
-  const sym = (c) => c==='KRW'?'₩':c==='USD'?'$':'฿';
-  el.innerHTML = `<div style="text-align:right;font-size:13px;color:#185FA5;font-weight:600;margin-bottom:8px">
+function renderTodaySalesTable(data,highlight){
+  const el=document.getElementById('today-sales-table');
+  if(!data||!data.length){el.innerHTML='<div class="empty">No orders for this date</div>';return;}
+  const total=data.reduce((s,o)=>s+o.total,0);
+  const sym=(c)=>c==='KRW'?'₩':c==='USD'?'$':'฿';
+  el.innerHTML=`<div style="text-align:right;font-size:13px;color:#185FA5;font-weight:600;margin-bottom:8px">
     Day Total: ${fmt(total)} | ${data.length} orders</div>
     <table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Discount</th><th>Payment</th><th>Currency</th><th>Total</th><th></th></tr></thead>
     <tbody>${data.map(s=>`<tr class="${highlight&&s.guest.toLowerCase().includes(highlight.toLowerCase())?'highlight-row':''}">
@@ -648,47 +665,48 @@ function renderTodaySalesTable(data, highlight) {
       </td></tr>`).join('')}</tbody></table>`;
 }
 
-async function deleteSale(id) {
-  if (!confirm('Delete this order?')) return;
-  const res = await api('DELETE',`/api/sales/${id}`);
-  if (res?.ok) { loadTodaySales(); toast('Order deleted'); }
+async function deleteSale(id){
+  if(!confirm('Delete this order?'))return;
+  const res=await api('DELETE',`/api/sales/${id}`);
+  if(res?.ok){ loadTodaySales(); if(document.getElementById('daily').classList.contains('active')) loadDaily(); toast('Order deleted'); }
 }
 
-function onEditCtypeChange() {
-  const isTour = document.getElementById('edit-ctype').value==='TOUR';
-  document.getElementById('edit-tour-field').style.display  = isTour?'':'none';
-  document.getElementById('edit-guide-field').style.display = isTour?'':'none';
+// ── EDIT ORDER MODAL ─────────────────────────────────────────
+function onEditCtypeChange(){
+  const isTour=document.getElementById('edit-ctype').value==='TOUR';
+  document.getElementById('edit-tour-field').style.display=isTour?'':'none';
+  document.getElementById('edit-guide-field').style.display=isTour?'':'none';
 }
 
-function openEditModal(id) {
-  const sale = allTodaySales.find(s=>s.id===id); if(!sale) return;
-  editOrderId = id;
-  editOrderItems = sale.items.map(i => { const m=MENU.find(m=>m.name===i.name); return {menuId:m?m.id:null,qty:i.qty,cat:i.cat}; });
-  document.getElementById('edit-guest').value    = sale.guest;
-  document.getElementById('edit-ctype').value    = sale.ctype;
-  document.getElementById('edit-payment').value  = sale.payment;
-  document.getElementById('edit-currency').value = sale.currency||'THB';
-  document.getElementById('edit-discount').value = sale.discount||0;
+function openEditModal(id){
+  // daily 탭의 dailySales 또는 allTodaySales 에서 찾기
+  const sale=([...allTodaySales,...dailySales]).find(s=>s.id===id); if(!sale)return;
+  editOrderId=id;
+  editOrderItems=sale.items.map(i=>{const m=MENU.find(m=>m.name===i.name);return{menuId:m?m.id:null,qty:i.qty,cat:i.cat};});
+  document.getElementById('edit-guest').value   =sale.guest;
+  document.getElementById('edit-ctype').value   =sale.ctype;
+  document.getElementById('edit-payment').value =sale.payment;
+  document.getElementById('edit-currency').value=sale.currency||'THB';
+  document.getElementById('edit-discount').value=sale.discount||0;
   onEditCtypeChange();
-  if(sale.tour)  document.getElementById('edit-tour').value  = sale.tour;
-  if(sale.guide) document.getElementById('edit-guide').value = sale.guide;
+  if(sale.tour)  document.getElementById('edit-tour').value =sale.tour;
+  if(sale.guide) document.getElementById('edit-guide').value=sale.guide;
   renderEditOrderItems();
   document.getElementById('edit-modal').classList.add('show');
 }
 
-function closeEditModal() { document.getElementById('edit-modal').classList.remove('show'); editOrderId=null; editOrderItems=[]; }
-function getEditMenuByCat(cat) { const ctype=document.getElementById('edit-ctype').value; return MENU.filter(m=>(m.type===ctype||m.type==='COMMON')&&m.cat===cat); }
-function addEditOrderItem() { editOrderItems.push({cat:'Food',menuId:null,qty:1}); renderEditOrderItems(); }
-function removeEditOrderItem(i) { editOrderItems.splice(i,1); renderEditOrderItems(); }
+function closeEditModal(){ document.getElementById('edit-modal').classList.remove('show'); editOrderId=null; editOrderItems=[]; }
+function getEditMenuByCat(cat){ const ctype=document.getElementById('edit-ctype').value; return MENU.filter(m=>(m.type===ctype||m.type==='COMMON')&&m.cat===cat); }
+function addEditOrderItem(){ editOrderItems.push({cat:'Food',menuId:null,qty:1}); renderEditOrderItems(); }
+function removeEditOrderItem(i){ editOrderItems.splice(i,1); renderEditOrderItems(); }
 
-function renderEditOrderItems() {
-  const container = document.getElementById('edit-order-items');
-  if (!editOrderItems.length) { container.innerHTML='<div class="empty" style="padding:1rem 0">No items</div>'; updateEditTotal(); return; }
-  container.innerHTML = editOrderItems.map((item,i) => {
-    const catList = getEditMenuByCat(item.cat);
-    if (!item.menuId&&catList.length) item.menuId=catList[0].id;
-    const menuObj = MENU.find(m=>m.id===item.menuId);
-    const subtotal = menuObj?menuObj.price*(item.qty||1):0;
+function renderEditOrderItems(){
+  const container=document.getElementById('edit-order-items');
+  if(!editOrderItems.length){container.innerHTML='<div class="empty" style="padding:1rem 0">No items</div>';updateEditTotal();return;}
+  container.innerHTML=editOrderItems.map((item,i)=>{
+    const catList=getEditMenuByCat(item.cat);
+    if(!item.menuId&&catList.length) item.menuId=catList[0].id;
+    const menuObj=MENU.find(m=>m.id===item.menuId); const subtotal=menuObj?menuObj.price*(item.qty||1):0;
     return `<div class="order-item">
       <select style="flex:1.2" onchange="editOrderItems[${i}].cat=this.value;editOrderItems[${i}].menuId=null;renderEditOrderItems()">
         <option value="Food" ${item.cat==='Food'?'selected':''}>🍽️ Food</option>
@@ -705,7 +723,7 @@ function renderEditOrderItems() {
   updateEditTotal();
 }
 
-function updateEditTotal() {
+function updateEditTotal(){
   const subtotal=editOrderItems.reduce((s,item)=>{const m=MENU.find(m=>m.id===item.menuId);return s+(m?m.price*(item.qty||1):0);},0);
   const discount=parseFloat(document.getElementById('edit-discount')?.value)||0;
   const currency=document.getElementById('edit-currency')?.value||'THB';
@@ -713,34 +731,38 @@ function updateEditTotal() {
   const subEl=document.getElementById('edit-order-subtotal');
   const discEl=document.getElementById('edit-discount-show');
   const discRow=document.getElementById('edit-discount-row'); const subRow=document.getElementById('edit-subtotal-row');
-  if(subEl)subEl.textContent=fmtCurrency(subtotal,currency);
+  if(subEl) subEl.textContent=fmtCurrency(subtotal,currency);
   if(discount>0){discRow.style.display='';subRow.style.display='';if(discEl)discEl.textContent=fmtCurrency(discount,currency);}
   else{if(discRow)discRow.style.display='none';if(subRow)subRow.style.display='none';}
   document.getElementById('edit-order-total').textContent=fmtCurrency(total,currency);
 }
 
-async function saveEditOrder() {
+async function saveEditOrder(){
   const valid=editOrderItems.filter(i=>MENU.find(m=>m.id===i.menuId));
   if(!valid.length){toast('Please add at least one item',true);return;}
   const items=valid.map(item=>{const m=MENU.find(m=>m.id===item.menuId);return{name:m.name,cat:m.cat,price:m.price,qty:item.qty||1,total:m.price*(item.qty||1)};});
   const subtotal=items.reduce((s,i)=>s+i.total,0);
   const discount=parseFloat(document.getElementById('edit-discount').value)||0;
   const currency=document.getElementById('edit-currency').value;
+  const origSale=[...allTodaySales,...dailySales].find(s=>s.id===editOrderId);
   const body={
-    date:allTodaySales.find(s=>s.id===editOrderId)?.date,
-    ctype:document.getElementById('edit-ctype').value,
+    date:origSale?.date, ctype:document.getElementById('edit-ctype').value,
     guest:document.getElementById('edit-guest').value.trim()||'-',
-    tour:document.getElementById('edit-tour').value.trim(),
-    guide:document.getElementById('edit-guide').value.trim(),
-    payment:document.getElementById('edit-payment').value,
-    currency,discount,items,total:Math.max(0,subtotal-discount)
+    tour:document.getElementById('edit-tour').value.trim(), guide:document.getElementById('edit-guide').value.trim(),
+    payment:document.getElementById('edit-payment').value, currency, discount, items, total:Math.max(0,subtotal-discount)
   };
   await api('DELETE',`/api/sales/${editOrderId}`);
   const res=await api('POST','/api/sales',body);
-  if(res?.ok){closeEditModal();loadTodaySales();toast('✓ Order updated!');}
+  if(res?.ok){
+    closeEditModal();
+    loadTodaySales();
+    if(document.getElementById('daily').classList.contains('active')) loadDaily();
+    toast('✓ Order updated!');
+  }
 }
 
-async function submitExpense() {
+// ── EXPENSE ──────────────────────────────────────────────────
+async function submitExpense(){
   const amount=parseFloat(document.getElementById('exp-amount').value);
   if(!amount||amount<=0){toast('Please enter a valid amount',true);return;}
   const body={
@@ -751,32 +773,120 @@ async function submitExpense() {
     note:document.getElementById('exp-note').value.trim()
   };
   const res=await api('POST','/api/expenses',body);
-  if(res?.ok){['exp-vendor','exp-amount','exp-note'].forEach(id=>document.getElementById(id).value='');loadRecentExpenses();toast('✓ Expense saved!');}
+  if(res?.ok){
+    ['exp-vendor','exp-amount','exp-note'].forEach(id=>document.getElementById(id).value='');
+    loadRecentExpenses(); toast('✓ Expense saved!');
+  }
 }
 
-async function loadRecentExpenses() {
+// ★ 날짜별 그룹 지출 목록
+async function loadRecentExpenses(){
   const data=await api('GET','/api/expenses');
   const el=document.getElementById('expense-table');
   if(!data||!data.length){el.innerHTML='<div class="empty">No expenses recorded</div>';return;}
   const sym=(c)=>c==='KRW'?'₩':c==='USD'?'$':'฿';
-  el.innerHTML=`<table><thead><tr><th>Date</th><th>Category</th><th>Vendor</th><th>Currency</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
-    <tbody>${data.slice(0,30).map(e=>`<tr>
-      <td>${e.date}</td><td>${e.cat}</td>
-      <td>${e.vendor}${e.note?' · '+e.note:''}</td>
-      <td><span class="badge badge-${(e.currency||'THB').toLowerCase()}">${e.currency||'THB'}</span></td>
-      <td><span class="badge badge-${e.payment.toLowerCase()}">${e.payment}</span></td>
-      <td style="font-weight:600;color:#A32D2D">${sym(e.currency)}${Math.round(e.amount).toLocaleString()}</td>
-      <td><button class="btn btn-danger" onclick="deleteExpense(${e.id})">Del</button></td>
-    </tr>`).join('')}</tbody></table>`;
+
+  // 날짜별 그룹화
+  const groups={};
+  data.forEach(e=>{
+    if(!groups[e.date]) groups[e.date]=[];
+    groups[e.date].push(e);
+  });
+  const sortedDates=Object.keys(groups).sort((a,b)=>b.localeCompare(a));
+
+  el.innerHTML=sortedDates.map((date,idx)=>{
+    const items=groups[date];
+    const dayTotal=items.reduce((s,e)=>s+e.amount,0);
+    const isOpen=idx===0; // 가장 최근 날짜만 기본으로 열기
+    return `<div class="date-group">
+      <div class="date-group-header ${isOpen?'open':''}" onclick="toggleDateGroup(this)">
+        <span class="dg-date">📅 ${fmtDateShort(date)}</span>
+        <div class="dg-summary">
+          <span>${items.length}건</span>
+          <span class="dg-total">${fmt(dayTotal)}</span>
+          <span class="dg-arrow">▼</span>
+        </div>
+      </div>
+      <div class="date-group-body ${isOpen?'open':''}">
+        <table><thead><tr><th>Category</th><th>Vendor</th><th>Currency</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
+        <tbody>${items.map(e=>`<tr>
+          <td>${e.cat}</td>
+          <td>${e.vendor}${e.note?' · '+e.note:''}</td>
+          <td><span class="badge badge-${(e.currency||'THB').toLowerCase()}">${e.currency||'THB'}</span></td>
+          <td><span class="badge badge-${e.payment.toLowerCase()}">${e.payment}</span></td>
+          <td style="font-weight:600;color:#A32D2D">${sym(e.currency)}${Math.round(e.amount).toLocaleString()}</td>
+          <td style="display:flex;gap:4px">
+            <button class="btn btn-edit" onclick="openExpEditModal(${e.id})">✏️</button>
+            <button class="btn btn-danger" onclick="deleteExpense(${e.id})">Del</button>
+          </td>
+        </tr>`).join('')}</tbody></table>
+        <div style="text-align:right;padding:8px 14px;font-size:13px;font-weight:600;color:#A32D2D;border-top:1px solid #f0f0f0">
+          일계: ${fmt(dayTotal)}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-async function deleteExpense(id) {
+function toggleDateGroup(header){
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+async function deleteExpense(id){
   if(!confirm('Delete this expense?'))return;
   const res=await api('DELETE',`/api/expenses/${id}`);
-  if(res?.ok){loadRecentExpenses();toast('Expense deleted');}
+  if(res?.ok){
+    loadRecentExpenses();
+    if(document.getElementById('daily').classList.contains('active')) loadDaily();
+    toast('Expense deleted');
+  }
 }
 
-function changeDay(d) {
+// ★ 지출 수정 모달
+function openExpEditModal(id){
+  // expense 탭 또는 daily 탭의 데이터에서 찾기
+  const allExp=[...dailyExpenses];
+  // expense 탭에서 직접 찾기 위해 API 재조회
+  api('GET','/api/expenses').then(data=>{
+    if(!data) return;
+    const exp=data.find(e=>e.id===id); if(!exp) return;
+    editExpId=id;
+    document.getElementById('ee-date').value    =exp.date;
+    document.getElementById('ee-cat').value     =exp.cat;
+    document.getElementById('ee-vendor').value  =exp.vendor||'';
+    document.getElementById('ee-amount').value  =exp.amount;
+    document.getElementById('ee-currency').value=exp.currency||'THB';
+    document.getElementById('ee-payment').value =exp.payment;
+    document.getElementById('ee-note').value    =exp.note||'';
+    document.getElementById('edit-exp-modal').classList.add('show');
+  });
+}
+
+function closeExpEditModal(){ document.getElementById('edit-exp-modal').classList.remove('show'); editExpId=null; }
+
+async function saveExpEdit(){
+  const amount=parseFloat(document.getElementById('ee-amount').value);
+  if(!amount||amount<=0){toast('Please enter a valid amount',true);return;}
+  const body={
+    date:document.getElementById('ee-date').value, cat:document.getElementById('ee-cat').value,
+    vendor:document.getElementById('ee-vendor').value.trim()||'-', amount,
+    currency:document.getElementById('ee-currency').value,
+    payment:document.getElementById('ee-payment').value,
+    note:document.getElementById('ee-note').value.trim()
+  };
+  await api('DELETE',`/api/expenses/${editExpId}`);
+  const res=await api('POST','/api/expenses',body);
+  if(res?.ok){
+    closeExpEditModal();
+    loadRecentExpenses();
+    if(document.getElementById('daily').classList.contains('active')) loadDaily();
+    toast('✓ Expense updated!');
+  }
+}
+
+// ── DAILY ────────────────────────────────────────────────────
+function changeDay(d){
   const parts=viewDate.split('-');
   const dt=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
   dt.setDate(dt.getDate()+d);
@@ -786,9 +896,10 @@ function changeDay(d) {
   loadDaily();
 }
 
-async function loadDaily() {
+async function loadDaily(){
   const [ds,de]=await Promise.all([api('GET',`/api/sales?date=${viewDate}`),api('GET',`/api/expenses?date=${viewDate}`)]);
   if(!ds||!de)return;
+  dailySales=ds; dailyExpenses=de;
 
   const totalSales=ds.reduce((s,o)=>s+o.total,0);
   const totalExp=de.reduce((s,e)=>s+e.amount,0);
@@ -806,77 +917,62 @@ async function loadDaily() {
     <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
     <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>`;
 
-  // ─── 매출 결제수단별 집계 ───────────────────────────────
   const payIncome={};
-  ds.forEach(s=>{
-    if(!payIncome[s.payment])payIncome[s.payment]={count:0,total:0};
-    payIncome[s.payment].count++; payIncome[s.payment].total+=s.total;
-  });
-
-  // ─── 지출 결제수단별 집계 ───────────────────────────────
+  ds.forEach(s=>{if(!payIncome[s.payment])payIncome[s.payment]={count:0,total:0};payIncome[s.payment].count++;payIncome[s.payment].total+=s.total;});
   const payExpense={};
-  de.forEach(e=>{
-    if(!payExpense[e.payment])payExpense[e.payment]={count:0,total:0};
-    payExpense[e.payment].count++; payExpense[e.payment].total+=e.amount;
-  });
+  de.forEach(e=>{if(!payExpense[e.payment])payExpense[e.payment]={count:0,total:0};payExpense[e.payment].count++;payExpense[e.payment].total+=e.amount;});
 
-  // ─── ★ 시제 마감 정산표 ────────────────────────────────
+  // 시제 마감
   const allPays=[...new Set([...Object.keys(payIncome),...Object.keys(payExpense)])].sort();
   const closingEl=document.getElementById('daily-closing');
-  if(!allPays.length){
-    closingEl.innerHTML='<div class="empty">데이터가 없습니다</div>';
-  } else {
-    let totalBalIncome=0, totalBalExp=0, totalBal=0;
+  if(!allPays.length){closingEl.innerHTML='<div class="empty">데이터가 없습니다</div>';}
+  else{
+    let tInc=0,tExp=0,tBal=0;
     const rows=allPays.map(pay=>{
       const inc=payIncome[pay]||{count:0,total:0};
       const exp=payExpense[pay]||{count:0,total:0};
-      const bal=inc.total-exp.total;
-      totalBalIncome+=inc.total; totalBalExp+=exp.total; totalBal+=bal;
-      const balClass=bal>=0?'balance-pos':'balance-neg';
-      const balSign=bal>=0?'':'-';
+      const bal=inc.total-exp.total; tInc+=inc.total;tExp+=exp.total;tBal+=bal;
+      const bc=bal>=0?'balance-pos':'balance-neg';
       return `<tr>
-        <td class="pay-badge-cell"><span class="badge badge-${pay.toLowerCase()}">${pay}</span></td>
+        <td><span class="badge badge-${pay.toLowerCase()}">${pay}</span></td>
         <td class="income-val">${inc.total>0?fmt(inc.total):'-'}</td>
         <td class="count-cell">${inc.count>0?inc.count+'건':'-'}</td>
         <td class="exp-val">${exp.total>0?fmt(exp.total):'-'}</td>
         <td class="count-cell">${exp.count>0?exp.count+'건':'-'}</td>
-        <td class="${balClass}">${balSign}${fmt(Math.abs(bal))}</td>
+        <td class="${bc}">${bal<0?'-':''}${fmt(Math.abs(bal))}</td>
       </tr>`;
     }).join('');
-    const footBal=totalBal>=0?'balance-pos':'balance-neg';
-    closingEl.innerHTML=`
-      <table class="closing-table">
-        <thead>
-          <tr>
-            <th style="background:#555;border-radius:8px 0 0 0">결제수단</th>
-            <th colspan="2" class="blue-bg">수입 (매출)</th>
-            <th colspan="2" class="red-bg">지출</th>
-            <th class="green-bg" style="border-radius:0 8px 0 0">잔액 (시제)</th>
-          </tr>
-          <tr style="background:#f8f8f6;font-size:11px;color:#888">
-            <th></th>
-            <th style="text-align:right;font-weight:500;color:#185FA5">금액</th>
-            <th style="text-align:center;font-weight:500;color:#888">건수</th>
-            <th style="text-align:right;font-weight:500;color:#A32D2D">금액</th>
-            <th style="text-align:center;font-weight:500;color:#888">건수</th>
-            <th style="text-align:right;font-weight:500;color:#0F6E56">잔액</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-        <tfoot>
-          <tr>
-            <td style="color:#555">합 계</td>
-            <td style="color:#185FA5;text-align:right">${fmt(totalBalIncome)}</td>
-            <td style="text-align:center;color:#888;font-size:12px">${ds.length}건</td>
-            <td style="color:#A32D2D;text-align:right">${fmt(totalBalExp)}</td>
-            <td style="text-align:center;color:#888;font-size:12px">${de.length}건</td>
-            <td class="${footBal}">${totalBal<0?'-':''}${fmt(Math.abs(totalBal))}</td>
-          </tr>
-        </tfoot>
-      </table>`;
+    const fc=tBal>=0?'balance-pos':'balance-neg';
+    closingEl.innerHTML=`<table class="closing-table">
+      <thead>
+        <tr>
+          <th style="background:#555;border-radius:8px 0 0 0">결제수단</th>
+          <th colspan="2" class="blue-bg">수입 (매출)</th>
+          <th colspan="2" class="red-bg">지출</th>
+          <th class="green-bg" style="border-radius:0 8px 0 0">잔액 (시제)</th>
+        </tr>
+        <tr style="background:#f8f8f6;font-size:11px;color:#888">
+          <th></th>
+          <th style="text-align:right;font-weight:500;color:#185FA5">금액</th>
+          <th style="text-align:center;font-weight:500;color:#888">건수</th>
+          <th style="text-align:right;font-weight:500;color:#A32D2D">금액</th>
+          <th style="text-align:center;font-weight:500;color:#888">건수</th>
+          <th style="text-align:right;font-weight:500;color:#0F6E56">잔액</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+      <tfoot><tr>
+        <td style="color:#555">합 계</td>
+        <td style="color:#185FA5;text-align:right">${fmt(tInc)}</td>
+        <td style="text-align:center;color:#888;font-size:12px">${ds.length}건</td>
+        <td style="color:#A32D2D;text-align:right">${fmt(tExp)}</td>
+        <td style="text-align:center;color:#888;font-size:12px">${de.length}건</td>
+        <td class="${fc}">${tBal<0?'-':''}${fmt(Math.abs(tBal))}</td>
+      </tr></tfoot>
+    </table>`;
   }
 
-  // ─── 매출 결제수단별 건수+금액 ─────────────────────────
+  // 매출 결제수단별
   const payEl=document.getElementById('daily-payment');
   if(Object.keys(payIncome).length){
     payEl.innerHTML=Object.entries(payIncome).sort((a,b)=>b[1].total-a[1].total).map(([k,v])=>`
@@ -887,16 +983,15 @@ async function loadDaily() {
       </div>`).join('')+
       `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#185FA5">
         <span>합계</span><span>${ds.length}건 · ${fmt(totalSales)}</span></div>`;
-  } else { payEl.innerHTML='<div class="empty">No data</div>'; }
+  }else{payEl.innerHTML='<div class="empty">No data</div>';}
 
-  // 카테고리별 매출
   document.getElementById('daily-category').innerHTML=`
     <div class="stat-row"><span>🍽️ Food</span><span style="font-weight:600">${fmt(foodSales)}</span></div>
     <div class="stat-row"><span>🥤 Beverage</span><span style="font-weight:600">${fmt(bevSales)}</span></div>
     <div style="border-top:1px solid #eee;margin-top:4px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#185FA5">
       <span>합계</span><span>${fmt(foodSales+bevSales)}</span></div>`;
 
-  // ─── 지출 결제수단별 건수+합계 ─────────────────────────
+  // 지출 결제수단별
   const expPayEl=document.getElementById('daily-exp-payment');
   if(Object.keys(payExpense).length){
     expPayEl.innerHTML=Object.entries(payExpense).sort((a,b)=>b[1].total-a[1].total).map(([k,v])=>`
@@ -907,9 +1002,9 @@ async function loadDaily() {
       </div>`).join('')+
       `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#A32D2D">
         <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span></div>`;
-  } else { expPayEl.innerHTML='<div class="empty">No expense data</div>'; }
+  }else{expPayEl.innerHTML='<div class="empty">No expense data</div>';}
 
-  // ─── 지출 항목별 통계 ──────────────────────────────────
+  // 지출 항목별
   const expCatMap={};
   de.forEach(e=>{if(!expCatMap[e.cat])expCatMap[e.cat]={count:0,total:0};expCatMap[e.cat].count++;expCatMap[e.cat].total+=e.amount;});
   const expCatEl=document.getElementById('daily-exp-category');
@@ -924,28 +1019,39 @@ async function loadDaily() {
     }).join('')+
     `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#A32D2D">
       <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span></div>`;
-  } else { expCatEl.innerHTML='<div class="empty">No expense data</div>'; }
+  }else{expCatEl.innerHTML='<div class="empty">No expense data</div>';}
 
-  // 주문 목록
+  // ★ 주문 목록 (수정 버튼 포함)
   document.getElementById('daily-orders').innerHTML=ds.length
-    ?`<table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Currency</th><th>Payment</th><th>Total</th></tr></thead>
-      <tbody>${ds.map(s=>`<tr><td>${s.guest}</td>
+    ?`<table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Currency</th><th>Payment</th><th>Total</th><th></th></tr></thead>
+      <tbody>${ds.map(s=>`<tr>
+        <td style="font-weight:600">${s.guest}</td>
         <td><span class="badge ${s.ctype==='TOUR'?'badge-tour':'badge-walk'}">${s.ctype}</span></td>
         <td style="font-size:12px;color:#555">${s.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td>
         <td>${s.currency||'THB'}</td><td>${s.payment}</td>
-        <td style="font-weight:600">${fmt(s.total)}</td></tr>`).join('')}</tbody></table>`
+        <td style="font-weight:600">${fmt(s.total)}</td>
+        <td style="display:flex;gap:4px">
+          <button class="btn btn-edit" onclick="openEditModal(${s.id})">✏️</button>
+          <button class="btn btn-danger" onclick="deleteSale(${s.id})">Del</button>
+        </td></tr>`).join('')}</tbody></table>`
     :'<div class="empty">No orders</div>';
 
-  // 지출 목록
+  // ★ 지출 목록 (수정 버튼 포함)
   document.getElementById('daily-expenses').innerHTML=de.length
-    ?`<table><thead><tr><th>Category</th><th>Vendor</th><th>Currency</th><th>Payment</th><th>Amount</th></tr></thead>
-      <tbody>${de.map(e=>`<tr><td>${e.cat}</td><td>${e.vendor}</td>
+    ?`<table><thead><tr><th>Category</th><th>Vendor</th><th>Note</th><th>Currency</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
+      <tbody>${de.map(e=>`<tr>
+        <td>${e.cat}</td><td>${e.vendor}</td><td style="color:#888;font-size:12px">${e.note||''}</td>
         <td>${e.currency||'THB'}</td><td>${e.payment}</td>
-        <td style="color:#A32D2D;font-weight:600">${fmt(e.amount)}</td></tr>`).join('')}</tbody></table>`
+        <td style="color:#A32D2D;font-weight:600">${fmt(e.amount)}</td>
+        <td style="display:flex;gap:4px">
+          <button class="btn btn-edit" onclick="openExpEditModal(${e.id})">✏️</button>
+          <button class="btn btn-danger" onclick="deleteExpense(${e.id})">Del</button>
+        </td></tr>`).join('')}</tbody></table>`
     :'<div class="empty">No expenses</div>';
 }
 
-async function loadInventory() {
+// ── INVENTORY ────────────────────────────────────────────────
+async function loadInventory(){
   const data=await api('GET','/api/inventory');
   const el=document.getElementById('inventory-list');
   if(!data||!data.length){el.innerHTML='<div class="empty">No inventory items.</div>';return;}
@@ -966,30 +1072,28 @@ async function loadInventory() {
   }).join('');
 }
 
-async function addInvItem() {
+async function addInvItem(){
   const name=document.getElementById('inv-name').value.trim();
   if(!name){toast('Please enter item name',true);return;}
   const res=await api('POST','/api/inventory',{name,category:document.getElementById('inv-cat').value,unit:document.getElementById('inv-unit').value,current_stock:0,min_stock:parseFloat(document.getElementById('inv-min').value)||0});
   if(res?.ok){document.getElementById('inv-name').value='';document.getElementById('inv-min').value='0';loadInventory();toast('✓ Item added!');}
 }
 
-async function deleteInvItem(id) {
+async function deleteInvItem(id){
   if(!confirm('Delete this inventory item?'))return;
   const res=await api('DELETE',`/api/inventory/${id}`);
   if(res?.ok){loadInventory();toast('Item deleted');}
 }
 
-function openStockModal(id,name) {
+function openStockModal(id,name){
   stockItemId=id;
   document.getElementById('stock-modal-title').textContent=`📦 Update Stock — ${name}`;
-  document.getElementById('stock-qty').value='1';
-  document.getElementById('stock-note').value='';
+  document.getElementById('stock-qty').value='1'; document.getElementById('stock-note').value='';
   document.getElementById('stock-modal').classList.add('show');
 }
-
 function closeStockModal(){document.getElementById('stock-modal').classList.remove('show');stockItemId=null;}
 
-async function saveStock() {
+async function saveStock(){
   const action=document.getElementById('stock-action').value;
   const qty=parseFloat(document.getElementById('stock-qty').value)||0;
   const note=document.getElementById('stock-note').value.trim();
@@ -998,7 +1102,8 @@ async function saveStock() {
   if(res?.ok){closeStockModal();loadInventory();toast('✓ Stock updated!');}
 }
 
-function setRange(type) {
+// ── STATISTICS ────────────────────────────────────────────────
+function setRange(type){
   const t=tod(); let from=t;
   if(type==='week'){const d=new Date(t+'T00:00:00');d.setDate(d.getDate()-d.getDay()+1);from=d.toISOString().slice(0,10);}
   else if(type==='month'){from=t.slice(0,7)+'-01';}
@@ -1007,7 +1112,7 @@ function setRange(type) {
   loadStats();
 }
 
-async function loadStats() {
+async function loadStats(){
   const from=document.getElementById('stats-from').value, to=document.getElementById('stats-to').value;
   const [ds,de]=await Promise.all([api('GET',`/api/sales?from=${from}&to=${to}`),api('GET',`/api/expenses?from=${from}&to=${to}`)]);
   if(!ds||!de)return;
@@ -1055,17 +1160,16 @@ async function loadStats() {
     :'<div class="empty">No tour data in this period</div>';
 }
 
-function setMenuFilter(f,btn) {
+// ── SETTINGS ────────────────────────────────────────────────
+function setMenuFilter(f,btn){
   menuFilter=f;
   document.querySelectorAll('.filter-tabs button').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active'); renderSettingsMenu();
 }
-
-async function loadSettingsMenu() {
+async function loadSettingsMenu(){
   const data=await api('GET','/api/menu'); if(data)MENU=data; editingMenuId=null; renderSettingsMenu();
 }
-
-function renderSettingsMenu() {
+function renderSettingsMenu(){
   const filtered=MENU.filter(m=>{
     if(menuFilter==='ALL')return true;
     if(menuFilter==='Food'||menuFilter==='Beverage')return m.cat===menuFilter;
@@ -1094,18 +1198,15 @@ function renderSettingsMenu() {
         </div></div>`;
       const tb=m.type==='WALK-IN'?'badge-walk':m.type==='TOUR'?'badge-tour':'badge-cash';
       return`<div class="menu-row">
-        <span>${m.name}</span>
-        <span><span class="badge ${tb}">${m.type}</span></span>
-        <span style="color:#666">${m.cat}</span>
-        <span style="font-weight:600">฿${m.price.toLocaleString()}</span>
+        <span>${m.name}</span><span><span class="badge ${tb}">${m.type}</span></span>
+        <span style="color:#666">${m.cat}</span><span style="font-weight:600">฿${m.price.toLocaleString()}</span>
         <div style="display:flex;gap:6px">
           <button class="btn btn-edit" onclick="editingMenuId=${m.id};renderSettingsMenu()">✏️ Edit</button>
           <button class="btn btn-danger" onclick="deleteMenuItem(${m.id})">Del</button>
         </div></div>`;
     }).join('')}`;
 }
-
-async function addMenuItem() {
+async function addMenuItem(){
   const name=document.getElementById('new-menu-name').value.trim();
   const price=parseFloat(document.getElementById('new-menu-price').value);
   if(!name){toast('Please enter a menu name',true);return;}
@@ -1113,8 +1214,7 @@ async function addMenuItem() {
   const res=await api('POST','/api/menu',{name,type:document.getElementById('new-menu-type').value,cat:document.getElementById('new-menu-cat').value,price});
   if(res?.ok){document.getElementById('new-menu-name').value='';document.getElementById('new-menu-price').value='';await loadSettingsMenu();MENU=await api('GET','/api/menu')||MENU;toast('✓ Menu item added!');}
 }
-
-async function saveMenuItem(id) {
+async function saveMenuItem(id){
   const name=document.getElementById(`em-name-${id}`).value.trim();
   const price=parseFloat(document.getElementById(`em-price-${id}`).value);
   if(!name){toast('Name cannot be empty',true);return;}
@@ -1122,21 +1222,18 @@ async function saveMenuItem(id) {
   const res=await api('PUT',`/api/menu/${id}`,{name,type:document.getElementById(`em-type-${id}`).value,cat:document.getElementById(`em-cat-${id}`).value,price});
   if(res?.ok){editingMenuId=null;await loadSettingsMenu();MENU=await api('GET','/api/menu')||MENU;toast('✓ Menu updated!');}
 }
-
-async function deleteMenuItem(id) {
+async function deleteMenuItem(id){
   const item=MENU.find(m=>m.id===id);
   if(!confirm(`Delete "${item?.name}"?`))return;
   const res=await api('DELETE',`/api/menu/${id}`);
   if(res?.ok){await loadSettingsMenu();MENU=await api('GET','/api/menu')||MENU;toast('Menu item deleted');}
 }
-
-async function loadSettingsExpCats() {
+async function loadSettingsExpCats(){
   const data=await api('GET','/api/exp_categories');
-  if(data){EXP_CATS=data;populateExpCatSelect();}
+  if(data){EXP_CATS=data;populateExpCatSelect();populateEECatSelect();}
   editingCatId=null; renderSettingsExpCats();
 }
-
-function renderSettingsExpCats() {
+function renderSettingsExpCats(){
   const el=document.getElementById('settings-exp-cat-list');
   if(!EXP_CATS.length){el.innerHTML='<div class="empty">No categories</div>';return;}
   el.innerHTML=EXP_CATS.map(c=>{
@@ -1153,23 +1250,20 @@ function renderSettingsExpCats() {
       </div></div>`;
   }).join('');
 }
-
-async function addExpCat() {
+async function addExpCat(){
   const name=document.getElementById('new-exp-cat').value.trim();
   if(!name){toast('Please enter a category name',true);return;}
   const res=await api('POST','/api/exp_categories',{name});
   if(res?.ok){document.getElementById('new-exp-cat').value='';await loadSettingsExpCats();toast('✓ Category added!');}
   else if(res)toast('This category already exists',true);
 }
-
-async function saveExpCat(id) {
+async function saveExpCat(id){
   const name=document.getElementById(`ec-name-${id}`).value.trim();
   if(!name){toast('Name cannot be empty',true);return;}
   const res=await api('PUT',`/api/exp_categories/${id}`,{name});
   if(res?.ok){editingCatId=null;await loadSettingsExpCats();toast('✓ Category updated!');}
 }
-
-async function deleteExpCat(id) {
+async function deleteExpCat(id){
   const cat=EXP_CATS.find(c=>c.id===id);
   if(!confirm(`Delete "${cat?.name}"?`))return;
   const res=await api('DELETE',`/api/exp_categories/${id}`);
