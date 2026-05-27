@@ -82,8 +82,7 @@ tr:hover td { background: #fafafa; }
 .order-total-row .total-label { font-size: 15px; font-weight: 600; }
 .order-total-row .total-value { font-size: 20px; font-weight: 700; color: #185FA5; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
-@media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } .three-col { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
 .filter-tabs { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
 .filter-tabs button { padding: 6px 14px; border: 1px solid #ddd; border-radius: 99px; font-size: 13px; cursor: pointer; background: #fff; color: #666; font-weight: 500; transition: all 0.15s; }
 .filter-tabs button.active { background: #185FA5; color: #fff; border-color: #185FA5; }
@@ -100,17 +99,29 @@ tr:hover td { background: #fafafa; }
 .highlight-row td { background: #fffbe6 !important; }
 .stock-ok   { color: #0F6E56; font-weight: 600; }
 .stock-low  { color: #A32D2D; font-weight: 600; }
-/* 결제수단별 건수 표시용 */
+/* 결제수단별 행 */
 .pay-stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; background: #f8f8f6; margin-bottom: 6px; font-size: 13px; }
 .pay-stat-row .pay-name { font-weight: 500; flex: 1; }
 .pay-stat-row .pay-count { color: #888; font-size: 12px; margin: 0 12px; }
 .pay-stat-row .pay-amount { font-weight: 700; color: #185FA5; }
 .pay-stat-row.exp-row .pay-amount { color: #A32D2D; }
-/* 지출 항목별 통계 */
-.exp-cat-stat { padding: 10px 12px; border-radius: 8px; background: #fff8f8; border: 1px solid #f5dede; margin-bottom: 8px; }
-.exp-cat-stat .cat-name { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
-.exp-cat-stat .cat-detail { display: flex; justify-content: space-between; font-size: 12px; color: #888; }
-.exp-cat-stat .cat-amount { font-size: 15px; font-weight: 700; color: #A32D2D; margin-top: 2px; }
+/* 시제 마감 테이블 */
+.closing-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.closing-table th { padding: 10px 14px; font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
+.closing-table th.blue-bg { background: #185FA5; }
+.closing-table th.red-bg  { background: #A32D2D; }
+.closing-table th.green-bg{ background: #0F6E56; }
+.closing-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; }
+.closing-table tr:last-child td { border-bottom: none; }
+.closing-table .pay-badge-cell { width: 90px; }
+.closing-table .income-val  { color: #185FA5; font-weight: 600; text-align: right; }
+.closing-table .exp-val     { color: #A32D2D; font-weight: 600; text-align: right; }
+.closing-table .balance-pos { color: #0F6E56; font-weight: 700; text-align: right; font-size: 15px; }
+.closing-table .balance-neg { color: #A32D2D; font-weight: 700; text-align: right; font-size: 15px; }
+.closing-table .count-cell  { color: #888; font-size: 12px; text-align: center; }
+.closing-table tfoot td    { background: #f0f4f8; font-weight: 700; font-size: 14px; padding: 12px 14px; }
+.closing-card { border: 2px solid #0F6E56; }
+.closing-card h3 { color: #0F6E56; }
 /* Modal */
 .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:100; align-items:center; justify-content:center; }
 .modal-overlay.show { display:flex; }
@@ -252,7 +263,13 @@ tr:hover td { background: #fafafa; }
     </div>
     <div class="metrics" id="daily-metrics"></div>
 
-    <!-- 1) 결제수단별 건수 + 금액 (매출) -->
+    <!-- ★ 시제 마감 정산표 -->
+    <div class="card closing-card">
+      <h3>🏦 일일 시제 마감 정산 <span style="font-size:12px;color:#0F6E56;font-weight:400">(결제수단별 잔액)</span></h3>
+      <div id="daily-closing"></div>
+    </div>
+
+    <!-- 매출 결제수단별 건수 + 금액 / 카테고리별 -->
     <div class="two-col">
       <div class="card">
         <h3>💳 Payment Breakdown <span style="font-size:12px;color:#888;font-weight:400">(건수 · 금액)</span></h3>
@@ -261,13 +278,12 @@ tr:hover td { background: #fafafa; }
       <div class="card"><h3>🍽️ Sales by Category</h3><div id="daily-category"></div></div>
     </div>
 
-    <!-- 2) 지출 결제수단별 건수 + 합계 -->
+    <!-- 지출 결제수단별 / 지출 항목별 -->
     <div class="two-col">
       <div class="card">
         <h3>💸 Expense by Payment <span style="font-size:12px;color:#888;font-weight:400">(건수 · 합계)</span></h3>
         <div id="daily-exp-payment"></div>
       </div>
-      <!-- 3) 지출 항목별 통계 -->
       <div class="card">
         <h3>📂 Expense by Category</h3>
         <div id="daily-exp-category"></div>
@@ -288,22 +304,16 @@ tr:hover td { background: #fafafa; }
         <div class="form-group">
           <label>Category</label>
           <select id="inv-cat">
-            <option value="Beer">Beer</option>
-            <option value="Soju">Soju</option>
-            <option value="Spirits">Spirits</option>
-            <option value="Soft Drink">Soft Drink</option>
-            <option value="Food">Food</option>
-            <option value="Other">Other</option>
+            <option value="Beer">Beer</option><option value="Soju">Soju</option>
+            <option value="Spirits">Spirits</option><option value="Soft Drink">Soft Drink</option>
+            <option value="Food">Food</option><option value="Other">Other</option>
           </select>
         </div>
         <div class="form-group">
           <label>Unit</label>
           <select id="inv-unit">
-            <option value="bottle">Bottle</option>
-            <option value="can">Can</option>
-            <option value="box">Box</option>
-            <option value="kg">Kg</option>
-            <option value="piece">Piece</option>
+            <option value="bottle">Bottle</option><option value="can">Can</option>
+            <option value="box">Box</option><option value="kg">Kg</option><option value="piece">Piece</option>
           </select>
         </div>
         <div class="form-group"><label>Min Stock Alert</label><input type="number" id="inv-min" placeholder="0" min="0" value="0"></div>
@@ -464,58 +474,38 @@ tr:hover td { background: #fafafa; }
 <div class="toast" id="toast"></div>
 
 <script>
-// ── GLOBALS ─────────────────────────────────────────────────
 let MENU = [], EXP_CATS = [], orderItems = [], viewDate = tod();
 let menuFilter = 'ALL', editingMenuId = null, editingCatId = null;
 let allTodaySales = [], editOrderId = null, editOrderItems = [];
 let stockItemId = null;
 
-// ── HELPERS ─────────────────────────────────────────────────
 function tod() { return new Date().toISOString().slice(0,10); }
-
 function fmtCurrency(n, currency) {
   const sym = currency === 'KRW' ? '₩' : currency === 'USD' ? '$' : '฿';
   return sym + Math.round(n).toLocaleString();
 }
 function fmt(n) { return '฿' + Math.round(n).toLocaleString(); }
-
 function fmtDate(d) {
   const parts = d.split('-');
   const dt = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
   return dt.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 }
-
 function toast(msg, isErr) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = isErr ? '#A32D2D' : '#185FA5';
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  t.textContent = msg; t.style.background = isErr ? '#A32D2D' : '#185FA5';
+  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500);
 }
-
 function setStatus(ok) {
-  const d = document.getElementById('status-dot');
-  d.className = 'status-dot ' + (ok ? 'online' : 'offline');
+  document.getElementById('status-dot').className = 'status-dot ' + (ok ? 'online' : 'offline');
 }
 
-// ── API ─────────────────────────────────────────────────────
 async function api(method, path, body) {
   try {
-    const res = await fetch(path, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: body ? JSON.stringify(body) : undefined
-    });
-    setStatus(true);
-    return await res.json();
-  } catch(e) {
-    setStatus(false);
-    toast('Connection error', true);
-    return null;
-  }
+    const res = await fetch(path, { method, headers: {'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : undefined });
+    setStatus(true); return await res.json();
+  } catch(e) { setStatus(false); toast('Connection error', true); return null; }
 }
 
-// ── NAV ─────────────────────────────────────────────────────
 function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
@@ -528,7 +518,6 @@ function showSection(id) {
   if (id==='settings')  { loadSettingsMenu(); loadSettingsExpCats(); }
 }
 
-// ── INIT ────────────────────────────────────────────────────
 async function init() {
   const t = tod();
   document.getElementById('sale-date').value = t;
@@ -537,57 +526,39 @@ async function init() {
   const m = new Date(); m.setDate(1);
   document.getElementById('stats-from').value = m.toISOString().slice(0,10);
   document.getElementById('stats-to').value   = t;
-  const [menuData, catData] = await Promise.all([
-    api('GET','/api/menu'), api('GET','/api/exp_categories')
-  ]);
+  const [menuData, catData] = await Promise.all([api('GET','/api/menu'), api('GET','/api/exp_categories')]);
   if (menuData) MENU = menuData;
   if (catData)  { EXP_CATS = catData; populateExpCatSelect(); }
-  addOrderItem();
-  loadTodaySales();
-  loadRecentExpenses();
+  addOrderItem(); loadTodaySales(); loadRecentExpenses();
 }
 
 function populateExpCatSelect() {
-  const sel = document.getElementById('exp-cat');
-  sel.innerHTML = EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
+  document.getElementById('exp-cat').innerHTML = EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
 }
 
-// ── SALES ENTRY ─────────────────────────────────────────────
 function onCtypeChange() {
   const isTour = document.getElementById('sale-ctype').value === 'TOUR';
   document.getElementById('tour-name-field').style.display = isTour ? '' : 'none';
   document.getElementById('guide-name-field').style.display = isTour ? '' : 'none';
-  orderItems = [];
-  addOrderItem();
+  orderItems = []; addOrderItem();
 }
 
-function getMenuByCat(cat, ctype) {
-  return MENU.filter(m => (m.type === ctype || m.type === 'COMMON') && m.cat === cat);
-}
-
-function addOrderItem() {
-  orderItems.push({ cat:'Food', menuId:null, qty:1 });
-  renderOrderItems();
-}
-
+function getMenuByCat(cat, ctype) { return MENU.filter(m => (m.type === ctype || m.type === 'COMMON') && m.cat === cat); }
+function addOrderItem() { orderItems.push({ cat:'Food', menuId:null, qty:1 }); renderOrderItems(); }
 function removeOrderItem(i) { orderItems.splice(i,1); renderOrderItems(); }
-
 function onItemCatChange(i, cat) {
   orderItems[i].cat = cat;
-  const ctype = document.getElementById('sale-ctype').value;
-  const list = getMenuByCat(cat, ctype);
+  const list = getMenuByCat(cat, document.getElementById('sale-ctype').value);
   orderItems[i].menuId = list.length ? list[0].id : null;
   renderOrderItems();
 }
-
 function onItemMenuChange(i, id) { orderItems[i].menuId = parseInt(id); renderOrderItems(); }
-
 function getMenuObj(item) { return MENU.find(m => m.id === item.menuId) || null; }
 
 function renderOrderItems() {
   const ctype = document.getElementById('sale-ctype').value;
   const container = document.getElementById('order-items');
-  if (!orderItems.length) { container.innerHTML='<div class="empty" style="padding:1rem 0">No items. Click "+ Add Menu Item"</div>'; updateTotal(); return; }
+  if (!orderItems.length) { container.innerHTML='<div class="empty" style="padding:1rem 0">No items.</div>'; updateTotal(); return; }
   container.innerHTML = orderItems.map((item,i) => {
     const catList = getMenuByCat(item.cat, ctype);
     if (!item.menuId && catList.length) item.menuId = catList[0].id;
@@ -613,14 +584,13 @@ function updateTotal() {
   const subtotal = orderItems.reduce((s,item) => { const m=getMenuObj(item); return s+(m?m.price*(item.qty||1):0); }, 0);
   const discount = parseFloat(document.getElementById('sale-discount')?.value)||0;
   const currency = document.getElementById('sale-currency')?.value || 'THB';
-  const total    = Math.max(0, subtotal-discount);
-  const subEl = document.getElementById('order-subtotal');
-  const discRow = document.getElementById('discount-row');
-  const subRow  = document.getElementById('subtotal-row');
-  if (subEl) subEl.textContent = fmtCurrency(subtotal, currency);
-  if (discount>0) { discRow.style.display=''; subRow.style.display=''; document.getElementById('order-discount-show').textContent=fmtCurrency(discount,currency); }
-  else { if(discRow) discRow.style.display='none'; if(subRow) subRow.style.display='none'; }
-  document.getElementById('order-total').textContent = fmtCurrency(total, currency);
+  const total = Math.max(0, subtotal-discount);
+  const subEl=document.getElementById('order-subtotal');
+  const discRow=document.getElementById('discount-row'); const subRow=document.getElementById('subtotal-row');
+  if(subEl) subEl.textContent=fmtCurrency(subtotal,currency);
+  if(discount>0){discRow.style.display='';subRow.style.display='';document.getElementById('order-discount-show').textContent=fmtCurrency(discount,currency);}
+  else{if(discRow)discRow.style.display='none';if(subRow)subRow.style.display='none';}
+  document.getElementById('order-total').textContent=fmtCurrency(total,currency);
 }
 
 async function submitSale() {
@@ -631,20 +601,15 @@ async function submitSale() {
   const discount = parseFloat(document.getElementById('sale-discount').value)||0;
   const currency = document.getElementById('sale-currency').value;
   const body = {
-    date:     document.getElementById('sale-date').value,
-    ctype:    document.getElementById('sale-ctype').value,
-    guest:    document.getElementById('sale-guest').value.trim()||'-',
-    tour:     document.getElementById('sale-tour').value.trim(),
-    guide:    document.getElementById('sale-guide').value.trim(),
-    payment:  document.getElementById('sale-payment').value,
-    currency, discount, items, total: Math.max(0,subtotal-discount)
+    date:document.getElementById('sale-date').value, ctype:document.getElementById('sale-ctype').value,
+    guest:document.getElementById('sale-guest').value.trim()||'-',
+    tour:document.getElementById('sale-tour').value.trim(), guide:document.getElementById('sale-guide').value.trim(),
+    payment:document.getElementById('sale-payment').value, currency, discount, items, total:Math.max(0,subtotal-discount)
   };
   const res = await api('POST','/api/sales',body);
   if (res?.ok) {
     orderItems=[];addOrderItem();
-    document.getElementById('sale-guest').value='';
-    document.getElementById('sale-tour').value='';
-    document.getElementById('sale-guide').value='';
+    ['sale-guest','sale-tour','sale-guide'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('sale-discount').value='0';
     loadTodaySales(); toast('✓ Order saved!');
   }
@@ -653,14 +618,12 @@ async function submitSale() {
 async function loadTodaySales() {
   const d = document.getElementById('sale-date').value;
   const data = await api('GET',`/api/sales?date=${d}`);
-  allTodaySales = data||[];
-  renderTodaySalesTable(allTodaySales);
+  allTodaySales = data||[]; renderTodaySalesTable(allTodaySales);
 }
 
 function filterOrders(q) {
   if (!q.trim()) { renderTodaySalesTable(allTodaySales); return; }
-  const filtered = allTodaySales.filter(s=>s.guest.toLowerCase().includes(q.toLowerCase()));
-  renderTodaySalesTable(filtered,q);
+  renderTodaySalesTable(allTodaySales.filter(s=>s.guest.toLowerCase().includes(q.toLowerCase())),q);
 }
 
 function renderTodaySalesTable(data, highlight) {
@@ -682,8 +645,7 @@ function renderTodaySalesTable(data, highlight) {
       <td style="display:flex;gap:4px">
         <button class="btn btn-edit" onclick="openEditModal(${s.id})">✏️</button>
         <button class="btn btn-danger" onclick="deleteSale(${s.id})">Del</button>
-      </td>
-    </tr>`).join('')}</tbody></table>`;
+      </td></tr>`).join('')}</tbody></table>`;
 }
 
 async function deleteSale(id) {
@@ -692,7 +654,6 @@ async function deleteSale(id) {
   if (res?.ok) { loadTodaySales(); toast('Order deleted'); }
 }
 
-// ── EDIT ORDER MODAL ─────────────────────────────────────────
 function onEditCtypeChange() {
   const isTour = document.getElementById('edit-ctype').value==='TOUR';
   document.getElementById('edit-tour-field').style.display  = isTour?'':'none';
@@ -716,12 +677,7 @@ function openEditModal(id) {
 }
 
 function closeEditModal() { document.getElementById('edit-modal').classList.remove('show'); editOrderId=null; editOrderItems=[]; }
-
-function getEditMenuByCat(cat) {
-  const ctype = document.getElementById('edit-ctype').value;
-  return MENU.filter(m=>(m.type===ctype||m.type==='COMMON')&&m.cat===cat);
-}
-
+function getEditMenuByCat(cat) { const ctype=document.getElementById('edit-ctype').value; return MENU.filter(m=>(m.type===ctype||m.type==='COMMON')&&m.cat===cat); }
 function addEditOrderItem() { editOrderItems.push({cat:'Food',menuId:null,qty:1}); renderEditOrderItems(); }
 function removeEditOrderItem(i) { editOrderItems.splice(i,1); renderEditOrderItems(); }
 
@@ -750,69 +706,60 @@ function renderEditOrderItems() {
 }
 
 function updateEditTotal() {
-  const subtotal = editOrderItems.reduce((s,item)=>{ const m=MENU.find(m=>m.id===item.menuId); return s+(m?m.price*(item.qty||1):0); },0);
-  const discount = parseFloat(document.getElementById('edit-discount')?.value)||0;
-  const currency = document.getElementById('edit-currency')?.value||'THB';
-  const total    = Math.max(0,subtotal-discount);
+  const subtotal=editOrderItems.reduce((s,item)=>{const m=MENU.find(m=>m.id===item.menuId);return s+(m?m.price*(item.qty||1):0);},0);
+  const discount=parseFloat(document.getElementById('edit-discount')?.value)||0;
+  const currency=document.getElementById('edit-currency')?.value||'THB';
+  const total=Math.max(0,subtotal-discount);
   const subEl=document.getElementById('edit-order-subtotal');
   const discEl=document.getElementById('edit-discount-show');
-  const discRow=document.getElementById('edit-discount-row');
-  const subRow=document.getElementById('edit-subtotal-row');
-  if(subEl) subEl.textContent=fmtCurrency(subtotal,currency);
+  const discRow=document.getElementById('edit-discount-row'); const subRow=document.getElementById('edit-subtotal-row');
+  if(subEl)subEl.textContent=fmtCurrency(subtotal,currency);
   if(discount>0){discRow.style.display='';subRow.style.display='';if(discEl)discEl.textContent=fmtCurrency(discount,currency);}
   else{if(discRow)discRow.style.display='none';if(subRow)subRow.style.display='none';}
   document.getElementById('edit-order-total').textContent=fmtCurrency(total,currency);
 }
 
 async function saveEditOrder() {
-  const valid = editOrderItems.filter(i=>MENU.find(m=>m.id===i.menuId));
-  if (!valid.length) { toast('Please add at least one item',true); return; }
-  const items = valid.map(item=>{ const m=MENU.find(m=>m.id===item.menuId); return {name:m.name,cat:m.cat,price:m.price,qty:item.qty||1,total:m.price*(item.qty||1)}; });
-  const subtotal = items.reduce((s,i)=>s+i.total,0);
-  const discount = parseFloat(document.getElementById('edit-discount').value)||0;
-  const currency = document.getElementById('edit-currency').value;
-  const body = {
-    date:    allTodaySales.find(s=>s.id===editOrderId)?.date,
-    ctype:   document.getElementById('edit-ctype').value,
-    guest:   document.getElementById('edit-guest').value.trim()||'-',
-    tour:    document.getElementById('edit-tour').value.trim(),
-    guide:   document.getElementById('edit-guide').value.trim(),
-    payment: document.getElementById('edit-payment').value,
-    currency, discount, items, total: Math.max(0,subtotal-discount)
+  const valid=editOrderItems.filter(i=>MENU.find(m=>m.id===i.menuId));
+  if(!valid.length){toast('Please add at least one item',true);return;}
+  const items=valid.map(item=>{const m=MENU.find(m=>m.id===item.menuId);return{name:m.name,cat:m.cat,price:m.price,qty:item.qty||1,total:m.price*(item.qty||1)};});
+  const subtotal=items.reduce((s,i)=>s+i.total,0);
+  const discount=parseFloat(document.getElementById('edit-discount').value)||0;
+  const currency=document.getElementById('edit-currency').value;
+  const body={
+    date:allTodaySales.find(s=>s.id===editOrderId)?.date,
+    ctype:document.getElementById('edit-ctype').value,
+    guest:document.getElementById('edit-guest').value.trim()||'-',
+    tour:document.getElementById('edit-tour').value.trim(),
+    guide:document.getElementById('edit-guide').value.trim(),
+    payment:document.getElementById('edit-payment').value,
+    currency,discount,items,total:Math.max(0,subtotal-discount)
   };
   await api('DELETE',`/api/sales/${editOrderId}`);
-  const res = await api('POST','/api/sales',body);
-  if (res?.ok) { closeEditModal(); loadTodaySales(); toast('✓ Order updated!'); }
+  const res=await api('POST','/api/sales',body);
+  if(res?.ok){closeEditModal();loadTodaySales();toast('✓ Order updated!');}
 }
 
-// ── EXPENSE ──────────────────────────────────────────────────
 async function submitExpense() {
-  const amount = parseFloat(document.getElementById('exp-amount').value);
-  if (!amount||amount<=0) { toast('Please enter a valid amount',true); return; }
-  const body = {
-    date:     document.getElementById('exp-date').value,
-    cat:      document.getElementById('exp-cat').value,
-    vendor:   document.getElementById('exp-vendor').value.trim()||'-',
-    amount,
-    currency: document.getElementById('exp-currency').value,
-    payment:  document.getElementById('exp-payment').value,
-    note:     document.getElementById('exp-note').value.trim()
+  const amount=parseFloat(document.getElementById('exp-amount').value);
+  if(!amount||amount<=0){toast('Please enter a valid amount',true);return;}
+  const body={
+    date:document.getElementById('exp-date').value, cat:document.getElementById('exp-cat').value,
+    vendor:document.getElementById('exp-vendor').value.trim()||'-', amount,
+    currency:document.getElementById('exp-currency').value,
+    payment:document.getElementById('exp-payment').value,
+    note:document.getElementById('exp-note').value.trim()
   };
-  const res = await api('POST','/api/expenses',body);
-  if (res?.ok) {
-    document.getElementById('exp-vendor').value='';
-    document.getElementById('exp-amount').value='';
-    document.getElementById('exp-note').value='';
-    loadRecentExpenses(); toast('✓ Expense saved!');
-  }
+  const res=await api('POST','/api/expenses',body);
+  if(res?.ok){['exp-vendor','exp-amount','exp-note'].forEach(id=>document.getElementById(id).value='');loadRecentExpenses();toast('✓ Expense saved!');}
 }
 
 async function loadRecentExpenses() {
-  const data = await api('GET','/api/expenses');
-  const el = document.getElementById('expense-table');
-  if (!data||!data.length) { el.innerHTML='<div class="empty">No expenses recorded</div>'; return; }
-  const sym = (c) => c==='KRW'?'₩':c==='USD'?'$':'฿';
-  el.innerHTML = `<table><thead><tr><th>Date</th><th>Category</th><th>Vendor</th><th>Currency</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
+  const data=await api('GET','/api/expenses');
+  const el=document.getElementById('expense-table');
+  if(!data||!data.length){el.innerHTML='<div class="empty">No expenses recorded</div>';return;}
+  const sym=(c)=>c==='KRW'?'₩':c==='USD'?'$':'฿';
+  el.innerHTML=`<table><thead><tr><th>Date</th><th>Category</th><th>Vendor</th><th>Currency</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
     <tbody>${data.slice(0,30).map(e=>`<tr>
       <td>${e.date}</td><td>${e.cat}</td>
       <td>${e.vendor}${e.note?' · '+e.note:''}</td>
@@ -824,25 +771,24 @@ async function loadRecentExpenses() {
 }
 
 async function deleteExpense(id) {
-  if (!confirm('Delete this expense?')) return;
-  const res = await api('DELETE',`/api/expenses/${id}`);
-  if (res?.ok) { loadRecentExpenses(); toast('Expense deleted'); }
+  if(!confirm('Delete this expense?'))return;
+  const res=await api('DELETE',`/api/expenses/${id}`);
+  if(res?.ok){loadRecentExpenses();toast('Expense deleted');}
 }
 
-// ── DAILY ────────────────────────────────────────────────────
 function changeDay(d) {
-  const parts = viewDate.split('-');
-  const dt = new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+  const parts=viewDate.split('-');
+  const dt=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
   dt.setDate(dt.getDate()+d);
-  const y=dt.getFullYear(), mo=String(dt.getMonth()+1).padStart(2,'0'), day=String(dt.getDate()).padStart(2,'0');
+  const y=dt.getFullYear(),mo=String(dt.getMonth()+1).padStart(2,'0'),day=String(dt.getDate()).padStart(2,'0');
   viewDate=`${y}-${mo}-${day}`;
   document.getElementById('daily-date-label').textContent=fmtDate(viewDate);
   loadDaily();
 }
 
 async function loadDaily() {
-  const [ds,de] = await Promise.all([api('GET',`/api/sales?date=${viewDate}`),api('GET',`/api/expenses?date=${viewDate}`)]);
-  if(!ds||!de) return;
+  const [ds,de]=await Promise.all([api('GET',`/api/sales?date=${viewDate}`),api('GET',`/api/expenses?date=${viewDate}`)]);
+  if(!ds||!de)return;
 
   const totalSales=ds.reduce((s,o)=>s+o.total,0);
   const totalExp=de.reduce((s,e)=>s+e.amount,0);
@@ -860,90 +806,125 @@ async function loadDaily() {
     <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
     <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>`;
 
-  // ─── 1) 매출 결제수단별 건수 + 금액 ───────────────────────
-  const payMap = {};
-  ds.forEach(s => {
-    if (!payMap[s.payment]) payMap[s.payment] = { count: 0, total: 0 };
-    payMap[s.payment].count++;
-    payMap[s.payment].total += s.total;
+  // ─── 매출 결제수단별 집계 ───────────────────────────────
+  const payIncome={};
+  ds.forEach(s=>{
+    if(!payIncome[s.payment])payIncome[s.payment]={count:0,total:0};
+    payIncome[s.payment].count++; payIncome[s.payment].total+=s.total;
   });
-  const payEl = document.getElementById('daily-payment');
-  if (Object.keys(payMap).length) {
-    payEl.innerHTML = Object.entries(payMap)
-      .sort((a,b) => b[1].total - a[1].total)
-      .map(([k,v]) => `
-        <div class="pay-stat-row">
-          <span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
-          <span class="pay-count">${v.count}건</span>
-          <span class="pay-amount">${fmt(v.total)}</span>
-        </div>`).join('') +
-      `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#185FA5">
-        <span>합계</span><span>${ds.length}건 · ${fmt(totalSales)}</span>
-      </div>`;
+
+  // ─── 지출 결제수단별 집계 ───────────────────────────────
+  const payExpense={};
+  de.forEach(e=>{
+    if(!payExpense[e.payment])payExpense[e.payment]={count:0,total:0};
+    payExpense[e.payment].count++; payExpense[e.payment].total+=e.amount;
+  });
+
+  // ─── ★ 시제 마감 정산표 ────────────────────────────────
+  const allPays=[...new Set([...Object.keys(payIncome),...Object.keys(payExpense)])].sort();
+  const closingEl=document.getElementById('daily-closing');
+  if(!allPays.length){
+    closingEl.innerHTML='<div class="empty">데이터가 없습니다</div>';
   } else {
-    payEl.innerHTML = '<div class="empty">No data</div>';
+    let totalBalIncome=0, totalBalExp=0, totalBal=0;
+    const rows=allPays.map(pay=>{
+      const inc=payIncome[pay]||{count:0,total:0};
+      const exp=payExpense[pay]||{count:0,total:0};
+      const bal=inc.total-exp.total;
+      totalBalIncome+=inc.total; totalBalExp+=exp.total; totalBal+=bal;
+      const balClass=bal>=0?'balance-pos':'balance-neg';
+      const balSign=bal>=0?'':'-';
+      return `<tr>
+        <td class="pay-badge-cell"><span class="badge badge-${pay.toLowerCase()}">${pay}</span></td>
+        <td class="income-val">${inc.total>0?fmt(inc.total):'-'}</td>
+        <td class="count-cell">${inc.count>0?inc.count+'건':'-'}</td>
+        <td class="exp-val">${exp.total>0?fmt(exp.total):'-'}</td>
+        <td class="count-cell">${exp.count>0?exp.count+'건':'-'}</td>
+        <td class="${balClass}">${balSign}${fmt(Math.abs(bal))}</td>
+      </tr>`;
+    }).join('');
+    const footBal=totalBal>=0?'balance-pos':'balance-neg';
+    closingEl.innerHTML=`
+      <table class="closing-table">
+        <thead>
+          <tr>
+            <th style="background:#555;border-radius:8px 0 0 0">결제수단</th>
+            <th colspan="2" class="blue-bg">수입 (매출)</th>
+            <th colspan="2" class="red-bg">지출</th>
+            <th class="green-bg" style="border-radius:0 8px 0 0">잔액 (시제)</th>
+          </tr>
+          <tr style="background:#f8f8f6;font-size:11px;color:#888">
+            <th></th>
+            <th style="text-align:right;font-weight:500;color:#185FA5">금액</th>
+            <th style="text-align:center;font-weight:500;color:#888">건수</th>
+            <th style="text-align:right;font-weight:500;color:#A32D2D">금액</th>
+            <th style="text-align:center;font-weight:500;color:#888">건수</th>
+            <th style="text-align:right;font-weight:500;color:#0F6E56">잔액</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+        <tfoot>
+          <tr>
+            <td style="color:#555">합 계</td>
+            <td style="color:#185FA5;text-align:right">${fmt(totalBalIncome)}</td>
+            <td style="text-align:center;color:#888;font-size:12px">${ds.length}건</td>
+            <td style="color:#A32D2D;text-align:right">${fmt(totalBalExp)}</td>
+            <td style="text-align:center;color:#888;font-size:12px">${de.length}건</td>
+            <td class="${footBal}">${totalBal<0?'-':''}${fmt(Math.abs(totalBal))}</td>
+          </tr>
+        </tfoot>
+      </table>`;
   }
+
+  // ─── 매출 결제수단별 건수+금액 ─────────────────────────
+  const payEl=document.getElementById('daily-payment');
+  if(Object.keys(payIncome).length){
+    payEl.innerHTML=Object.entries(payIncome).sort((a,b)=>b[1].total-a[1].total).map(([k,v])=>`
+      <div class="pay-stat-row">
+        <span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
+        <span class="pay-count">${v.count}건</span>
+        <span class="pay-amount">${fmt(v.total)}</span>
+      </div>`).join('')+
+      `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#185FA5">
+        <span>합계</span><span>${ds.length}건 · ${fmt(totalSales)}</span></div>`;
+  } else { payEl.innerHTML='<div class="empty">No data</div>'; }
 
   // 카테고리별 매출
   document.getElementById('daily-category').innerHTML=`
     <div class="stat-row"><span>🍽️ Food</span><span style="font-weight:600">${fmt(foodSales)}</span></div>
     <div class="stat-row"><span>🥤 Beverage</span><span style="font-weight:600">${fmt(bevSales)}</span></div>
     <div style="border-top:1px solid #eee;margin-top:4px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#185FA5">
-      <span>합계</span><span>${fmt(foodSales+bevSales)}</span>
-    </div>`;
+      <span>합계</span><span>${fmt(foodSales+bevSales)}</span></div>`;
 
-  // ─── 2) 지출 결제수단별 건수 + 합계 ──────────────────────
-  const expPayMap = {};
-  de.forEach(e => {
-    if (!expPayMap[e.payment]) expPayMap[e.payment] = { count: 0, total: 0 };
-    expPayMap[e.payment].count++;
-    expPayMap[e.payment].total += e.amount;
-  });
-  const expPayEl = document.getElementById('daily-exp-payment');
-  if (Object.keys(expPayMap).length) {
-    expPayEl.innerHTML = Object.entries(expPayMap)
-      .sort((a,b) => b[1].total - a[1].total)
-      .map(([k,v]) => `
-        <div class="pay-stat-row exp-row">
-          <span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
-          <span class="pay-count">${v.count}건</span>
-          <span class="pay-amount">${fmt(v.total)}</span>
-        </div>`).join('') +
+  // ─── 지출 결제수단별 건수+합계 ─────────────────────────
+  const expPayEl=document.getElementById('daily-exp-payment');
+  if(Object.keys(payExpense).length){
+    expPayEl.innerHTML=Object.entries(payExpense).sort((a,b)=>b[1].total-a[1].total).map(([k,v])=>`
+      <div class="pay-stat-row exp-row">
+        <span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
+        <span class="pay-count">${v.count}건</span>
+        <span class="pay-amount">${fmt(v.total)}</span>
+      </div>`).join('')+
       `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#A32D2D">
-        <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span>
-      </div>`;
-  } else {
-    expPayEl.innerHTML = '<div class="empty">No expense data</div>';
-  }
+        <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span></div>`;
+  } else { expPayEl.innerHTML='<div class="empty">No expense data</div>'; }
 
-  // ─── 3) 지출 항목(카테고리)별 통계 ───────────────────────
-  const expCatMap = {};
-  de.forEach(e => {
-    if (!expCatMap[e.cat]) expCatMap[e.cat] = { count: 0, total: 0 };
-    expCatMap[e.cat].count++;
-    expCatMap[e.cat].total += e.amount;
-  });
-  const expCatEl = document.getElementById('daily-exp-category');
-  if (Object.keys(expCatMap).length) {
-    const maxVal = Math.max(...Object.values(expCatMap).map(v=>v.total));
-    expCatEl.innerHTML = Object.entries(expCatMap)
-      .sort((a,b) => b[1].total - a[1].total)
-      .map(([cat, v]) => {
-        const pct = Math.round(v.total / maxVal * 100);
-        return `<div class="bar-wrap">
-          <div class="bar-label">
-            <span style="font-weight:500">${cat}</span>
-            <span style="color:#A32D2D;font-weight:600">${fmt(v.total)} <span style="color:#aaa;font-weight:400;font-size:11px">${v.count}건</span></span>
-          </div>
-          <div class="bar red" style="width:${pct}%"></div>
-        </div>`;
-      }).join('') +
-      `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#A32D2D">
-        <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span>
-      </div>`;
-  } else {
-    expCatEl.innerHTML = '<div class="empty">No expense data</div>';
-  }
+  // ─── 지출 항목별 통계 ──────────────────────────────────
+  const expCatMap={};
+  de.forEach(e=>{if(!expCatMap[e.cat])expCatMap[e.cat]={count:0,total:0};expCatMap[e.cat].count++;expCatMap[e.cat].total+=e.amount;});
+  const expCatEl=document.getElementById('daily-exp-category');
+  if(Object.keys(expCatMap).length){
+    const maxVal=Math.max(...Object.values(expCatMap).map(v=>v.total));
+    expCatEl.innerHTML=Object.entries(expCatMap).sort((a,b)=>b[1].total-a[1].total).map(([cat,v])=>{
+      const pct=Math.round(v.total/maxVal*100);
+      return `<div class="bar-wrap">
+        <div class="bar-label"><span style="font-weight:500">${cat}</span>
+          <span style="color:#A32D2D;font-weight:600">${fmt(v.total)} <span style="color:#aaa;font-weight:400;font-size:11px">${v.count}건</span></span>
+        </div><div class="bar red" style="width:${pct}%"></div></div>`;
+    }).join('')+
+    `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#A32D2D">
+      <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span></div>`;
+  } else { expCatEl.innerHTML='<div class="empty">No expense data</div>'; }
 
   // 주문 목록
   document.getElementById('daily-orders').innerHTML=ds.length
@@ -964,71 +945,59 @@ async function loadDaily() {
     :'<div class="empty">No expenses</div>';
 }
 
-// ── INVENTORY ────────────────────────────────────────────────
 async function loadInventory() {
-  const data = await api('GET','/api/inventory');
-  const el = document.getElementById('inventory-list');
-  if (!data||!data.length) { el.innerHTML='<div class="empty">No inventory items. Add one above!</div>'; return; }
-  const cats = [...new Set(data.map(i=>i.category))];
-  el.innerHTML = cats.map(cat => {
-    const items = data.filter(i=>i.category===cat);
+  const data=await api('GET','/api/inventory');
+  const el=document.getElementById('inventory-list');
+  if(!data||!data.length){el.innerHTML='<div class="empty">No inventory items.</div>';return;}
+  const cats=[...new Set(data.map(i=>i.category))];
+  el.innerHTML=cats.map(cat=>{
+    const items=data.filter(i=>i.category===cat);
     return `<div style="margin-bottom:1.5rem">
       <div style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">${cat}</div>
       <table><thead><tr><th>Item</th><th>Unit</th><th>Current Stock</th><th>Min Alert</th><th>Status</th><th></th></tr></thead>
-      <tbody>${items.map(item=>{
-        const isLow = item.current_stock <= item.min_stock;
-        return `<tr>
-          <td style="font-weight:500">${item.name}</td>
-          <td>${item.unit}</td>
-          <td class="${isLow?'stock-low':'stock-ok'}">${item.current_stock}</td>
-          <td style="color:#888">${item.min_stock}</td>
-          <td>${isLow?'⚠️ Low Stock':'✅ OK'}</td>
-          <td style="display:flex;gap:4px">
-            <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="openStockModal(${item.id},'${item.name}')">📦 Update</button>
-            <button class="btn btn-danger" onclick="deleteInvItem(${item.id})">Del</button>
-          </td>
-        </tr>`;
-      }).join('')}</tbody></table>
-    </div>`;
+      <tbody>${items.map(item=>{const isLow=item.current_stock<=item.min_stock;return`<tr>
+        <td style="font-weight:500">${item.name}</td><td>${item.unit}</td>
+        <td class="${isLow?'stock-low':'stock-ok'}">${item.current_stock}</td>
+        <td style="color:#888">${item.min_stock}</td><td>${isLow?'⚠️ Low Stock':'✅ OK'}</td>
+        <td style="display:flex;gap:4px">
+          <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="openStockModal(${item.id},'${item.name}')">📦 Update</button>
+          <button class="btn btn-danger" onclick="deleteInvItem(${item.id})">Del</button>
+        </td></tr>`;}).join('')}</tbody></table></div>`;
   }).join('');
 }
 
 async function addInvItem() {
-  const name = document.getElementById('inv-name').value.trim();
-  const cat  = document.getElementById('inv-cat').value;
-  const unit = document.getElementById('inv-unit').value;
-  const min  = parseFloat(document.getElementById('inv-min').value)||0;
-  if (!name) { toast('Please enter item name',true); return; }
-  const res = await api('POST','/api/inventory',{name,category:cat,unit,current_stock:0,min_stock:min});
-  if (res?.ok) { document.getElementById('inv-name').value=''; document.getElementById('inv-min').value='0'; loadInventory(); toast('✓ Item added!'); }
+  const name=document.getElementById('inv-name').value.trim();
+  if(!name){toast('Please enter item name',true);return;}
+  const res=await api('POST','/api/inventory',{name,category:document.getElementById('inv-cat').value,unit:document.getElementById('inv-unit').value,current_stock:0,min_stock:parseFloat(document.getElementById('inv-min').value)||0});
+  if(res?.ok){document.getElementById('inv-name').value='';document.getElementById('inv-min').value='0';loadInventory();toast('✓ Item added!');}
 }
 
 async function deleteInvItem(id) {
-  if (!confirm('Delete this inventory item?')) return;
-  const res = await api('DELETE',`/api/inventory/${id}`);
-  if (res?.ok) { loadInventory(); toast('Item deleted'); }
+  if(!confirm('Delete this inventory item?'))return;
+  const res=await api('DELETE',`/api/inventory/${id}`);
+  if(res?.ok){loadInventory();toast('Item deleted');}
 }
 
-function openStockModal(id, name) {
-  stockItemId = id;
-  document.getElementById('stock-modal-title').textContent = `📦 Update Stock — ${name}`;
-  document.getElementById('stock-qty').value = '1';
-  document.getElementById('stock-note').value = '';
+function openStockModal(id,name) {
+  stockItemId=id;
+  document.getElementById('stock-modal-title').textContent=`📦 Update Stock — ${name}`;
+  document.getElementById('stock-qty').value='1';
+  document.getElementById('stock-note').value='';
   document.getElementById('stock-modal').classList.add('show');
 }
 
-function closeStockModal() { document.getElementById('stock-modal').classList.remove('show'); stockItemId=null; }
+function closeStockModal(){document.getElementById('stock-modal').classList.remove('show');stockItemId=null;}
 
 async function saveStock() {
-  const action = document.getElementById('stock-action').value;
-  const qty    = parseFloat(document.getElementById('stock-qty').value)||0;
-  const note   = document.getElementById('stock-note').value.trim();
-  if (qty<=0) { toast('Please enter a valid quantity',true); return; }
-  const res = await api('POST',`/api/inventory/${stockItemId}/stock`,{action,quantity:qty,note});
-  if (res?.ok) { closeStockModal(); loadInventory(); toast('✓ Stock updated!'); }
+  const action=document.getElementById('stock-action').value;
+  const qty=parseFloat(document.getElementById('stock-qty').value)||0;
+  const note=document.getElementById('stock-note').value.trim();
+  if(qty<=0){toast('Please enter a valid quantity',true);return;}
+  const res=await api('POST',`/api/inventory/${stockItemId}/stock`,{action,quantity:qty,note});
+  if(res?.ok){closeStockModal();loadInventory();toast('✓ Stock updated!');}
 }
 
-// ── STATISTICS ───────────────────────────────────────────────
 function setRange(type) {
   const t=tod(); let from=t;
   if(type==='week'){const d=new Date(t+'T00:00:00');d.setDate(d.getDate()-d.getDay()+1);from=d.toISOString().slice(0,10);}
@@ -1039,16 +1008,12 @@ function setRange(type) {
 }
 
 async function loadStats() {
-  const from=document.getElementById('stats-from').value;
-  const to=document.getElementById('stats-to').value;
+  const from=document.getElementById('stats-from').value, to=document.getElementById('stats-to').value;
   const [ds,de]=await Promise.all([api('GET',`/api/sales?from=${from}&to=${to}`),api('GET',`/api/expenses?from=${from}&to=${to}`)]);
-  if(!ds||!de) return;
-  const totalSales=ds.reduce((s,o)=>s+o.total,0);
-  const totalExp=de.reduce((s,o)=>s+o.amount,0);
-  const net=totalSales-totalExp;
-  const tourSales=ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
-  const walkSales=ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
-  const avgOrder=ds.length?totalSales/ds.length:0;
+  if(!ds||!de)return;
+  const totalSales=ds.reduce((s,o)=>s+o.total,0), totalExp=de.reduce((s,o)=>s+o.amount,0);
+  const net=totalSales-totalExp, tourSales=ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
+  const walkSales=ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0), avgOrder=ds.length?totalSales/ds.length:0;
   document.getElementById('stats-metrics').innerHTML=`
     <div class="metric"><div class="label">Total Sales</div><div class="value blue">${fmt(totalSales)}</div></div>
     <div class="metric"><div class="label">Total Expenses</div><div class="value red">${fmt(totalExp)}</div></div>
@@ -1066,8 +1031,7 @@ async function loadStats() {
     :'<div class="empty">No data</div>';
   const expCat={};
   de.forEach(e=>{expCat[e.cat]=(expCat[e.cat]||0)+e.amount;});
-  const topExp=Object.entries(expCat).sort((a,b)=>b[1]-a[1]);
-  const maxE=topExp[0]?.[1]||1;
+  const topExp=Object.entries(expCat).sort((a,b)=>b[1]-a[1]); const maxE=topExp[0]?.[1]||1;
   document.getElementById('stats-exp-cat').innerHTML=topExp.length
     ?topExp.map(([c,v])=>`<div class="bar-wrap"><div class="bar-label"><span>${c}</span><span style="color:#A32D2D">${fmt(v)}</span></div><div class="bar red" style="width:${Math.round(v/maxE*100)}%"></div></div>`).join('')
     :'<div class="empty">No data</div>';
@@ -1091,22 +1055,20 @@ async function loadStats() {
     :'<div class="empty">No tour data in this period</div>';
 }
 
-// ── SETTINGS — MENU ──────────────────────────────────────────
 function setMenuFilter(f,btn) {
   menuFilter=f;
   document.querySelectorAll('.filter-tabs button').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  renderSettingsMenu();
+  if(btn)btn.classList.add('active'); renderSettingsMenu();
 }
 
 async function loadSettingsMenu() {
-  const data=await api('GET','/api/menu'); if(data) MENU=data; editingMenuId=null; renderSettingsMenu();
+  const data=await api('GET','/api/menu'); if(data)MENU=data; editingMenuId=null; renderSettingsMenu();
 }
 
 function renderSettingsMenu() {
   const filtered=MENU.filter(m=>{
-    if(menuFilter==='ALL') return true;
-    if(menuFilter==='Food'||menuFilter==='Beverage') return m.cat===menuFilter;
+    if(menuFilter==='ALL')return true;
+    if(menuFilter==='Food'||menuFilter==='Beverage')return m.cat===menuFilter;
     return m.type===menuFilter;
   });
   document.getElementById('menu-count').textContent=`(${filtered.length} items)`;
@@ -1114,7 +1076,7 @@ function renderSettingsMenu() {
   if(!filtered.length){el.innerHTML='<div class="empty">No items found</div>';return;}
   el.innerHTML=`<div class="menu-row-header"><span>Name</span><span>Type</span><span>Category</span><span>Price</span><span>Action</span></div>
     ${filtered.map(m=>{
-      if(editingMenuId===m.id) return `<div class="menu-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
+      if(editingMenuId===m.id)return`<div class="menu-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
         <input class="edit-input" id="em-name-${m.id}" value="${m.name}">
         <select class="edit-input" id="em-type-${m.id}">
           <option value="WALK-IN" ${m.type==='WALK-IN'?'selected':''}>WALK-IN</option>
@@ -1131,7 +1093,7 @@ function renderSettingsMenu() {
           <button class="btn" style="padding:5px 10px;font-size:12px" onclick="editingMenuId=null;renderSettingsMenu()">✕</button>
         </div></div>`;
       const tb=m.type==='WALK-IN'?'badge-walk':m.type==='TOUR'?'badge-tour':'badge-cash';
-      return `<div class="menu-row">
+      return`<div class="menu-row">
         <span>${m.name}</span>
         <span><span class="badge ${tb}">${m.type}</span></span>
         <span style="color:#666">${m.cat}</span>
@@ -1145,34 +1107,29 @@ function renderSettingsMenu() {
 
 async function addMenuItem() {
   const name=document.getElementById('new-menu-name').value.trim();
-  const type=document.getElementById('new-menu-type').value;
-  const cat=document.getElementById('new-menu-cat').value;
   const price=parseFloat(document.getElementById('new-menu-price').value);
   if(!name){toast('Please enter a menu name',true);return;}
   if(!price||price<=0){toast('Please enter a valid price',true);return;}
-  const res=await api('POST','/api/menu',{name,type,cat,price});
+  const res=await api('POST','/api/menu',{name,type:document.getElementById('new-menu-type').value,cat:document.getElementById('new-menu-cat').value,price});
   if(res?.ok){document.getElementById('new-menu-name').value='';document.getElementById('new-menu-price').value='';await loadSettingsMenu();MENU=await api('GET','/api/menu')||MENU;toast('✓ Menu item added!');}
 }
 
 async function saveMenuItem(id) {
   const name=document.getElementById(`em-name-${id}`).value.trim();
-  const type=document.getElementById(`em-type-${id}`).value;
-  const cat=document.getElementById(`em-cat-${id}`).value;
   const price=parseFloat(document.getElementById(`em-price-${id}`).value);
   if(!name){toast('Name cannot be empty',true);return;}
   if(!price||price<0){toast('Invalid price',true);return;}
-  const res=await api('PUT',`/api/menu/${id}`,{name,type,cat,price});
+  const res=await api('PUT',`/api/menu/${id}`,{name,type:document.getElementById(`em-type-${id}`).value,cat:document.getElementById(`em-cat-${id}`).value,price});
   if(res?.ok){editingMenuId=null;await loadSettingsMenu();MENU=await api('GET','/api/menu')||MENU;toast('✓ Menu updated!');}
 }
 
 async function deleteMenuItem(id) {
   const item=MENU.find(m=>m.id===id);
-  if(!confirm(`Delete "${item?.name}"?`)) return;
+  if(!confirm(`Delete "${item?.name}"?`))return;
   const res=await api('DELETE',`/api/menu/${id}`);
   if(res?.ok){await loadSettingsMenu();MENU=await api('GET','/api/menu')||MENU;toast('Menu item deleted');}
 }
 
-// ── SETTINGS — EXPENSE CATS ──────────────────────────────────
 async function loadSettingsExpCats() {
   const data=await api('GET','/api/exp_categories');
   if(data){EXP_CATS=data;populateExpCatSelect();}
@@ -1183,13 +1140,13 @@ function renderSettingsExpCats() {
   const el=document.getElementById('settings-exp-cat-list');
   if(!EXP_CATS.length){el.innerHTML='<div class="empty">No categories</div>';return;}
   el.innerHTML=EXP_CATS.map(c=>{
-    if(editingCatId===c.id) return `<div class="cat-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
+    if(editingCatId===c.id)return`<div class="cat-row" style="background:#f0f6ff;border-radius:8px;padding:8px 4px">
       <input class="edit-input" id="ec-name-${c.id}" value="${c.name}">
       <div style="display:flex;gap:6px">
         <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="saveExpCat(${c.id})">✓</button>
         <button class="btn" style="padding:5px 10px;font-size:12px" onclick="editingCatId=null;renderSettingsExpCats()">✕</button>
       </div></div>`;
-    return `<div class="cat-row"><span>${c.name}</span>
+    return`<div class="cat-row"><span>${c.name}</span>
       <div style="display:flex;gap:6px">
         <button class="btn btn-edit" onclick="editingCatId=${c.id};renderSettingsExpCats()">✏️ Edit</button>
         <button class="btn btn-danger" onclick="deleteExpCat(${c.id})">Del</button>
@@ -1202,7 +1159,7 @@ async function addExpCat() {
   if(!name){toast('Please enter a category name',true);return;}
   const res=await api('POST','/api/exp_categories',{name});
   if(res?.ok){document.getElementById('new-exp-cat').value='';await loadSettingsExpCats();toast('✓ Category added!');}
-  else if(res) toast('This category already exists',true);
+  else if(res)toast('This category already exists',true);
 }
 
 async function saveExpCat(id) {
@@ -1214,12 +1171,11 @@ async function saveExpCat(id) {
 
 async function deleteExpCat(id) {
   const cat=EXP_CATS.find(c=>c.id===id);
-  if(!confirm(`Delete "${cat?.name}"?`)) return;
+  if(!confirm(`Delete "${cat?.name}"?`))return;
   const res=await api('DELETE',`/api/exp_categories/${id}`);
   if(res?.ok){await loadSettingsExpCats();toast('Category deleted');}
 }
 
-// ── START ────────────────────────────────────────────────────
 init();
 </script>
 </body>
