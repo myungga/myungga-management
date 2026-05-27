@@ -98,13 +98,11 @@ tr:hover td { background: #fafafa; }
 .highlight-row td { background: #fffbe6 !important; }
 .stock-ok { color: #0F6E56; font-weight: 600; }
 .stock-low { color: #A32D2D; font-weight: 600; }
-/* 결제수단별 행 */
 .pay-stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; background: #f8f8f6; margin-bottom: 6px; font-size: 13px; }
 .pay-stat-row .pay-name { font-weight: 500; flex: 1; }
 .pay-stat-row .pay-count { color: #888; font-size: 12px; margin: 0 12px; }
 .pay-stat-row .pay-amount { font-weight: 700; color: #185FA5; }
 .pay-stat-row.exp-row .pay-amount { color: #A32D2D; }
-/* 시제 마감 */
 .closing-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .closing-table th { padding: 10px 14px; font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
 .closing-table th.blue-bg { background: #185FA5; }
@@ -120,7 +118,7 @@ tr:hover td { background: #fafafa; }
 .closing-table tfoot td { background: #f0f4f8; font-weight: 700; font-size: 14px; padding: 12px 14px; }
 .closing-card { border: 2px solid #0F6E56; }
 .closing-card h3 { color: #0F6E56; }
-/* ★ 날짜 그룹 (지출 목록) */
+/* 날짜 그룹 */
 .date-group { margin-bottom: 10px; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
 .date-group-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; background: #f5f4f0; cursor: pointer; user-select: none; transition: background 0.15s; }
 .date-group-header:hover { background: #ece9e2; }
@@ -131,13 +129,23 @@ tr:hover td { background: #fafafa; }
 .date-group-header.open .dg-arrow { transform: rotate(180deg); }
 .date-group-body { display: none; }
 .date-group-body.open { display: block; }
+/* ★ 투어 통계 카드 */
+.tour-company-card { border: 1px solid #e0ddd6; border-radius: 12px; margin-bottom: 14px; overflow: hidden; }
+.tour-company-header { background: #185FA5; color: #fff; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
+.tour-company-header .co-name { font-size: 15px; font-weight: 700; }
+.tour-company-header .co-summary { font-size: 12px; opacity: 0.85; display: flex; gap: 16px; }
+.tour-guide-row { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 10px; padding: 10px 16px; border-bottom: 1px solid #f0f0f0; font-size: 13px; align-items: center; }
+.tour-guide-row:last-child { border-bottom: none; }
+.tour-guide-row:hover { background: #f8f8ff; }
+.tour-guide-header { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 10px; padding: 8px 16px; background: #f0f4f8; font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }
+.pax-badge { display: inline-flex; align-items: center; gap: 4px; background: #E6F1FB; color: #185FA5; padding: 3px 10px; border-radius: 99px; font-size: 12px; font-weight: 700; }
+.visit-badge { display: inline-flex; align-items: center; gap: 4px; background: #EAF3DE; color: #3B6D11; padding: 3px 10px; border-radius: 99px; font-size: 12px; font-weight: 700; }
 /* Modal */
 .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:100; align-items:center; justify-content:center; }
 .modal-overlay.show { display:flex; }
 .modal { background:#fff; border-radius:16px; padding:1.5rem; width:92%; max-width:660px; max-height:90vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.18); }
 .modal h3 { font-size:16px; font-weight:600; margin-bottom:1rem; color:#185FA5; }
 .modal-footer { display:flex; justify-content:flex-end; gap:8px; margin-top:1rem; padding-top:1rem; border-top:1px solid #eee; }
-/* ★ 지출 수정 모달 */
 .exp-edit-modal h3 { color: #A32D2D; }
 .toast { position: fixed; bottom: 24px; right: 24px; background: #185FA5; color: #fff; padding: 11px 20px; border-radius: 10px; font-size: 14px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
 .toast.show { opacity: 1; }
@@ -183,8 +191,12 @@ tr:hover td { background: #fafafa; }
             <option value="WALK-IN">WALK-IN</option><option value="TOUR">TOUR</option>
           </select>
         </div>
-        <div class="form-group" id="tour-name-field" style="display:none"><label>Tour Team</label><input type="text" id="sale-tour" placeholder="Team name"></div>
-        <div class="form-group" id="guide-name-field" style="display:none"><label>Guide Name</label><input type="text" id="sale-guide" placeholder="Guide name"></div>
+        <div class="form-group" id="tour-name-field" style="display:none"><label>Tour Company</label><input type="text" id="sale-tour" placeholder="투어사명"></div>
+        <div class="form-group" id="guide-name-field" style="display:none"><label>Guide Name</label><input type="text" id="sale-guide" placeholder="가이드명"></div>
+        <div class="form-group" id="pax-field" style="display:none">
+          <label>👥 인원 (Pax)</label>
+          <input type="number" id="sale-pax" placeholder="0" min="0" value="0">
+        </div>
         <div class="form-group"><label>Table / Guest No.</label><input type="text" id="sale-guest" placeholder="e.g. Table 1"></div>
         <div class="form-group">
           <label>Payment</label>
@@ -246,7 +258,6 @@ tr:hover td { background: #fafafa; }
       <div style="text-align:right"><button class="btn btn-primary" onclick="submitExpense()">✓ Save Expense</button></div>
     </div>
     <div class="card">
-      <!-- ★ 날짜별 그룹 지출 목록 -->
       <h3>📋 Expense History <span style="font-size:12px;color:#888;font-weight:400">(날짜 클릭으로 펼치기/접기)</span></h3>
       <div id="expense-table"><div class="loading">Loading...</div></div>
     </div>
@@ -261,7 +272,6 @@ tr:hover td { background: #fafafa; }
       <button onclick="changeDay(1)">Next ▶</button>
     </div>
     <div class="metrics" id="daily-metrics"></div>
-    <!-- 시제 마감 -->
     <div class="card closing-card">
       <h3>🏦 일일 시제 마감 정산 <span style="font-size:12px;color:#0F6E56;font-weight:400">(결제수단별 잔액)</span></h3>
       <div id="daily-closing"></div>
@@ -280,12 +290,10 @@ tr:hover td { background: #fafafa; }
       </div>
       <div class="card"><h3>📂 Expense by Category</h3><div id="daily-exp-category"></div></div>
     </div>
-    <!-- ★ 수정 가능한 주문 목록 -->
     <div class="card">
       <h3>🧾 Orders <span style="font-size:12px;color:#185FA5;font-weight:400">✏️ 수정 가능</span></h3>
       <div id="daily-orders"></div>
     </div>
-    <!-- ★ 수정 가능한 지출 목록 -->
     <div class="card">
       <h3>💸 Expenses <span style="font-size:12px;color:#A32D2D;font-weight:400">✏️ 수정 가능</span></h3>
       <div id="daily-expenses"></div>
@@ -345,7 +353,11 @@ tr:hover td { background: #fafafa; }
       <div class="card"><h3>👥 Customer Type</h3><div id="stats-ctype"></div></div>
       <div class="card"><h3>💳 Payment Methods</h3><div id="stats-payment"></div></div>
     </div>
-    <div class="card" style="margin-top:1rem"><h3>🧭 Tour Guide Summary</h3><div id="stats-guides"></div></div>
+    <!-- ★ 투어 회사/가이드별 통계 -->
+    <div class="card" style="margin-top:1rem">
+      <h3>🚌 Tour Company & Guide Summary</h3>
+      <div id="stats-guides"></div>
+    </div>
   </div>
 
   <!-- ===== SETTINGS ===== -->
@@ -404,8 +416,9 @@ tr:hover td { background: #fafafa; }
           <option value="WALK-IN">WALK-IN</option><option value="TOUR">TOUR</option>
         </select>
       </div>
-      <div class="form-group" id="edit-tour-field" style="display:none"><label>Tour Team</label><input type="text" id="edit-tour"></div>
+      <div class="form-group" id="edit-tour-field" style="display:none"><label>Tour Company</label><input type="text" id="edit-tour"></div>
       <div class="form-group" id="edit-guide-field" style="display:none"><label>Guide Name</label><input type="text" id="edit-guide"></div>
+      <div class="form-group" id="edit-pax-field" style="display:none"><label>👥 인원 (Pax)</label><input type="number" id="edit-pax" min="0" value="0"></div>
       <div class="form-group">
         <label>Payment</label>
         <select id="edit-payment"><option>Cash</option><option>QR</option><option>Card</option><option>Transfer</option></select>
@@ -436,7 +449,7 @@ tr:hover td { background: #fafafa; }
   </div>
 </div>
 
-<!-- ★ EDIT EXPENSE MODAL -->
+<!-- EDIT EXPENSE MODAL -->
 <div class="modal-overlay" id="edit-exp-modal">
   <div class="modal exp-edit-modal">
     <h3>✏️ Edit Expense</h3>
@@ -490,21 +503,17 @@ tr:hover td { background: #fafafa; }
 let MENU=[], EXP_CATS=[], orderItems=[], viewDate=tod();
 let menuFilter='ALL', editingMenuId=null, editingCatId=null;
 let allTodaySales=[], editOrderId=null, editOrderItems=[];
-let stockItemId=null;
-let dailySales=[], dailyExpenses=[];
-let editExpId=null;
+let stockItemId=null, dailySales=[], dailyExpenses=[], editExpId=null;
 
 function tod(){ return new Date().toISOString().slice(0,10); }
 function fmtCurrency(n,currency){ const sym=currency==='KRW'?'₩':currency==='USD'?'$':'฿'; return sym+Math.round(n).toLocaleString(); }
 function fmt(n){ return '฿'+Math.round(n).toLocaleString(); }
 function fmtDate(d){
-  const parts=d.split('-');
-  const dt=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+  const p=d.split('-'); const dt=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
   return dt.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 }
 function fmtDateShort(d){
-  const parts=d.split('-');
-  const dt=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+  const p=d.split('-'); const dt=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
   return dt.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 }
 function toast(msg,isErr){
@@ -548,18 +557,15 @@ async function init(){
   addOrderItem(); loadTodaySales(); loadRecentExpenses();
 }
 
-function populateExpCatSelect(){
-  document.getElementById('exp-cat').innerHTML=EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
-}
-function populateEECatSelect(){
-  document.getElementById('ee-cat').innerHTML=EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
-}
+function populateExpCatSelect(){ document.getElementById('exp-cat').innerHTML=EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join(''); }
+function populateEECatSelect(){ document.getElementById('ee-cat').innerHTML=EXP_CATS.map(c=>`<option value="${c.name}">${c.name}</option>`).join(''); }
 
-// ── SALES ────────────────────────────────────────────────────
+// ── SALES ─────────────────────────────────────────────────
 function onCtypeChange(){
   const isTour=document.getElementById('sale-ctype').value==='TOUR';
   document.getElementById('tour-name-field').style.display=isTour?'':'none';
   document.getElementById('guide-name-field').style.display=isTour?'':'none';
+  document.getElementById('pax-field').style.display=isTour?'':'none';
   orderItems=[]; addOrderItem();
 }
 function getMenuByCat(cat,ctype){ return MENU.filter(m=>(m.type===ctype||m.type==='COMMON')&&m.cat===cat); }
@@ -576,7 +582,7 @@ function getMenuObj(item){ return MENU.find(m=>m.id===item.menuId)||null; }
 function renderOrderItems(){
   const ctype=document.getElementById('sale-ctype').value;
   const container=document.getElementById('order-items');
-  if(!orderItems.length){ container.innerHTML='<div class="empty" style="padding:1rem 0">No items.</div>'; updateTotal(); return; }
+  if(!orderItems.length){container.innerHTML='<div class="empty" style="padding:1rem 0">No items.</div>';updateTotal();return;}
   container.innerHTML=orderItems.map((item,i)=>{
     const catList=getMenuByCat(item.cat,ctype);
     if(!item.menuId&&catList.length) item.menuId=catList[0].id;
@@ -620,14 +626,18 @@ async function submitSale(){
   const body={
     date:document.getElementById('sale-date').value, ctype:document.getElementById('sale-ctype').value,
     guest:document.getElementById('sale-guest').value.trim()||'-',
-    tour:document.getElementById('sale-tour').value.trim(), guide:document.getElementById('sale-guide').value.trim(),
-    payment:document.getElementById('sale-payment').value, currency, discount, items, total:Math.max(0,subtotal-discount)
+    tour:document.getElementById('sale-tour').value.trim(),
+    guide:document.getElementById('sale-guide').value.trim(),
+    pax:parseInt(document.getElementById('sale-pax').value)||0,
+    payment:document.getElementById('sale-payment').value,
+    currency, discount, items, total:Math.max(0,subtotal-discount)
   };
   const res=await api('POST','/api/sales',body);
   if(res?.ok){
     orderItems=[];addOrderItem();
     ['sale-guest','sale-tour','sale-guide'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('sale-discount').value='0';
+    document.getElementById('sale-pax').value='0';
     loadTodaySales(); toast('✓ Order saved!');
   }
 }
@@ -650,14 +660,14 @@ function renderTodaySalesTable(data,highlight){
   const sym=(c)=>c==='KRW'?'₩':c==='USD'?'$':'฿';
   el.innerHTML=`<div style="text-align:right;font-size:13px;color:#185FA5;font-weight:600;margin-bottom:8px">
     Day Total: ${fmt(total)} | ${data.length} orders</div>
-    <table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Discount</th><th>Payment</th><th>Currency</th><th>Total</th><th></th></tr></thead>
+    <table><thead><tr><th>Guest</th><th>Type</th><th>Pax</th><th>Items</th><th>Discount</th><th>Payment</th><th>Total</th><th></th></tr></thead>
     <tbody>${data.map(s=>`<tr class="${highlight&&s.guest.toLowerCase().includes(highlight.toLowerCase())?'highlight-row':''}">
       <td style="cursor:pointer;color:#185FA5;font-weight:600" onclick="filterOrders('${s.guest}')">${s.guest}</td>
       <td><span class="badge ${s.ctype==='TOUR'?'badge-tour':'badge-walk'}">${s.ctype}</span></td>
+      <td>${s.pax>0?`<span class="pax-badge">👥 ${s.pax}명</span>`:'-'}</td>
       <td style="font-size:12px;color:#555">${s.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td>
       <td style="color:#A32D2D">${s.discount?'-'+sym(s.currency)+Math.round(s.discount).toLocaleString():'-'}</td>
       <td><span class="badge badge-${s.payment.toLowerCase()}">${s.payment}</span></td>
-      <td><span class="badge badge-${(s.currency||'THB').toLowerCase()}">${s.currency||'THB'}</span></td>
       <td style="font-weight:600">${sym(s.currency)}${Math.round(s.total).toLocaleString()}</td>
       <td style="display:flex;gap:4px">
         <button class="btn btn-edit" onclick="openEditModal(${s.id})">✏️</button>
@@ -676,11 +686,11 @@ function onEditCtypeChange(){
   const isTour=document.getElementById('edit-ctype').value==='TOUR';
   document.getElementById('edit-tour-field').style.display=isTour?'':'none';
   document.getElementById('edit-guide-field').style.display=isTour?'':'none';
+  document.getElementById('edit-pax-field').style.display=isTour?'':'none';
 }
 
 function openEditModal(id){
-  // daily 탭의 dailySales 또는 allTodaySales 에서 찾기
-  const sale=([...allTodaySales,...dailySales]).find(s=>s.id===id); if(!sale)return;
+  const sale=[...allTodaySales,...dailySales].find(s=>s.id===id); if(!sale)return;
   editOrderId=id;
   editOrderItems=sale.items.map(i=>{const m=MENU.find(m=>m.name===i.name);return{menuId:m?m.id:null,qty:i.qty,cat:i.cat};});
   document.getElementById('edit-guest').value   =sale.guest;
@@ -688,6 +698,7 @@ function openEditModal(id){
   document.getElementById('edit-payment').value =sale.payment;
   document.getElementById('edit-currency').value=sale.currency||'THB';
   document.getElementById('edit-discount').value=sale.discount||0;
+  document.getElementById('edit-pax').value     =sale.pax||0;
   onEditCtypeChange();
   if(sale.tour)  document.getElementById('edit-tour').value =sale.tour;
   if(sale.guide) document.getElementById('edit-guide').value=sale.guide;
@@ -748,17 +759,15 @@ async function saveEditOrder(){
   const body={
     date:origSale?.date, ctype:document.getElementById('edit-ctype').value,
     guest:document.getElementById('edit-guest').value.trim()||'-',
-    tour:document.getElementById('edit-tour').value.trim(), guide:document.getElementById('edit-guide').value.trim(),
-    payment:document.getElementById('edit-payment').value, currency, discount, items, total:Math.max(0,subtotal-discount)
+    tour:document.getElementById('edit-tour').value.trim(),
+    guide:document.getElementById('edit-guide').value.trim(),
+    pax:parseInt(document.getElementById('edit-pax').value)||0,
+    payment:document.getElementById('edit-payment').value,
+    currency, discount, items, total:Math.max(0,subtotal-discount)
   };
   await api('DELETE',`/api/sales/${editOrderId}`);
   const res=await api('POST','/api/sales',body);
-  if(res?.ok){
-    closeEditModal();
-    loadTodaySales();
-    if(document.getElementById('daily').classList.contains('active')) loadDaily();
-    toast('✓ Order updated!');
-  }
+  if(res?.ok){ closeEditModal(); loadTodaySales(); if(document.getElementById('daily').classList.contains('active')) loadDaily(); toast('✓ Order updated!'); }
 }
 
 // ── EXPENSE ──────────────────────────────────────────────────
@@ -773,81 +782,50 @@ async function submitExpense(){
     note:document.getElementById('exp-note').value.trim()
   };
   const res=await api('POST','/api/expenses',body);
-  if(res?.ok){
-    ['exp-vendor','exp-amount','exp-note'].forEach(id=>document.getElementById(id).value='');
-    loadRecentExpenses(); toast('✓ Expense saved!');
-  }
+  if(res?.ok){ ['exp-vendor','exp-amount','exp-note'].forEach(id=>document.getElementById(id).value=''); loadRecentExpenses(); toast('✓ Expense saved!'); }
 }
 
-// ★ 날짜별 그룹 지출 목록
 async function loadRecentExpenses(){
   const data=await api('GET','/api/expenses');
   const el=document.getElementById('expense-table');
   if(!data||!data.length){el.innerHTML='<div class="empty">No expenses recorded</div>';return;}
   const sym=(c)=>c==='KRW'?'₩':c==='USD'?'$':'฿';
-
-  // 날짜별 그룹화
   const groups={};
-  data.forEach(e=>{
-    if(!groups[e.date]) groups[e.date]=[];
-    groups[e.date].push(e);
-  });
+  data.forEach(e=>{ if(!groups[e.date]) groups[e.date]=[]; groups[e.date].push(e); });
   const sortedDates=Object.keys(groups).sort((a,b)=>b.localeCompare(a));
-
   el.innerHTML=sortedDates.map((date,idx)=>{
-    const items=groups[date];
-    const dayTotal=items.reduce((s,e)=>s+e.amount,0);
-    const isOpen=idx===0; // 가장 최근 날짜만 기본으로 열기
+    const items=groups[date]; const dayTotal=items.reduce((s,e)=>s+e.amount,0);
+    const isOpen=idx===0;
     return `<div class="date-group">
       <div class="date-group-header ${isOpen?'open':''}" onclick="toggleDateGroup(this)">
         <span class="dg-date">📅 ${fmtDateShort(date)}</span>
-        <div class="dg-summary">
-          <span>${items.length}건</span>
-          <span class="dg-total">${fmt(dayTotal)}</span>
-          <span class="dg-arrow">▼</span>
-        </div>
+        <div class="dg-summary"><span>${items.length}건</span><span class="dg-total">${fmt(dayTotal)}</span><span class="dg-arrow">▼</span></div>
       </div>
       <div class="date-group-body ${isOpen?'open':''}">
         <table><thead><tr><th>Category</th><th>Vendor</th><th>Currency</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
         <tbody>${items.map(e=>`<tr>
-          <td>${e.cat}</td>
-          <td>${e.vendor}${e.note?' · '+e.note:''}</td>
+          <td>${e.cat}</td><td>${e.vendor}${e.note?' · '+e.note:''}</td>
           <td><span class="badge badge-${(e.currency||'THB').toLowerCase()}">${e.currency||'THB'}</span></td>
           <td><span class="badge badge-${e.payment.toLowerCase()}">${e.payment}</span></td>
           <td style="font-weight:600;color:#A32D2D">${sym(e.currency)}${Math.round(e.amount).toLocaleString()}</td>
           <td style="display:flex;gap:4px">
             <button class="btn btn-edit" onclick="openExpEditModal(${e.id})">✏️</button>
             <button class="btn btn-danger" onclick="deleteExpense(${e.id})">Del</button>
-          </td>
-        </tr>`).join('')}</tbody></table>
-        <div style="text-align:right;padding:8px 14px;font-size:13px;font-weight:600;color:#A32D2D;border-top:1px solid #f0f0f0">
-          일계: ${fmt(dayTotal)}
-        </div>
-      </div>
-    </div>`;
+          </td></tr>`).join('')}</tbody></table>
+        <div style="text-align:right;padding:8px 14px;font-size:13px;font-weight:600;color:#A32D2D;border-top:1px solid #f0f0f0">일계: ${fmt(dayTotal)}</div>
+      </div></div>`;
   }).join('');
 }
 
-function toggleDateGroup(header){
-  header.classList.toggle('open');
-  header.nextElementSibling.classList.toggle('open');
-}
+function toggleDateGroup(header){ header.classList.toggle('open'); header.nextElementSibling.classList.toggle('open'); }
 
 async function deleteExpense(id){
   if(!confirm('Delete this expense?'))return;
   const res=await api('DELETE',`/api/expenses/${id}`);
-  if(res?.ok){
-    loadRecentExpenses();
-    if(document.getElementById('daily').classList.contains('active')) loadDaily();
-    toast('Expense deleted');
-  }
+  if(res?.ok){ loadRecentExpenses(); if(document.getElementById('daily').classList.contains('active')) loadDaily(); toast('Expense deleted'); }
 }
 
-// ★ 지출 수정 모달
 function openExpEditModal(id){
-  // expense 탭 또는 daily 탭의 데이터에서 찾기
-  const allExp=[...dailyExpenses];
-  // expense 탭에서 직접 찾기 위해 API 재조회
   api('GET','/api/expenses').then(data=>{
     if(!data) return;
     const exp=data.find(e=>e.id===id); if(!exp) return;
@@ -877,19 +855,13 @@ async function saveExpEdit(){
   };
   await api('DELETE',`/api/expenses/${editExpId}`);
   const res=await api('POST','/api/expenses',body);
-  if(res?.ok){
-    closeExpEditModal();
-    loadRecentExpenses();
-    if(document.getElementById('daily').classList.contains('active')) loadDaily();
-    toast('✓ Expense updated!');
-  }
+  if(res?.ok){ closeExpEditModal(); loadRecentExpenses(); if(document.getElementById('daily').classList.contains('active')) loadDaily(); toast('✓ Expense updated!'); }
 }
 
-// ── DAILY ────────────────────────────────────────────────────
+// ── DAILY ─────────────────────────────────────────────────
 function changeDay(d){
-  const parts=viewDate.split('-');
-  const dt=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
-  dt.setDate(dt.getDate()+d);
+  const p=viewDate.split('-');
+  const dt=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2])); dt.setDate(dt.getDate()+d);
   const y=dt.getFullYear(),mo=String(dt.getMonth()+1).padStart(2,'0'),day=String(dt.getDate()).padStart(2,'0');
   viewDate=`${y}-${mo}-${day}`;
   document.getElementById('daily-date-label').textContent=fmtDate(viewDate);
@@ -898,9 +870,8 @@ function changeDay(d){
 
 async function loadDaily(){
   const [ds,de]=await Promise.all([api('GET',`/api/sales?date=${viewDate}`),api('GET',`/api/expenses?date=${viewDate}`)]);
-  if(!ds||!de)return;
+  if(!ds||!de) return;
   dailySales=ds; dailyExpenses=de;
-
   const totalSales=ds.reduce((s,o)=>s+o.total,0);
   const totalExp=de.reduce((s,e)=>s+e.amount,0);
   const net=totalSales-totalExp;
@@ -908,6 +879,7 @@ async function loadDaily(){
   const walkSales=ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
   const foodSales=ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Food').reduce((a,i)=>a+i.total,0),0);
   const bevSales=ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Beverage').reduce((a,i)=>a+i.total,0),0);
+  const tourPax=ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+(o.pax||0),0);
 
   document.getElementById('daily-metrics').innerHTML=`
     <div class="metric"><div class="label">Total Sales</div><div class="value blue">${fmt(totalSales)}</div></div>
@@ -915,7 +887,7 @@ async function loadDaily(){
     <div class="metric"><div class="label">Net Income</div><div class="value ${net>=0?'green':'red'}">${fmt(net)}</div></div>
     <div class="metric"><div class="label">Orders</div><div class="value">${ds.length}</div></div>
     <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
-    <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>`;
+    <div class="metric"><div class="label">Tour Pax</div><div class="value blue">${tourPax}명</div></div>`;
 
   const payIncome={};
   ds.forEach(s=>{if(!payIncome[s.payment])payIncome[s.payment]={count:0,total:0};payIncome[s.payment].count++;payIncome[s.payment].total+=s.total;});
@@ -929,36 +901,30 @@ async function loadDaily(){
   else{
     let tInc=0,tExp=0,tBal=0;
     const rows=allPays.map(pay=>{
-      const inc=payIncome[pay]||{count:0,total:0};
-      const exp=payExpense[pay]||{count:0,total:0};
+      const inc=payIncome[pay]||{count:0,total:0}; const exp=payExpense[pay]||{count:0,total:0};
       const bal=inc.total-exp.total; tInc+=inc.total;tExp+=exp.total;tBal+=bal;
       const bc=bal>=0?'balance-pos':'balance-neg';
-      return `<tr>
-        <td><span class="badge badge-${pay.toLowerCase()}">${pay}</span></td>
+      return `<tr><td><span class="badge badge-${pay.toLowerCase()}">${pay}</span></td>
         <td class="income-val">${inc.total>0?fmt(inc.total):'-'}</td>
         <td class="count-cell">${inc.count>0?inc.count+'건':'-'}</td>
         <td class="exp-val">${exp.total>0?fmt(exp.total):'-'}</td>
         <td class="count-cell">${exp.count>0?exp.count+'건':'-'}</td>
-        <td class="${bc}">${bal<0?'-':''}${fmt(Math.abs(bal))}</td>
-      </tr>`;
+        <td class="${bc}">${bal<0?'-':''}${fmt(Math.abs(bal))}</td></tr>`;
     }).join('');
     const fc=tBal>=0?'balance-pos':'balance-neg';
     closingEl.innerHTML=`<table class="closing-table">
       <thead>
-        <tr>
-          <th style="background:#555;border-radius:8px 0 0 0">결제수단</th>
+        <tr><th style="background:#555;border-radius:8px 0 0 0">결제수단</th>
           <th colspan="2" class="blue-bg">수입 (매출)</th>
           <th colspan="2" class="red-bg">지출</th>
-          <th class="green-bg" style="border-radius:0 8px 0 0">잔액 (시제)</th>
-        </tr>
+          <th class="green-bg" style="border-radius:0 8px 0 0">잔액 (시제)</th></tr>
         <tr style="background:#f8f8f6;font-size:11px;color:#888">
           <th></th>
           <th style="text-align:right;font-weight:500;color:#185FA5">금액</th>
           <th style="text-align:center;font-weight:500;color:#888">건수</th>
           <th style="text-align:right;font-weight:500;color:#A32D2D">금액</th>
           <th style="text-align:center;font-weight:500;color:#888">건수</th>
-          <th style="text-align:right;font-weight:500;color:#0F6E56">잔액</th>
-        </tr>
+          <th style="text-align:right;font-weight:500;color:#0F6E56">잔액</th></tr>
       </thead>
       <tbody>${rows}</tbody>
       <tfoot><tr>
@@ -968,19 +934,14 @@ async function loadDaily(){
         <td style="color:#A32D2D;text-align:right">${fmt(tExp)}</td>
         <td style="text-align:center;color:#888;font-size:12px">${de.length}건</td>
         <td class="${fc}">${tBal<0?'-':''}${fmt(Math.abs(tBal))}</td>
-      </tr></tfoot>
-    </table>`;
+      </tr></tfoot></table>`;
   }
 
-  // 매출 결제수단별
   const payEl=document.getElementById('daily-payment');
   if(Object.keys(payIncome).length){
     payEl.innerHTML=Object.entries(payIncome).sort((a,b)=>b[1].total-a[1].total).map(([k,v])=>`
-      <div class="pay-stat-row">
-        <span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
-        <span class="pay-count">${v.count}건</span>
-        <span class="pay-amount">${fmt(v.total)}</span>
-      </div>`).join('')+
+      <div class="pay-stat-row"><span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
+        <span class="pay-count">${v.count}건</span><span class="pay-amount">${fmt(v.total)}</span></div>`).join('')+
       `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#185FA5">
         <span>합계</span><span>${ds.length}건 · ${fmt(totalSales)}</span></div>`;
   }else{payEl.innerHTML='<div class="empty">No data</div>';}
@@ -991,20 +952,15 @@ async function loadDaily(){
     <div style="border-top:1px solid #eee;margin-top:4px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#185FA5">
       <span>합계</span><span>${fmt(foodSales+bevSales)}</span></div>`;
 
-  // 지출 결제수단별
   const expPayEl=document.getElementById('daily-exp-payment');
   if(Object.keys(payExpense).length){
     expPayEl.innerHTML=Object.entries(payExpense).sort((a,b)=>b[1].total-a[1].total).map(([k,v])=>`
-      <div class="pay-stat-row exp-row">
-        <span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
-        <span class="pay-count">${v.count}건</span>
-        <span class="pay-amount">${fmt(v.total)}</span>
-      </div>`).join('')+
+      <div class="pay-stat-row exp-row"><span class="pay-name"><span class="badge badge-${k.toLowerCase()}">${k}</span></span>
+        <span class="pay-count">${v.count}건</span><span class="pay-amount">${fmt(v.total)}</span></div>`).join('')+
       `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#A32D2D">
         <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span></div>`;
   }else{expPayEl.innerHTML='<div class="empty">No expense data</div>';}
 
-  // 지출 항목별
   const expCatMap={};
   de.forEach(e=>{if(!expCatMap[e.cat])expCatMap[e.cat]={count:0,total:0};expCatMap[e.cat].count++;expCatMap[e.cat].total+=e.amount;});
   const expCatEl=document.getElementById('daily-exp-category');
@@ -1012,31 +968,28 @@ async function loadDaily(){
     const maxVal=Math.max(...Object.values(expCatMap).map(v=>v.total));
     expCatEl.innerHTML=Object.entries(expCatMap).sort((a,b)=>b[1].total-a[1].total).map(([cat,v])=>{
       const pct=Math.round(v.total/maxVal*100);
-      return `<div class="bar-wrap">
-        <div class="bar-label"><span style="font-weight:500">${cat}</span>
-          <span style="color:#A32D2D;font-weight:600">${fmt(v.total)} <span style="color:#aaa;font-weight:400;font-size:11px">${v.count}건</span></span>
+      return `<div class="bar-wrap"><div class="bar-label"><span style="font-weight:500">${cat}</span>
+        <span style="color:#A32D2D;font-weight:600">${fmt(v.total)} <span style="color:#aaa;font-weight:400;font-size:11px">${v.count}건</span></span>
         </div><div class="bar red" style="width:${pct}%"></div></div>`;
     }).join('')+
     `<div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#A32D2D">
       <span>합계</span><span>${de.length}건 · ${fmt(totalExp)}</span></div>`;
   }else{expCatEl.innerHTML='<div class="empty">No expense data</div>';}
 
-  // ★ 주문 목록 (수정 버튼 포함)
   document.getElementById('daily-orders').innerHTML=ds.length
-    ?`<table><thead><tr><th>Guest</th><th>Type</th><th>Items</th><th>Currency</th><th>Payment</th><th>Total</th><th></th></tr></thead>
+    ?`<table><thead><tr><th>Guest</th><th>Type</th><th>Pax</th><th>Tour/Guide</th><th>Payment</th><th>Total</th><th></th></tr></thead>
       <tbody>${ds.map(s=>`<tr>
         <td style="font-weight:600">${s.guest}</td>
         <td><span class="badge ${s.ctype==='TOUR'?'badge-tour':'badge-walk'}">${s.ctype}</span></td>
-        <td style="font-size:12px;color:#555">${s.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td>
-        <td>${s.currency||'THB'}</td><td>${s.payment}</td>
-        <td style="font-weight:600">${fmt(s.total)}</td>
+        <td>${s.pax>0?`<span class="pax-badge">👥 ${s.pax}명</span>`:'-'}</td>
+        <td style="font-size:12px;color:#555">${[s.tour,s.guide].filter(Boolean).join(' / ')||'-'}</td>
+        <td>${s.payment}</td><td style="font-weight:600">${fmt(s.total)}</td>
         <td style="display:flex;gap:4px">
           <button class="btn btn-edit" onclick="openEditModal(${s.id})">✏️</button>
           <button class="btn btn-danger" onclick="deleteSale(${s.id})">Del</button>
         </td></tr>`).join('')}</tbody></table>`
     :'<div class="empty">No orders</div>';
 
-  // ★ 지출 목록 (수정 버튼 포함)
   document.getElementById('daily-expenses').innerHTML=de.length
     ?`<table><thead><tr><th>Category</th><th>Vendor</th><th>Note</th><th>Currency</th><th>Payment</th><th>Amount</th><th></th></tr></thead>
       <tbody>${de.map(e=>`<tr>
@@ -1050,7 +1003,7 @@ async function loadDaily(){
     :'<div class="empty">No expenses</div>';
 }
 
-// ── INVENTORY ────────────────────────────────────────────────
+// ── INVENTORY ─────────────────────────────────────────────
 async function loadInventory(){
   const data=await api('GET','/api/inventory');
   const el=document.getElementById('inventory-list');
@@ -1078,13 +1031,11 @@ async function addInvItem(){
   const res=await api('POST','/api/inventory',{name,category:document.getElementById('inv-cat').value,unit:document.getElementById('inv-unit').value,current_stock:0,min_stock:parseFloat(document.getElementById('inv-min').value)||0});
   if(res?.ok){document.getElementById('inv-name').value='';document.getElementById('inv-min').value='0';loadInventory();toast('✓ Item added!');}
 }
-
 async function deleteInvItem(id){
   if(!confirm('Delete this inventory item?'))return;
   const res=await api('DELETE',`/api/inventory/${id}`);
   if(res?.ok){loadInventory();toast('Item deleted');}
 }
-
 function openStockModal(id,name){
   stockItemId=id;
   document.getElementById('stock-modal-title').textContent=`📦 Update Stock — ${name}`;
@@ -1092,7 +1043,6 @@ function openStockModal(id,name){
   document.getElementById('stock-modal').classList.add('show');
 }
 function closeStockModal(){document.getElementById('stock-modal').classList.remove('show');stockItemId=null;}
-
 async function saveStock(){
   const action=document.getElementById('stock-action').value;
   const qty=parseFloat(document.getElementById('stock-qty').value)||0;
@@ -1102,7 +1052,7 @@ async function saveStock(){
   if(res?.ok){closeStockModal();loadInventory();toast('✓ Stock updated!');}
 }
 
-// ── STATISTICS ────────────────────────────────────────────────
+// ── STATISTICS ────────────────────────────────────────────
 function setRange(type){
   const t=tod(); let from=t;
   if(type==='week'){const d=new Date(t+'T00:00:00');d.setDate(d.getDate()-d.getDay()+1);from=d.toISOString().slice(0,10);}
@@ -1117,16 +1067,21 @@ async function loadStats(){
   const [ds,de]=await Promise.all([api('GET',`/api/sales?from=${from}&to=${to}`),api('GET',`/api/expenses?from=${from}&to=${to}`)]);
   if(!ds||!de)return;
   const totalSales=ds.reduce((s,o)=>s+o.total,0), totalExp=de.reduce((s,o)=>s+o.amount,0);
-  const net=totalSales-totalExp, tourSales=ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
-  const walkSales=ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0), avgOrder=ds.length?totalSales/ds.length:0;
+  const net=totalSales-totalExp;
+  const tourSales=ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+o.total,0);
+  const walkSales=ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+o.total,0);
+  const avgOrder=ds.length?totalSales/ds.length:0;
+  const totalTourPax=ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+(o.pax||0),0);
+
   document.getElementById('stats-metrics').innerHTML=`
     <div class="metric"><div class="label">Total Sales</div><div class="value blue">${fmt(totalSales)}</div></div>
     <div class="metric"><div class="label">Total Expenses</div><div class="value red">${fmt(totalExp)}</div></div>
     <div class="metric"><div class="label">Net Income</div><div class="value ${net>=0?'green':'red'}">${fmt(net)}</div></div>
     <div class="metric"><div class="label">Orders</div><div class="value">${ds.length}</div></div>
     <div class="metric"><div class="label">Avg Order</div><div class="value">${fmt(avgOrder)}</div></div>
-    <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
+    <div class="metric"><div class="label">Tour Pax</div><div class="value blue">${totalTourPax}명</div></div>
     <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>`;
+
   const menuMap={};
   ds.forEach(s=>s.items.forEach(i=>{if(!menuMap[i.name])menuMap[i.name]={qty:0,total:0};menuMap[i.name].qty+=i.qty;menuMap[i.name].total+=i.total;}));
   const topMenu=Object.entries(menuMap).sort((a,b)=>b[1].total-a[1].total).slice(0,8);
@@ -1134,12 +1089,14 @@ async function loadStats(){
   document.getElementById('stats-menu').innerHTML=topMenu.length
     ?topMenu.map(([n,v])=>`<div class="bar-wrap"><div class="bar-label"><span>${n}</span><span style="color:#888">${fmt(v.total)} · ${v.qty}pcs</span></div><div class="bar" style="width:${Math.round(v.total/maxM*100)}%"></div></div>`).join('')
     :'<div class="empty">No data</div>';
+
   const expCat={};
   de.forEach(e=>{expCat[e.cat]=(expCat[e.cat]||0)+e.amount;});
   const topExp=Object.entries(expCat).sort((a,b)=>b[1]-a[1]); const maxE=topExp[0]?.[1]||1;
   document.getElementById('stats-exp-cat').innerHTML=topExp.length
     ?topExp.map(([c,v])=>`<div class="bar-wrap"><div class="bar-label"><span>${c}</span><span style="color:#A32D2D">${fmt(v)}</span></div><div class="bar red" style="width:${Math.round(v/maxE*100)}%"></div></div>`).join('')
     :'<div class="empty">No data</div>';
+
   const tourPct=totalSales?Math.round(tourSales/totalSales*100):0;
   document.getElementById('stats-ctype').innerHTML=`
     <div class="stat-row"><span>TOUR</span><span style="font-weight:600">${fmt(tourSales)} (${tourPct}%)</span></div>
@@ -1147,20 +1104,76 @@ async function loadStats(){
     <div style="margin-top:10px"><div style="height:10px;border-radius:6px;background:#e8e8e8;overflow:hidden">
       <div style="height:100%;width:${tourPct}%;background:#185FA5;border-radius:6px"></div></div>
     <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-top:4px"><span>Tour ${tourPct}%</span><span>Walk-in ${100-tourPct}%</span></div></div>`;
+
   const payMap={};
   ds.forEach(s=>{payMap[s.payment]=(payMap[s.payment]||0)+s.total;});
   document.getElementById('stats-payment').innerHTML=Object.keys(payMap).length
     ?Object.entries(payMap).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="stat-row"><span>${k}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')
     :'<div class="empty">No data</div>';
-  const guides={};
-  ds.filter(s=>s.ctype==='TOUR'&&s.guide).forEach(s=>{if(!guides[s.guide])guides[s.guide]={tour:s.tour||'',sales:0,orders:0};guides[s.guide].sales+=s.total;guides[s.guide].orders++;});
-  document.getElementById('stats-guides').innerHTML=Object.keys(guides).length
-    ?`<table><thead><tr><th>Guide</th><th>Tour Team</th><th>Orders</th><th>Total Sales</th></tr></thead>
-      <tbody>${Object.entries(guides).map(([g,v])=>`<tr><td>${g}</td><td>${v.tour||'-'}</td><td>${v.orders}</td><td style="font-weight:600;color:#185FA5">${fmt(v.sales)}</td></tr>`).join('')}</tbody></table>`
-    :'<div class="empty">No tour data in this period</div>';
+
+  // ★ 투어 회사/가이드별 통계
+  const tourData=ds.filter(s=>s.ctype==='TOUR');
+  const companyMap={};
+  tourData.forEach(s=>{
+    const co=s.tour||'(미입력)';
+    const guide=s.guide||'(미입력)';
+    if(!companyMap[co]) companyMap[co]={total:0,pax:0,visits:0,guides:{}};
+    companyMap[co].total+=s.total;
+    companyMap[co].pax+=(s.pax||0);
+    companyMap[co].visits++;
+    if(!companyMap[co].guides[guide]) companyMap[co].guides[guide]={visits:0,pax:0,total:0,dates:new Set()};
+    companyMap[co].guides[guide].visits++;
+    companyMap[co].guides[guide].pax+=(s.pax||0);
+    companyMap[co].guides[guide].total+=s.total;
+    companyMap[co].guides[guide].dates.add(s.date);
+  });
+
+  const guidesEl=document.getElementById('stats-guides');
+  if(!Object.keys(companyMap).length){
+    guidesEl.innerHTML='<div class="empty">No tour data in this period</div>';
+    return;
+  }
+
+  // 전체 요약
+  const totalVisits=tourData.length;
+  const uniqueDates=new Set(tourData.map(s=>s.date)).size;
+  guidesEl.innerHTML=`
+    <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+      <div class="metric" style="flex:1;min-width:120px"><div class="label">총 방문 회차</div><div class="value blue">${totalVisits}회</div></div>
+      <div class="metric" style="flex:1;min-width:120px"><div class="label">총 인원</div><div class="value blue">${totalTourPax}명</div></div>
+      <div class="metric" style="flex:1;min-width:120px"><div class="label">방문 일수</div><div class="value">${uniqueDates}일</div></div>
+      <div class="metric" style="flex:1;min-width:120px"><div class="label">투어 매출</div><div class="value green">${fmt(tourSales)}</div></div>
+    </div>
+    ${Object.entries(companyMap).sort((a,b)=>b[1].total-a[1].total).map(([co,coData])=>{
+      const perPax=coData.pax>0?Math.round(coData.total/coData.pax):0;
+      return `<div class="tour-company-card">
+        <div class="tour-company-header">
+          <span class="co-name">🚌 ${co}</span>
+          <div class="co-summary">
+            <span>총 ${coData.visits}회 방문</span>
+            <span>👥 ${coData.pax}명</span>
+            <span>${fmt(coData.total)}</span>
+            ${coData.pax>0?`<span>1인당 ${fmt(perPax)}</span>`:''}
+          </div>
+        </div>
+        <div class="tour-guide-header">
+          <span>가이드</span><span>방문 회차</span><span>총 인원</span><span>1인당 평균</span><span>총 매출</span>
+        </div>
+        ${Object.entries(coData.guides).sort((a,b)=>b[1].visits-a[1].visits).map(([guide,gData])=>{
+          const gPerPax=gData.pax>0?Math.round(gData.total/gData.pax):0;
+          return `<div class="tour-guide-row">
+            <span style="font-weight:600">👤 ${guide}</span>
+            <span><span class="visit-badge">🗓 ${gData.visits}회</span></span>
+            <span><span class="pax-badge">👥 ${gData.pax}명</span></span>
+            <span style="color:#185FA5;font-weight:600">${gData.pax>0?fmt(gPerPax):'-'}</span>
+            <span style="font-weight:700;color:#0F6E56">${fmt(gData.total)}</span>
+          </div>`;
+        }).join('')}
+      </div>`;
+    }).join('')}`;
 }
 
-// ── SETTINGS ────────────────────────────────────────────────
+// ── SETTINGS ─────────────────────────────────────────────
 function setMenuFilter(f,btn){
   menuFilter=f;
   document.querySelectorAll('.filter-tabs button').forEach(b=>b.classList.remove('active'));
