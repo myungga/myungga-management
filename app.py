@@ -34,6 +34,7 @@ def init_db():
         guest TEXT,
         tour TEXT,
         guide TEXT,
+        pax INTEGER DEFAULT 0,
         payment TEXT NOT NULL,
         currency TEXT DEFAULT 'THB',
         items TEXT NOT NULL,
@@ -41,6 +42,11 @@ def init_db():
         total REAL NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )''')
+    # 기존 DB에 pax 컬럼이 없을 경우 추가 (마이그레이션)
+    try:
+        c.execute("ALTER TABLE sales ADD COLUMN IF NOT EXISTS pax INTEGER DEFAULT 0")
+    except Exception:
+        conn.rollback()
     c.execute('''CREATE TABLE IF NOT EXISTS expenses (
         id SERIAL PRIMARY KEY,
         date TEXT NOT NULL,
@@ -231,10 +237,10 @@ def get_sales():
 @app.route('/api/sales', methods=['POST'])
 def add_sale():
     d = request.json; conn = get_db(); c = conn.cursor()
-    c.execute('''INSERT INTO sales (date,ctype,guest,tour,guide,payment,currency,items,discount,total)
-                 VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
+    c.execute('''INSERT INTO sales (date,ctype,guest,tour,guide,pax,payment,currency,items,discount,total)
+                 VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
               (d['date'],d['ctype'],d.get('guest',''),d.get('tour',''),d.get('guide',''),
-               d['payment'],d.get('currency','THB'),json.dumps(d['items']),
+               d.get('pax',0),d['payment'],d.get('currency','THB'),json.dumps(d['items']),
                d.get('discount',0),d['total']))
     conn.commit(); conn.close()
     return jsonify({'ok':True})
@@ -256,7 +262,7 @@ def get_expenses():
     elif date_from and date_to:
         c.execute('SELECT * FROM expenses WHERE date>=%s AND date<=%s ORDER BY date DESC,id DESC',(date_from,date_to))
     else:
-        c.execute('SELECT * FROM expenses ORDER BY date DESC,id DESC LIMIT 100')
+        c.execute('SELECT * FROM expenses ORDER BY date DESC,id DESC LIMIT 200')
     rows = c.fetchall(); conn.close()
     return jsonify([dict(r) for r in rows])
 
