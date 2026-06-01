@@ -118,7 +118,6 @@ tr:hover td { background: #fafafa; }
 .closing-table tfoot td { background: #f0f4f8; font-weight: 700; font-size: 14px; padding: 12px 14px; }
 .closing-card { border: 2px solid #0F6E56; }
 .closing-card h3 { color: #0F6E56; }
-/* 날짜 그룹 */
 .date-group { margin-bottom: 10px; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; }
 .date-group-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; background: #f5f4f0; cursor: pointer; user-select: none; transition: background 0.15s; }
 .date-group-header:hover { background: #ece9e2; }
@@ -129,7 +128,6 @@ tr:hover td { background: #fafafa; }
 .date-group-header.open .dg-arrow { transform: rotate(180deg); }
 .date-group-body { display: none; }
 .date-group-body.open { display: block; }
-/* ★ 투어 통계 카드 */
 .tour-company-card { border: 1px solid #e0ddd6; border-radius: 12px; margin-bottom: 14px; overflow: hidden; }
 .tour-company-header { background: #185FA5; color: #fff; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
 .tour-company-header .co-name { font-size: 15px; font-weight: 700; }
@@ -140,6 +138,27 @@ tr:hover td { background: #fafafa; }
 .tour-guide-header { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 10px; padding: 8px 16px; background: #f0f4f8; font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }
 .pax-badge { display: inline-flex; align-items: center; gap: 4px; background: #E6F1FB; color: #185FA5; padding: 3px 10px; border-radius: 99px; font-size: 12px; font-weight: 700; }
 .visit-badge { display: inline-flex; align-items: center; gap: 4px; background: #EAF3DE; color: #3B6D11; padding: 3px 10px; border-radius: 99px; font-size: 12px; font-weight: 700; }
+/* ★ 재고 일별 현황 테이블 */
+.inv-daily-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.inv-daily-table th { padding: 10px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 2px solid #e0ddd6; color: #555; background: #f8f8f6; text-align: center; }
+.inv-daily-table th.left { text-align: left; }
+.inv-daily-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; text-align: center; vertical-align: middle; }
+.inv-daily-table td.item-name { text-align: left; font-weight: 600; }
+.inv-daily-table td.opening { color: #555; }
+.inv-daily-table td.sold { color: #A32D2D; font-weight: 600; }
+.inv-daily-table td.purchased { color: #0F6E56; font-weight: 600; }
+.inv-daily-table td.service { color: #854F0B; font-weight: 600; }
+.inv-daily-table td.closing { font-weight: 700; font-size: 14px; }
+.inv-daily-table td.closing.ok { color: #0F6E56; }
+.inv-daily-table td.closing.low { color: #A32D2D; }
+.inv-daily-table .editable-input { width: 60px; padding: 4px 6px; font-size: 13px; border: 1px solid #ddd; border-radius: 6px; text-align: center; background: #fff; }
+.inv-daily-table .editable-input:focus { outline: none; border-color: #185FA5; background: #f0f6ff; }
+.inv-cat-header { background: #185FA5; color: #fff; padding: 8px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 8px 8px 0 0; margin-top: 14px; }
+.inv-cat-section { border: 1px solid #e0ddd6; border-radius: 0 0 10px 10px; margin-bottom: 14px; overflow: hidden; }
+/* 메뉴-재고 연결 */
+.link-row { display: grid; grid-template-columns: 2fr 2fr 1fr auto; gap: 10px; align-items: center; padding: 8px 4px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+.link-row:last-child { border-bottom: none; }
+.link-header { display: grid; grid-template-columns: 2fr 2fr 1fr auto; gap: 10px; padding: 6px 4px 8px; font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; border-bottom: 1px solid #e8e8e8; margin-bottom: 4px; }
 /* Modal */
 .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:100; align-items:center; justify-content:center; }
 .modal-overlay.show { display:flex; }
@@ -303,8 +322,30 @@ tr:hover td { background: #fafafa; }
   <!-- ===== INVENTORY ===== -->
   <div id="inventory" class="section">
     <div class="print-bar"><button class="btn btn-print" onclick="window.print()">🖨️ Print</button></div>
+
+    <!-- 날짜 선택 -->
     <div class="card">
-      <h3>➕ Add Inventory Item</h3>
+      <h3>📅 재고 날짜 선택</h3>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <input type="date" id="inv-date" style="padding:9px 11px;font-size:14px;border:1px solid #ddd;border-radius:8px">
+        <button class="btn btn-primary" onclick="loadInventoryDaily()">📋 조회</button>
+        <button class="btn" onclick="setInvDate(0)">오늘</button>
+        <button class="btn" onclick="setInvDate(-1)">어제</button>
+        <span style="font-size:12px;color:#888">※ 수량 입력 후 ✓ 저장 클릭</span>
+      </div>
+    </div>
+
+    <!-- ★ 일별 재고 현황표 -->
+    <div class="card">
+      <h3>📦 일별 재고 현황
+        <span id="inv-date-label" style="font-size:13px;color:#185FA5;font-weight:600;margin-left:6px"></span>
+      </h3>
+      <div id="inventory-daily-table"><div class="loading">날짜를 선택하고 조회 버튼을 클릭하세요</div></div>
+    </div>
+
+    <!-- 재고 품목 추가 -->
+    <div class="card">
+      <h3>➕ 재고 품목 추가</h3>
       <div class="form-row">
         <div class="form-group"><label>Item Name</label><input type="text" id="inv-name" placeholder="Chang Beer"></div>
         <div class="form-group">
@@ -325,7 +366,18 @@ tr:hover td { background: #fafafa; }
         <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addInvItem()" style="width:100%">+ Add</button></div>
       </div>
     </div>
-    <div class="card"><h3>📦 Stock List</h3><div id="inventory-list"><div class="loading">Loading...</div></div></div>
+
+    <!-- 메뉴-재고 연결 -->
+    <div class="card">
+      <h3>🔗 메뉴-재고 연결 <span style="font-size:12px;color:#888;font-weight:400">(판매 시 자동 차감)</span></h3>
+      <div class="form-row" style="margin-bottom:1rem">
+        <div class="form-group"><label>메뉴 선택</label><select id="link-menu"></select></div>
+        <div class="form-group"><label>재고 품목</label><select id="link-inv"></select></div>
+        <div class="form-group"><label>차감 수량</label><input type="number" id="link-qty" value="1" min="0.1" step="0.1"></div>
+        <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="addMenuLink()" style="width:100%">연결 추가</button></div>
+      </div>
+      <div id="menu-inv-links"><div class="loading">Loading...</div></div>
+    </div>
   </div>
 
   <!-- ===== STATISTICS ===== -->
@@ -353,7 +405,6 @@ tr:hover td { background: #fafafa; }
       <div class="card"><h3>👥 Customer Type</h3><div id="stats-ctype"></div></div>
       <div class="card"><h3>💳 Payment Methods</h3><div id="stats-payment"></div></div>
     </div>
-    <!-- ★ 투어 회사/가이드별 통계 -->
     <div class="card" style="margin-top:1rem">
       <h3>🚌 Tour Company & Guide Summary</h3>
       <div id="stats-guides"></div>
@@ -475,35 +526,14 @@ tr:hover td { background: #fafafa; }
   </div>
 </div>
 
-<!-- STOCK UPDATE MODAL -->
-<div class="modal-overlay" id="stock-modal">
-  <div class="modal">
-    <h3 id="stock-modal-title">📦 Update Stock</h3>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Action</label>
-        <select id="stock-action">
-          <option value="add">➕ Add Stock (받음)</option>
-          <option value="use">➖ Use / Remove (사용/제거)</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Quantity</label><input type="number" id="stock-qty" placeholder="0" min="0" value="1"></div>
-      <div class="form-group"><label>Note (optional)</label><input type="text" id="stock-note" placeholder="Delivery, counted..."></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeStockModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveStock()">✓ Update Stock</button>
-    </div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script>
 let MENU=[], EXP_CATS=[], orderItems=[], viewDate=tod();
 let menuFilter='ALL', editingMenuId=null, editingCatId=null;
 let allTodaySales=[], editOrderId=null, editOrderItems=[];
-let stockItemId=null, dailySales=[], dailyExpenses=[], editExpId=null;
+let dailySales=[], dailyExpenses=[], editExpId=null;
+let INV_LIST=[], invDailyData=[];
 
 function tod(){ return new Date().toISOString().slice(0,10); }
 function fmtCurrency(n,currency){ const sym=currency==='KRW'?'₩':currency==='USD'?'$':'฿'; return sym+Math.round(n).toLocaleString(); }
@@ -537,7 +567,7 @@ function showSection(id){
   const idx=['sales','expense','daily','inventory','stats','settings'].indexOf(id);
   document.querySelectorAll('.nav button')[idx].classList.add('active');
   if(id==='daily')     loadDaily();
-  if(id==='inventory') loadInventory();
+  if(id==='inventory') loadInventorySection();
   if(id==='stats')     loadStats();
   if(id==='settings')  { loadSettingsMenu(); loadSettingsExpCats(); }
   if(id==='expense')   loadRecentExpenses();
@@ -547,6 +577,7 @@ async function init(){
   const t=tod();
   document.getElementById('sale-date').value=t;
   document.getElementById('exp-date').value=t;
+  document.getElementById('inv-date').value=t;
   document.getElementById('daily-date-label').textContent=fmtDate(t);
   const m=new Date(); m.setDate(1);
   document.getElementById('stats-from').value=m.toISOString().slice(0,10);
@@ -565,7 +596,6 @@ function onCtypeChange(){
   const isTour=document.getElementById('sale-ctype').value==='TOUR';
   document.getElementById('tour-name-field').style.display=isTour?'':'none';
   document.getElementById('guide-name-field').style.display=isTour?'':'none';
-  document.getElementById('pax-field').style.display=isTour?'':'none';
   orderItems=[]; addOrderItem();
 }
 function getMenuByCat(cat,ctype){ return MENU.filter(m=>(m.type===ctype||m.type==='COMMON')&&m.cat===cat); }
@@ -681,12 +711,10 @@ async function deleteSale(id){
   if(res?.ok){ loadTodaySales(); if(document.getElementById('daily').classList.contains('active')) loadDaily(); toast('Order deleted'); }
 }
 
-// ── EDIT ORDER MODAL ─────────────────────────────────────────
 function onEditCtypeChange(){
   const isTour=document.getElementById('edit-ctype').value==='TOUR';
   document.getElementById('edit-tour-field').style.display=isTour?'':'none';
   document.getElementById('edit-guide-field').style.display=isTour?'':'none';
-  document.getElementById('edit-pax-field').style.display=isTour?'':'none';
 }
 
 function openEditModal(id){
@@ -894,7 +922,6 @@ async function loadDaily(){
   const payExpense={};
   de.forEach(e=>{if(!payExpense[e.payment])payExpense[e.payment]={count:0,total:0};payExpense[e.payment].count++;payExpense[e.payment].total+=e.amount;});
 
-  // 시제 마감
   const allPays=[...new Set([...Object.keys(payIncome),...Object.keys(payExpense)])].sort();
   const closingEl=document.getElementById('daily-closing');
   if(!allPays.length){closingEl.innerHTML='<div class="empty">데이터가 없습니다</div>';}
@@ -1003,53 +1030,174 @@ async function loadDaily(){
     :'<div class="empty">No expenses</div>';
 }
 
-// ── INVENTORY ─────────────────────────────────────────────
-async function loadInventory(){
-  const data=await api('GET','/api/inventory');
-  const el=document.getElementById('inventory-list');
-  if(!data||!data.length){el.innerHTML='<div class="empty">No inventory items.</div>';return;}
+// ── INVENTORY (새 기능) ────────────────────────────────────
+function setInvDate(offset){
+  const dt=new Date(); dt.setDate(dt.getDate()+offset);
+  document.getElementById('inv-date').value=dt.toISOString().slice(0,10);
+  loadInventoryDaily();
+}
+
+async function loadInventorySection(){
+  // 날짜 기본값 오늘
+  if(!document.getElementById('inv-date').value) document.getElementById('inv-date').value=tod();
+  await Promise.all([loadInventoryDaily(), loadMenuLinks()]);
+  // 메뉴/재고 셀렉트 채우기
+  const invData=await api('GET','/api/inventory');
+  if(invData){
+    INV_LIST=invData;
+    document.getElementById('link-inv').innerHTML=invData.map(i=>`<option value="${i.id}">${i.name} (${i.category})</option>`).join('');
+  }
+  document.getElementById('link-menu').innerHTML=MENU.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
+}
+
+async function loadInventoryDaily(){
+  const date=document.getElementById('inv-date').value;
+  if(!date) return;
+  document.getElementById('inv-date-label').textContent=fmtDateShort(date);
+  document.getElementById('inventory-daily-table').innerHTML='<div class="loading">Loading...</div>';
+  const data=await api('GET',`/api/inventory/daily?date=${date}`);
+  if(!data||!data.length){
+    document.getElementById('inventory-daily-table').innerHTML='<div class="empty">재고 품목이 없습니다. 품목을 먼저 추가하세요.</div>';
+    return;
+  }
+  invDailyData=data;
   const cats=[...new Set(data.map(i=>i.category))];
-  el.innerHTML=cats.map(cat=>{
+  let html='';
+  cats.forEach(cat=>{
     const items=data.filter(i=>i.category===cat);
-    return `<div style="margin-bottom:1.5rem">
-      <div style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">${cat}</div>
-      <table><thead><tr><th>Item</th><th>Unit</th><th>Current Stock</th><th>Min Alert</th><th>Status</th><th></th></tr></thead>
-      <tbody>${items.map(item=>{const isLow=item.current_stock<=item.min_stock;return`<tr>
-        <td style="font-weight:500">${item.name}</td><td>${item.unit}</td>
-        <td class="${isLow?'stock-low':'stock-ok'}">${item.current_stock}</td>
-        <td style="color:#888">${item.min_stock}</td><td>${isLow?'⚠️ Low Stock':'✅ OK'}</td>
-        <td style="display:flex;gap:4px">
-          <button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="openStockModal(${item.id},'${item.name}')">📦 Update</button>
-          <button class="btn btn-danger" onclick="deleteInvItem(${item.id})">Del</button>
-        </td></tr>`;}).join('')}</tbody></table></div>`;
-  }).join('');
+    html+=`<div class="inv-cat-header">${cat}</div>
+    <div class="inv-cat-section">
+    <table class="inv-daily-table">
+      <thead><tr>
+        <th class="left">품목</th>
+        <th>단위</th>
+        <th style="background:#e8f0f8;color:#185FA5">전날재고</th>
+        <th style="background:#fde8e8;color:#A32D2D">당일판매</th>
+        <th style="background:#e8f5f0;color:#0F6E56">추가구입</th>
+        <th style="background:#fef3e8;color:#854F0B">서비스</th>
+        <th style="background:#e8f5f0;color:#0F6E56;font-size:13px">최종재고</th>
+        <th>저장</th>
+      </tr></thead>
+      <tbody>
+      ${items.map(item=>{
+        const isLow=item.closing<=item.min_stock;
+        return `<tr id="inv-row-${item.id}">
+          <td class="item-name">${item.name}</td>
+          <td style="color:#888;text-align:center">${item.unit}</td>
+          <td class="opening"><input class="editable-input" id="inv-op-${item.id}" type="number" min="0" step="0.1" value="${item.opening}" onchange="calcClosing(${item.id})"></td>
+          <td class="sold"><input class="editable-input" id="inv-sold-${item.id}" type="number" min="0" step="0.1" value="${item.sold}" onchange="calcClosing(${item.id})"></td>
+          <td class="purchased"><input class="editable-input" id="inv-pur-${item.id}" type="number" min="0" step="0.1" value="${item.purchased}" onchange="calcClosing(${item.id})"></td>
+          <td class="service"><input class="editable-input" id="inv-svc-${item.id}" type="number" min="0" step="0.1" value="${item.service}" onchange="calcClosing(${item.id})"></td>
+          <td class="closing ${isLow?'low':'ok'}" id="inv-closing-${item.id}">${item.closing}</td>
+          <td><button class="btn btn-primary" style="padding:5px 10px;font-size:12px" onclick="saveInvDaily(${item.id})">✓</button></td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table></div>`;
+  });
+  // 전체 저장 버튼
+  html+=`<div style="text-align:right;margin-top:10px">
+    <button class="btn btn-primary" onclick="saveAllInvDaily()" style="background:#0F6E56;border-color:#0F6E56">
+      ✓ 전체 저장
+    </button>
+  </div>`;
+  document.getElementById('inventory-daily-table').innerHTML=html;
+}
+
+function calcClosing(id){
+  const op=parseFloat(document.getElementById(`inv-op-${id}`)?.value)||0;
+  const sold=parseFloat(document.getElementById(`inv-sold-${id}`)?.value)||0;
+  const pur=parseFloat(document.getElementById(`inv-pur-${id}`)?.value)||0;
+  const svc=parseFloat(document.getElementById(`inv-svc-${id}`)?.value)||0;
+  const closing=Math.max(0, op-sold+pur-svc);
+  const el=document.getElementById(`inv-closing-${id}`);
+  if(el){
+    el.textContent=closing.toFixed(1).replace('.0','');
+    const item=invDailyData.find(i=>i.id===id);
+    const isLow=item&&closing<=item.min_stock;
+    el.className=`closing ${isLow?'low':'ok'}`;
+  }
+}
+
+async function saveInvDaily(id){
+  const date=document.getElementById('inv-date').value;
+  const opening=parseFloat(document.getElementById(`inv-op-${id}`)?.value)||0;
+  const sold=parseFloat(document.getElementById(`inv-sold-${id}`)?.value)||0;
+  const purchased=parseFloat(document.getElementById(`inv-pur-${id}`)?.value)||0;
+  const service=parseFloat(document.getElementById(`inv-svc-${id}`)?.value)||0;
+  const res=await api('POST','/api/inventory/daily/update',{item_id:id,log_date:date,opening,sold,purchased,service});
+  if(res?.ok){
+    const closing=res.closing;
+    const el=document.getElementById(`inv-closing-${id}`);
+    if(el) el.textContent=closing;
+    toast(`✓ 저장 완료`);
+  }
+}
+
+async function saveAllInvDaily(){
+  const date=document.getElementById('inv-date').value;
+  let count=0;
+  for(const item of invDailyData){
+    const opening=parseFloat(document.getElementById(`inv-op-${item.id}`)?.value)||0;
+    const sold=parseFloat(document.getElementById(`inv-sold-${item.id}`)?.value)||0;
+    const purchased=parseFloat(document.getElementById(`inv-pur-${item.id}`)?.value)||0;
+    const service=parseFloat(document.getElementById(`inv-svc-${item.id}`)?.value)||0;
+    await api('POST','/api/inventory/daily/update',{item_id:item.id,log_date:date,opening,sold,purchased,service});
+    count++;
+  }
+  toast(`✓ 전체 ${count}개 저장 완료!`);
+  loadInventoryDaily();
 }
 
 async function addInvItem(){
   const name=document.getElementById('inv-name').value.trim();
   if(!name){toast('Please enter item name',true);return;}
-  const res=await api('POST','/api/inventory',{name,category:document.getElementById('inv-cat').value,unit:document.getElementById('inv-unit').value,current_stock:0,min_stock:parseFloat(document.getElementById('inv-min').value)||0});
-  if(res?.ok){document.getElementById('inv-name').value='';document.getElementById('inv-min').value='0';loadInventory();toast('✓ Item added!');}
+  const res=await api('POST','/api/inventory',{
+    name, category:document.getElementById('inv-cat').value,
+    unit:document.getElementById('inv-unit').value, current_stock:0,
+    min_stock:parseFloat(document.getElementById('inv-min').value)||0
+  });
+  if(res?.ok){
+    document.getElementById('inv-name').value='';
+    document.getElementById('inv-min').value='0';
+    toast('✓ Item added!');
+    loadInventorySection();
+  }
 }
+
 async function deleteInvItem(id){
   if(!confirm('Delete this inventory item?'))return;
   const res=await api('DELETE',`/api/inventory/${id}`);
-  if(res?.ok){loadInventory();toast('Item deleted');}
+  if(res?.ok){ loadInventorySection(); toast('Item deleted'); }
 }
-function openStockModal(id,name){
-  stockItemId=id;
-  document.getElementById('stock-modal-title').textContent=`📦 Update Stock — ${name}`;
-  document.getElementById('stock-qty').value='1'; document.getElementById('stock-note').value='';
-  document.getElementById('stock-modal').classList.add('show');
+
+// 메뉴-재고 연결
+async function loadMenuLinks(){
+  const data=await api('GET','/api/menu_inventory');
+  const el=document.getElementById('menu-inv-links');
+  if(!data||!data.length){el.innerHTML='<div class="empty">연결된 항목이 없습니다. 위에서 연결을 추가하세요.</div>';return;}
+  el.innerHTML=`<div class="link-header"><span>메뉴</span><span>재고 품목</span><span>차감 수량</span><span></span></div>
+    ${data.map(l=>`<div class="link-row">
+      <span style="font-weight:500">${l.menu_name}</span>
+      <span style="color:#555">📦 ${l.inv_name}</span>
+      <span style="text-align:center;color:#185FA5;font-weight:600">-${l.quantity}</span>
+      <button class="btn btn-danger" onclick="deleteMenuLink(${l.id})">Del</button>
+    </div>`).join('')}`;
 }
-function closeStockModal(){document.getElementById('stock-modal').classList.remove('show');stockItemId=null;}
-async function saveStock(){
-  const action=document.getElementById('stock-action').value;
-  const qty=parseFloat(document.getElementById('stock-qty').value)||0;
-  const note=document.getElementById('stock-note').value.trim();
-  if(qty<=0){toast('Please enter a valid quantity',true);return;}
-  const res=await api('POST',`/api/inventory/${stockItemId}/stock`,{action,quantity:qty,note});
-  if(res?.ok){closeStockModal();loadInventory();toast('✓ Stock updated!');}
+
+async function addMenuLink(){
+  const menu_id=parseInt(document.getElementById('link-menu').value);
+  const inventory_id=parseInt(document.getElementById('link-inv').value);
+  const quantity=parseFloat(document.getElementById('link-qty').value)||1;
+  if(!menu_id||!inventory_id){toast('메뉴와 재고 품목을 선택하세요',true);return;}
+  const res=await api('POST','/api/menu_inventory',{menu_id,inventory_id,quantity});
+  if(res?.ok){ loadMenuLinks(); toast('✓ 연결 추가!'); }
+  else toast('이미 연결된 항목입니다',true);
+}
+
+async function deleteMenuLink(id){
+  const res=await api('DELETE',`/api/menu_inventory/${id}`);
+  if(res?.ok){ loadMenuLinks(); toast('연결 삭제'); }
 }
 
 // ── STATISTICS ────────────────────────────────────────────
@@ -1111,30 +1259,21 @@ async function loadStats(){
     ?Object.entries(payMap).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="stat-row"><span>${k}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')
     :'<div class="empty">No data</div>';
 
-  // ★ 투어 회사/가이드별 통계
   const tourData=ds.filter(s=>s.ctype==='TOUR');
   const companyMap={};
   tourData.forEach(s=>{
-    const co=s.tour||'(미입력)';
-    const guide=s.guide||'(미입력)';
+    const co=s.tour||'(미입력)'; const guide=s.guide||'(미입력)';
     if(!companyMap[co]) companyMap[co]={total:0,pax:0,visits:0,guides:{}};
-    companyMap[co].total+=s.total;
-    companyMap[co].pax+=(s.pax||0);
-    companyMap[co].visits++;
-    if(!companyMap[co].guides[guide]) companyMap[co].guides[guide]={visits:0,pax:0,total:0,dates:new Set()};
+    companyMap[co].total+=s.total; companyMap[co].pax+=(s.pax||0); companyMap[co].visits++;
+    if(!companyMap[co].guides[guide]) companyMap[co].guides[guide]={visits:0,pax:0,total:0};
     companyMap[co].guides[guide].visits++;
     companyMap[co].guides[guide].pax+=(s.pax||0);
     companyMap[co].guides[guide].total+=s.total;
-    companyMap[co].guides[guide].dates.add(s.date);
   });
 
   const guidesEl=document.getElementById('stats-guides');
-  if(!Object.keys(companyMap).length){
-    guidesEl.innerHTML='<div class="empty">No tour data in this period</div>';
-    return;
-  }
+  if(!Object.keys(companyMap).length){guidesEl.innerHTML='<div class="empty">No tour data in this period</div>';return;}
 
-  // 전체 요약
   const totalVisits=tourData.length;
   const uniqueDates=new Set(tourData.map(s=>s.date)).size;
   guidesEl.innerHTML=`
@@ -1150,8 +1289,7 @@ async function loadStats(){
         <div class="tour-company-header">
           <span class="co-name">🚌 ${co}</span>
           <div class="co-summary">
-            <span>총 ${coData.visits}회 방문</span>
-            <span>👥 ${coData.pax}명</span>
+            <span>총 ${coData.visits}회 방문</span><span>👥 ${coData.pax}명</span>
             <span>${fmt(coData.total)}</span>
             ${coData.pax>0?`<span>1인당 ${fmt(perPax)}</span>`:''}
           </div>
