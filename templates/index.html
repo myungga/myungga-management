@@ -942,9 +942,9 @@ async function loadDaily(){
     closingEl.innerHTML=`<table class="closing-table">
       <thead>
         <tr><th style="background:#555;border-radius:8px 0 0 0">결제수단</th>
-          <th colspan="2" class="blue-bg">수입 (매출)</th>
-          <th colspan="2" class="red-bg">지출</th>
-          <th class="green-bg" style="border-radius:0 8px 0 0">잔액 (시제)</th></tr>
+          <th colspan="2" class="blue-bg">수입 (매출)<br><span style="font-size:10px;font-weight:400">Income</span></th>
+          <th colspan="2" class="red-bg">지출<br><span style="font-size:10px;font-weight:400">Expense</span></th>
+          <th class="green-bg" style="border-radius:0 8px 0 0">잔액 (시제)<br><span style="font-size:10px;font-weight:400">Balance</span></th></tr>
         <tr style="background:#f8f8f6;font-size:11px;color:#888">
           <th></th>
           <th style="text-align:right;font-weight:500;color:#185FA5">금액</th>
@@ -1071,11 +1071,11 @@ async function loadInventoryDaily(){
       <thead><tr>
         <th class="left">품목</th>
         <th>단위</th>
-        <th style="background:#e8f0f8;color:#185FA5">전날재고</th>
-        <th style="background:#fde8e8;color:#A32D2D">당일판매</th>
-        <th style="background:#e8f5f0;color:#0F6E56">추가구입</th>
-        <th style="background:#fef3e8;color:#854F0B">서비스</th>
-        <th style="background:#e8f5f0;color:#0F6E56;font-size:13px">최종재고</th>
+        <th style="background:#e8f0f8;color:#185FA5">전날재고<br><span style="font-size:10px;font-weight:400">Prev Stock</span></th>
+        <th style="background:#fde8e8;color:#A32D2D">당일판매<br><span style="font-size:10px;font-weight:400">Sold</span></th>
+        <th style="background:#e8f5f0;color:#0F6E56">추가구입<br><span style="font-size:10px;font-weight:400">Purchase</span></th>
+        <th style="background:#fef3e8;color:#854F0B">서비스<br><span style="font-size:10px;font-weight:400">Service</span></th>
+        <th style="background:#e8f5f0;color:#0F6E56;font-size:13px">최종재고<br><span style="font-size:10px;font-weight:400">Closing</span></th>
         <th>저장</th>
       </tr></thead>
       <tbody>
