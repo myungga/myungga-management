@@ -367,6 +367,12 @@ tr:hover td { background: #fafafa; }
       </div>
     </div>
 
+    <!-- 재고 품목 목록 -->
+    <div class="card">
+      <h3>📋 재고 품목 목록 (Stock Item List)</h3>
+      <div id="inventory-item-list"><div class="loading">Loading...</div></div>
+    </div>
+
     <!-- 메뉴-재고 연결 -->
     <div class="card">
       <h3>🔗 메뉴-재고 연결 <span style="font-size:12px;color:#888;font-weight:400">(판매 시 자동 차감)</span></h3>
@@ -1040,7 +1046,7 @@ function setInvDate(offset){
 async function loadInventorySection(){
   // 날짜 기본값 오늘
   if(!document.getElementById('inv-date').value) document.getElementById('inv-date').value=tod();
-  await Promise.all([loadInventoryDaily(), loadMenuLinks()]);
+  await Promise.all([loadInventoryDaily(), loadMenuLinks(), loadInvItemList()]);
   // 메뉴/재고 셀렉트 채우기
   const invData=await api('GET','/api/inventory');
   if(invData){
@@ -1163,6 +1169,30 @@ async function addInvItem(){
     toast('✓ Item added!');
     loadInventorySection();
   }
+}
+
+async function loadInvItemList(){
+  const data=await api("GET","/api/inventory");
+  const el=document.getElementById("inventory-item-list");
+  if(!data||!data.length){el.innerHTML="<div class=\"empty\">등록된 품목이 없습니다.</div>";return;}
+  const cats=[...new Set(data.map(i=>i.category))];
+  el.innerHTML=cats.map(cat=>{
+    const items=data.filter(i=>i.category===cat);
+    return `<div style="margin-bottom:1rem">
+      <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;padding:4px 0;border-bottom:1px solid #eee">${cat}</div>
+      ${items.map(item=>{
+        const isLow=item.current_stock<=item.min_stock;
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 4px;border-bottom:1px solid #f5f5f5">
+          <div>
+            <span style="font-weight:600">${item.name}</span>
+            <span style="color:#888;font-size:12px;margin-left:8px">${item.unit}</span>
+            <span style="color:${isLow?"#A32D2D":"#0F6E56"};font-size:12px;margin-left:8px;font-weight:600">재고: ${item.current_stock}</span>
+          </div>
+          <button class="btn btn-danger" onclick="deleteInvItem(${item.id})">Del</button>
+        </div>`;
+      }).join("")}
+    </div>`;
+  }).join("");
 }
 
 async function deleteInvItem(id){
