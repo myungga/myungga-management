@@ -343,24 +343,55 @@ def get_inventory_daily():
 
     c.execute('SELECT * FROM inventory ORDER BY category,name')
     items=c.fetchall()
+
+    # ★ 당일 Sales에서 메뉴-재고 연결 기반으로 판매수량 자동 계산
+    c.execute('SELECT items FROM sales WHERE date=%s',(date,))
+    sales_rows=c.fetchall()
+
+    # 재고별 판매수량 집계
+    auto_sold={}  # {inventory_id: qty}
+    for sale in sales_rows:
+        try:
+            sale_items=json.loads(sale['items']) if isinstance(sale['items'],str) else sale['items']
+        except:
+            continue
+        for si in sale_items:
+            # 메뉴 이름으로 menu_id 찾기
+            c.execute('SELECT id FROM menu WHERE name=%s AND active=1 LIMIT 1',(si.get('name',''),))
+            menu_row=c.fetchone()
+            if not menu_row:
+                continue
+            # menu_inventory 연결 찾기
+            c.execute('SELECT inventory_id, quantity FROM menu_inventory WHERE menu_id=%s',(menu_row['id'],))
+            links=c.fetchall()
+            for link in links:
+                inv_id=link['inventory_id']
+                deduct=link['quantity']*(si.get('qty',1))
+                auto_sold[inv_id]=auto_sold.get(inv_id,0)+deduct
+
     result=[]
     for item in items:
         iid=item['id']
         # 당일 일별 데이터
         c.execute('SELECT * FROM inventory_daily WHERE item_id=%s AND log_date=%s',(iid,date))
         daily=c.fetchone()
-        # 전날 최종재고 = 전날 closing_stock 또는 현재재고에서 역산
+        # 전날 최종재고
         c.execute('SELECT closing_stock FROM inventory_daily WHERE item_id=%s AND log_date=%s',(iid,prev_date))
         prev=c.fetchone()
 
-        sold=daily['sold'] if daily else 0
+        # ★ 판매수량: 수동 입력값이 있으면 우선, 없으면 자동계산값 사용
+        auto_sold_qty=round(auto_sold.get(iid,0),1)
+        if daily and daily['sold']>0:
+            sold=daily['sold']  # 수동 입력값 우선
+        else:
+            sold=auto_sold_qty  # 자동계산값
+
         purchased=daily['purchased'] if daily else 0
         service=daily['service'] if daily else 0
 
         if prev:
             opening=prev['closing_stock']
         else:
-            # 전날 데이터 없으면 현재 재고 기준으로 역산
             opening=item['current_stock']+sold-purchased+service
 
         closing=opening-sold+purchased-service
@@ -374,6 +405,7 @@ def get_inventory_daily():
             'current_stock':item['current_stock'],
             'opening':round(opening,1),
             'sold':round(sold,1),
+            'auto_sold':auto_sold_qty,  # 자동계산값 별도 전달
             'purchased':round(purchased,1),
             'service':round(service,1),
             'closing':round(closing,1),
