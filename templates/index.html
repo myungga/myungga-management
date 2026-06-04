@@ -1091,7 +1091,7 @@ async function loadInventoryDaily(){
           <td class="item-name">${item.name}</td>
           <td style="color:#888;text-align:center">${item.unit}</td>
           <td class="opening"><input class="editable-input" id="inv-op-${item.id}" type="number" min="0" step="0.1" value="${item.opening}" onchange="calcClosing(${item.id})"></td>
-          <td class="sold"><input class="editable-input" id="inv-sold-${item.id}" type="number" min="0" step="0.1" value="${item.sold}" onchange="calcClosing(${item.id})"></td>
+          <td class="sold"><input class="editable-input" id="inv-sold-${item.id}" type="number" min="0" step="0.1" value="${item.sold}" onchange="calcClosing(${item.id})">${item.auto_sold>0&&item.sold===item.auto_sold?`<div style="font-size:10px;color:#185FA5;margin-top:2px">🔄 자동</div>`:''}</td>
           <td class="purchased"><input class="editable-input" id="inv-pur-${item.id}" type="number" min="0" step="0.1" value="${item.purchased}" onchange="calcClosing(${item.id})"></td>
           <td class="service"><input class="editable-input" id="inv-svc-${item.id}" type="number" min="0" step="0.1" value="${item.service}" onchange="calcClosing(${item.id})"></td>
           <td class="closing ${isLow?'low':'ok'}" id="inv-closing-${item.id}">${item.closing}</td>
