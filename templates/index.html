@@ -914,6 +914,7 @@ async function loadDaily(){
   const foodSales=ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Food').reduce((a,i)=>a+i.total,0),0);
   const bevSales=ds.reduce((s,o)=>s+o.items.filter(i=>i.cat==='Beverage').reduce((a,i)=>a+i.total,0),0);
   const tourPax=ds.filter(s=>s.ctype==='TOUR').reduce((s,o)=>s+(o.pax||0),0);
+  const walkPax=ds.filter(s=>s.ctype==='WALK-IN').reduce((s,o)=>s+(o.pax||0),0);
 
   document.getElementById('daily-metrics').innerHTML=`
     <div class="metric"><div class="label">Total Sales</div><div class="value blue">${fmt(totalSales)}</div></div>
@@ -921,7 +922,9 @@ async function loadDaily(){
     <div class="metric"><div class="label">Net Income</div><div class="value ${net>=0?'green':'red'}">${fmt(net)}</div></div>
     <div class="metric"><div class="label">Orders</div><div class="value">${ds.length}</div></div>
     <div class="metric"><div class="label">Tour Sales</div><div class="value">${fmt(tourSales)}</div></div>
-    <div class="metric"><div class="label">Tour Pax</div><div class="value blue">${tourPax}명</div></div>`;
+    <div class="metric"><div class="label">Tour Pax</div><div class="value blue">${tourPax}명</div></div>
+    <div class="metric"><div class="label">Walk-in Sales</div><div class="value">${fmt(walkSales)}</div></div>
+    <div class="metric"><div class="label">Walk-in Pax</div><div class="value green">${walkPax}명</div></div>`;
 
   const payIncome={};
   ds.forEach(s=>{if(!payIncome[s.payment])payIncome[s.payment]={count:0,total:0};payIncome[s.payment].count++;payIncome[s.payment].total+=s.total;});
